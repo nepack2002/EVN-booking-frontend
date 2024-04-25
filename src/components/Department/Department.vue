@@ -111,7 +111,7 @@ export default defineComponent({
     >
       <div class="basis-4/5">
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          User
+          Department
         </h1>
         <p class="text-sm font-medium text-gray-500">
           Manage departments in the company
@@ -120,7 +120,7 @@ export default defineComponent({
       <input
         type="text"
         v-model="searchQuery"
-        placeholder="Search cars..."
+        placeholder="Search department..."
         class="py-2 px-4 border-2 border-black rounded-lg"
       />
       <div class="flex gap-5">
@@ -135,7 +135,7 @@ export default defineComponent({
           class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
         >
           <router-link
-            :to="{ name: 'ImportUser' }"
+            :to="{ name: 'ImportDepartment' }"
             class="text-sm font-semibold tracking-wide"
             >Import excel</router-link
           >

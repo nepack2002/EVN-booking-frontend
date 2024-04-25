@@ -40,7 +40,7 @@
             <input
               type="password"
               id="password"
-              placeholder="123"
+              placeholder="Ce319"
               class="input2"
               v-model="password"
             />

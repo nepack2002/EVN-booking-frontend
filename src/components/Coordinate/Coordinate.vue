@@ -6,16 +6,16 @@ import { useUserStore } from "../../store/auth.js";
 export default defineComponent({
   setup() {
     const userStore = useUserStore();
-    const users = ref([]);
+    const departments = ref([]);
     const currentPage = ref(1); // Trang hiện tại
     const totalPages = ref(0); // Tổng số trang
     const showDeleteSuccess = ref(false);
     const searchQuery = ref("");
-    // Hàm để lấy danh sách người dùng với phân trang
-    const fetchUsers = async (page = 1) => {
+    // Hàm để lấy danh sách phong ban với phân trang
+    const fetchDepartments = async (page = 1) => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/users?page=${page}&query=${searchQuery.value}`,
+          `http://127.0.0.1:8000/api/schedules?page=${page}&query=${searchQuery.value}`,
           {
             headers: {
               Authorization: `Bearer ${userStore.token}`,
@@ -24,15 +24,15 @@ export default defineComponent({
         );
 
         // Lưu trữ dữ liệu trả về và thông tin phân trang
-        users.value = response.data.data;
+        departments.value = response.data.data;
         currentPage.value = response.data.current_page;
         totalPages.value = response.data.last_page;
-        if (users.value.length === 0 && currentPage.value > 1) {
+        if (departments.value.length === 0 && currentPage.value > 1) {
           // Nếu không còn người dùng trên trang hiện tại và không phải là trang đầu tiên
           // Chuyển về trang trước đó
           currentPage.value -= 1;
           console.log("hết");
-          await fetchUsers(currentPage.value);
+          await fetchDepartments(currentPage.value);
         }
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -40,19 +40,18 @@ export default defineComponent({
     };
     // Khi giá trị của searchQuery thay đổi, gọi fetchUsers
     watch(searchQuery, () => {
-      console.log(searchQuery);
-      fetchUsers(currentPage.value);
+      fetchDepartments(currentPage.value);
     });
 
     // Gọi fetchUsers khi component được mounted
     onMounted(() => {
-      fetchUsers(currentPage.value);
+      fetchDepartments(currentPage.value);
     });
 
     // Hàm để chuyển trang
     const changePage = async (newPage) => {
       if (newPage > 0 && newPage <= totalPages.value) {
-        await fetchUsers(newPage);
+        await fetchDepartments(newPage);
       }
     };
     // Hàm để xóa người dùng
@@ -64,13 +63,13 @@ export default defineComponent({
         );
 
         if (confirmed) {
-          await axios.delete(`http://127.0.0.1:8000/api/users/${id}`, {
+          await axios.delete(`http://127.0.0.1:8000/api/schedules/${id}`, {
             headers: {
               Authorization: `Bearer ${userStore.token}`,
             },
           });
 
-          await fetchUsers(currentPage.value);
+          await fetchDepartments(currentPage.value);
 
           // Hiển thị thông báo xóa thành công
           showDeleteSuccess.value = true;
@@ -84,16 +83,11 @@ export default defineComponent({
       }
     };
 
-    const formatDate = (dateString) => {
-      const date = new Date(dateString);
-      return date.toISOString().slice(0, 10);
-    };
 
     return {
-      users,
+      departments,
       deleteUser,
       showDeleteSuccess,
-      formatDate,
       currentPage,
       totalPages,
       changePage,
@@ -117,10 +111,10 @@ export default defineComponent({
     >
       <div class="basis-4/5">
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          User
+          Schedule
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage users in the company
+          Manage schedules in the company
         </p>
       </div>
       <input
@@ -133,15 +127,15 @@ export default defineComponent({
         <button
           class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
         >
-          <router-link :to="{ name: 'AddUser' }" class="text-sm font-semibold"
-            >Add User</router-link
+          <router-link :to="{ name: 'AddCoordinate' }" class="text-sm font-semibold"
+            >Add Schedule</router-link
           >
         </button>
         <button
           class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
         >
           <router-link
-            :to="{ name: 'ImportUser' }"
+            :to="{ name: 'ImportCoordinate' }"
             class="text-sm font-semibold tracking-wide"
             >Import excel</router-link
           >
@@ -156,60 +150,44 @@ export default defineComponent({
           >
             <th class="pl-10">
               <div class="flex items-center gap-x-4">
-                <span>List users</span>
+                <span>List Schedule</span>
               </div>
             </th>
-
-            <th class="py-4 px-4 text-center">Role</th>
-            <th class="py-4 px-4 text-center">Created At</th>
-            <th class="py-4 px-4 text-center">Updated at</th>
-            <th class="py-4 pr-10 pl-4 text-center">Actions</th>
+            <th class="py-4 px-4 text-center">Location</th>
+            <th class="py-4 px-4 text-center">Latitude</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="user in users"
-            :key="user.id"
+            v-for="department in departments"
+            :key="department.id"
             class="hover:bg-gray-100 transition-colors group"
           >
             <td class="flex gap-x-4 items-center py-4 pl-10">
               <div>
-                <a href="#" class="text-lg font-semibold text-gray-700">{{
-                  user.name
-                }}</a>
-
-                <div
-                  v-for="(car, index) in user.car"
-                  :key="index"
-                  class="font-medium text-gray-400"
-                >
-                  {{ car.ten_xe }}
-                </div>
-                <div
-                  v-if="user.department"
-                >
-                  {{ user.department.name }}
+                <!-- <a href="#" class="text-lg font-semibold text-gray-700">{{
+                  department.name
+                }}</a> -->
+                <div class="font-medium text-gray-400">
+                  {{ department.program }}
                 </div>
               </div>
             </td>
-            <td class="font-medium text-center">{{ user.role }}</td>
             <td class="font-medium text-center">
-              {{ formatDate(user.created_at) }}
+              {{department.lat_location}}
             </td>
-            <td class="font-medium text-center">
-              {{ formatDate(user.updated_at) }}
-            </td>
+
             <td class="font-medium text-center">
               <button
                 class="py-2 px-4 m-2 bg-orange-500 rounded-lg hover:bg-orange-400"
               >
-                <router-link :to="{ name: 'EditUser', params: { id: user.id } }"
+                <router-link :to="{ name: 'EditCoordinate', params: { id: department.id } }"
                   >Edit</router-link
                 >
               </button>
               <button
                 class="py-2 px-4 m-2 bg-red-500 rounded-lg hover:bg-red-400"
-                @click="deleteUser(user.id)"
+                @click="deleteUser(department.id)"
               >
                 Delete
               </button>
@@ -221,15 +199,15 @@ export default defineComponent({
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:hidden p-5">
       <div
         class="bg-white space-y-3 p-4 rounded-lg shadow"
-        v-for="user in users"
-        :key="user.id"
+        v-for="department in departments"
+        :key="department.id"
       >
         <div class="">
-          <div class="text-gray-900">{{ user.name }}</div>
-          <div class="text-gray-900">email: {{ user.email }}</div>
+          <div class="text-gray-900">{{}}</div>
+          <div class="text-gray-900">email: {{ department.id }}</div>
         </div>
-        <div class="text-sm text-gray-700">Chức vụ: {{ user.role }}</div>
-        <button
+        <div class="text-sm text-gray-700">Chức vụ: {{ department.id }}</div>
+        <!-- <button
           class="py-2 px-4 m-2 bg-orange-500 rounded-lg hover:bg-orange-400"
         >
           <router-link :to="{ name: 'EditUser', params: { id: user.id } }"
@@ -241,7 +219,7 @@ export default defineComponent({
           @click="deleteUser(user.id)"
         >
           Delete
-        </button>
+        </button> -->
       </div>
     </div>
     <!-- Điều khiển phân trang -->

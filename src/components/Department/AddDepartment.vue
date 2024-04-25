@@ -48,18 +48,18 @@
           <div>
             <label
               :class="{
-                'text-red-500': errorMessage.department_id,
+                'text-red-500': errorMessage.parent_id,
               }"
               class="input"
               >Phòng ban:</label
             >
-            <select class="input2" v-model="form.department_id">
+            <select class="input2" v-model="form.parent_id">
               <option v-for="department in departments" :key="department.id" :value="department.id">
                 {{ department.id }} - {{ department.name }}
               </option>
             </select>
-            <span v-if="errorMessage.department_id" class="text-red-500 text-sm">{{
-              errorMessage.department_id[0]
+            <span v-if="errorMessage.parent_id" class="text-red-500 text-sm">{{
+              errorMessage.parenr_id[0]
             }}</span>
           </div>
           

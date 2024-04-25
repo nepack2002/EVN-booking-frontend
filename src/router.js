@@ -11,6 +11,11 @@ import ImportUser from "./components/User/importUser.vue";
 import Department from "./components/Department/Department.vue";
 import AddDepartment from "./components/Department/AddDepartment.vue";
 import EditDepartment from "./components/Department/EditDepartment.vue";
+import ImportDepartment from "./components/Department/importDepartment.vue";
+import Coordinate from "./components/Coordinate/Coordinate.vue";
+import AddCoordiante from "./components/Coordinate/AddCoordiante.vue";
+import EditCoordinate from "./components/Coordinate/EditCoordinate.vue";
+import ImportCoordinate from "./components/Coordinate/ImportCoordinate.vue";
 import login from "./Auth/login.vue";
 import Unauthorized from "./components/Unauthorized.vue";
 import ForgotPassword from "./Auth/ForgotPassword.vue";
@@ -97,26 +102,51 @@ const routes = [
     meta: { requiresAuth: true, roles: [Roles.ADMIN, Roles.USER] }
   },
   {
-    path: '/:catchAll(.*)',
-    name: 'Unauthorized',
-    component: Unauthorized
-  },
-  {
     path: "/department",
     name: "Department",
     component: Department,
-    meta: { requiresAuth: true, roles: [Roles.ADMIN, Roles.QUAN_TRI_CONG_TAC] }
+    meta: { requiresAuth: true, roles: [Roles.ADMIN] }
   },
   {
     path: "/department/add",
     name: "AddDepartment",
     component: AddDepartment,
-    meta: { requiresAuth: true, roles: [Roles.ADMIN, Roles.QUAN_TRI_CONG_TAC] }
+    meta: { requiresAuth: true, roles: [Roles.ADMIN] }
   },
   {
     path: "/department/edit/:id",
     name: "EditDepartment",
     component: EditDepartment,
+    meta: { requiresAuth: true, roles: [Roles.ADMIN] }
+  },
+  {
+    path: "/department/importdepartment",
+    name: "ImportDepartment",
+    component: ImportDepartment,
+    meta: { requiresAuth: true, roles: [Roles.ADMIN] }
+  },
+  {
+    path: "/coordinate",
+    name: "Coordinate",
+    component: Coordinate,
+    meta: { requiresAuth: true, roles: [Roles.ADMIN, Roles.QUAN_TRI_CONG_TAC] }
+  },
+  {
+    path: "/coordinate/add",
+    name: "AddCoordinate",
+    component: AddCoordiante,
+    meta: { requiresAuth: true, roles: [Roles.ADMIN, Roles.QUAN_TRI_CONG_TAC] }
+  },
+  {
+    path: "/coordinate/edit/:id",
+    name: "EditCoordinate",
+    component: EditCoordinate,
+    meta: { requiresAuth: true, roles: [Roles.ADMIN, Roles.QUAN_TRI_CONG_TAC] }
+  },
+  {
+    path: "/coordinate/importcoordinate",
+    name: "ImportCoordinate",
+    component: ImportCoordinate,
     meta: { requiresAuth: true, roles: [Roles.ADMIN, Roles.QUAN_TRI_CONG_TAC] }
   }
 
@@ -130,39 +160,29 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const userStore = useUserStore();
 
-    // Kiểm tra xem người dùng đã đăng nhập chưa
     if (!userStore.getUser && userStore.getToken) {
         await userStore.fetchUser();
     }
 
-    // Nếu yêu cầu route yêu cầu xác thực
     if (to.meta.requiresAuth) {
-        // Nếu không có token (chưa đăng nhập), chuyển hướng đến trang đăng nhập
         if (!userStore.getToken) {
             next({ name: 'Login', query: { redirect: to.fullPath } });
         } else {
-            // Kiểm tra quyền truy cập dựa trên vai trò của người dùng
             const userRole = userStore.user.role;
 
             if (!canAccess(userRole, to.meta.roles)) {
-                // Nếu người dùng không có quyền truy cập vào route, chuyển hướng đến trang không được phép truy cập
                 next({ name: 'Unauthorized' });
             } else {
-                // Người dùng có quyền truy cập vào route, kiểm tra vai trò của họ
-                if (to.name === 'Login' && (userRole === Roles.ADMIN || userRole === Roles.QUAN_TRI_CONG_TACT || userRole === Roles.QUAN_TRI_VAT_TU)) {
-                    // Nếu người dùng là admin và yêu cầu đăng nhập, chuyển hướng đến trang Car
+                if (to.name === 'Login' && (userRole === Roles.ADMIN || userRole === Roles.QUAN_TRI_CONG_TAC || userRole === Roles.QUAN_TRI_VAT_TU)) {
                     next({ name: 'Car' });
                 } else if (to.name === 'Login' && userRole === Roles.USER) {
-                    // Nếu người dùng là user và yêu cầu đăng nhập, chuyển hướng đến trang home (giả định)
                     next({ name: 'Home' });
                 } else {
-                    // Người dùng có thể vào route
                     next();
                 }
             }
         }
     } else {
-        // Route không yêu cầu xác thực, tiếp tục
         next();
     }
 });

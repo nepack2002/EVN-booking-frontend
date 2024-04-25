@@ -15,7 +15,7 @@
         class="inline-flex gap-x-2 items-center py-2.5 px-4 text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
       >
         <router-link
-          :to="{ name: 'User' }"
+          :to="{ name: 'Department' }"
           class="text-sm font-semibold tracking-wide"
           >Back</router-link
         >
@@ -52,13 +52,19 @@
               >Phòng ban:</label
             >
             <select class="input2" v-model="form.parent_id">
-              <option v-for="department in departments" :key="department.id" :value="department.id">
+              <option
+                v-for="department in departments"
+                :key="department.id"
+                :value="department.id"
+              >
                 {{ department.id }} - {{ department.name }}
               </option>
             </select>
-            <span v-if="errorMessage.department_id" class="text-red-500 text-sm">{{
-              errorMessage.department_id[0]
-            }}</span>
+            <span
+              v-if="errorMessage.department_id"
+              class="text-red-500 text-sm"
+              >{{ errorMessage.department_id[0] }}</span
+            >
           </div>
           <div>
             <div class="flex items-center">
@@ -92,32 +98,35 @@ export default {
     const errorMessage = ref({});
     const showAddSuccess = ref(false);
     const form = ref({
+      id: "",
       name: "",
       parent_id: "",
     });
-
-
     const userStore = useUserStore();
     onMounted(async () => {
       await userStore.fetchUser();
       fetchDepartments();
+      getDepartments();
     });
-
 
     const departments = ref([]);
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/departments", {
-          headers: {
-            Authorization: `Bearer ${userStore.token}`,
-          },
-        });
-        departments.value = response.data.data;
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/departments",
+          {
+            headers: {
+              Authorization: `Bearer ${userStore.token}`,
+            },
+          }
+        );
+        departments.value = response.data.data.filter(
+          (department) => department.id !== form.value.id
+        );
       } catch (error) {
         console.error("Lỗi khi lấy danh sách phòng ban:", error);
       }
     };
-
     const route = useRoute();
     const getDepartments = async () => {
       try {
@@ -134,8 +143,8 @@ export default {
         console.error("Lỗi khi lấy thông tin xe:", error);
       }
     };
-     const handleSubmit = async (event) => {
-      event.preventDefault(); 
+    const handleSubmit = async (event) => {
+      event.preventDefault();
 
       try {
         const formData = new FormData();
@@ -151,7 +160,7 @@ export default {
           }
         );
         showAddSuccess.value = true;
-        errorMessage.value = []
+        errorMessage.value = [];
         setTimeout(() => {
           showAddSuccess.value = false;
         }, 2000);
@@ -159,9 +168,6 @@ export default {
         errorMessage.value = error.response.data.errors;
       }
     };
-    onMounted(() => {
-      getDepartments();
-    });
     return {
       form,
       handleSubmit,

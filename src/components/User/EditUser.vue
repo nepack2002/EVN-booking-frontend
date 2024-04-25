@@ -90,13 +90,19 @@
               >Phòng ban:</label
             >
             <select class="input2" v-model="form.department_id">
-              <option v-for="department in departments" :key="department.id" :value="department.id">
+              <option
+                v-for="department in departments"
+                :key="department.id"
+                :value="department.id"
+              >
                 {{ department.id }} - {{ department.name }}
               </option>
             </select>
-            <span v-if="errorMessage.department_id" class="text-red-500 text-sm">{{
-              errorMessage.department_id[0]
-            }}</span>
+            <span
+              v-if="errorMessage.department_id"
+              class="text-red-500 text-sm"
+              >{{ errorMessage.department_id[0] }}</span
+            >
           </div>
           <div>
             <div class="flex items-center">
@@ -133,21 +139,24 @@ export default {
       name: "",
       email: "",
       role: "",
-      department: "",
+      department_id: "",
     });
     const userStore = useUserStore();
-    onMounted(async () => {
-      await userStore.fetchUser();
+    onMounted(() => {
+      userStore.fetchUser();
       fetchDepartments();
     });
     const departments = ref([]);
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/departments", {
-          headers: {
-            Authorization: `Bearer ${userStore.token}`,
-          },
-        });
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/departments",
+          {
+            headers: {
+              Authorization: `Bearer ${userStore.token}`,
+            },
+          }
+        );
         departments.value = response.data.data;
       } catch (error) {
         console.error("Lỗi khi lấy danh sách phòng ban:", error);
@@ -177,6 +186,7 @@ export default {
         formData.append("name", form.value.name);
         formData.append("email", form.value.email);
         formData.append("role", form.value.role);
+        formData.append("department_id", form.value.department_id);
         await axios.post(
           `http://127.0.0.1:8000/api/users/${route.params.id}`,
           formData,
@@ -187,7 +197,7 @@ export default {
           }
         );
         showAddSuccess.value = true;
-        errorMessage.value = []
+        errorMessage.value = [];
         setTimeout(() => {
           showAddSuccess.value = false;
         }, 2000);

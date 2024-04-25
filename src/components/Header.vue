@@ -35,17 +35,13 @@
         <span class="self-center text-xl font-semibold whitespace-nowrap"
           >Nepack</span
         >
-         <div>
-        <!-- <p>User: {{ user.role }}</p> -->
-    </div>
       </a>
       <ul class="space-y-2 font-medium mt-[60px]">
         <li
           v-for="(item, index) in menuItems"
           :key="index"
-          @click="selectMenuItem(index)"
-          :class="{ 'bg-gray-300 ml-5': activeIndex === index }"
-          class="py-2 pl-2 rounded-md hover:bg-gray-300"
+          :class="{ 'bg-blue-500 text-white hover:translate-x-4': isItemActive(item.route) }"
+          class="py-2 pl-2 rounded-md hover:bg-blue-500 hover:text-white hover:translate-x-4"
         >
           <router-link :to="item.route" class="flex">
             <div v-html="item.icon" class="menu-icon"></div>
@@ -100,20 +96,14 @@
   </aside>
 </template>
 
-
-
-
-
-
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { useRouter } from "vue-router";
+import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "../store/auth.js";
 
 const router = useRouter();
+const route = useRoute();
 const userStore = useUserStore();
- const token = computed(() => userStore.getToken);
-      //   const user = computed(() => userStore.getUser);
 const user = computed(() => userStore.getUser);
 const isLoggedIn = computed(() => !!user.value);
 
@@ -147,52 +137,71 @@ const handleClickOutside = (event) => {
     showSidebar.value = false;
   }
 };
-// Hàm chọn một mục trong sidebar
-const selectMenuItem = (index) => {
-  activeIndex.value = index;
+const isItemActive = (itemRoute) => {
+  return route.path.includes(itemRoute);
 };
+const updateActiveIndex = () => {
+  menuItems.forEach((item, index) => {
+    if (isItemActive(item.route)) {
+      activeIndex.value = index;
+    }
+  });
+};
+
+// Đăng ký watcher để lắng nghe thay đổi của route
+watch(() => route.path, updateActiveIndex);
 const menuItems = [
   {
     name: "Dashboard",
-    route: "/",
-    icon: `<svg class="header-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                  <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
-                  <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
-               </svg>`,
+    route: "/home",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" />
+</svg>
+`,
   },
   {
     name: "Users",
     route: "/users",
-    icon: `<svg class="header-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-                  <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"/>
-               </svg>
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+</svg>
+
 `,
   },
   {
     name: "Cars",
     route: "/cars",
-    icon: `<svg class="header-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                  <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z"/>
-               </svg>
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+</svg>
+
 `,
   },
   {
     name: "Departments",
     route: "/department",
-    icon: `<svg class="header-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                  <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z"/>
-               </svg>
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819" />
+    </svg>
+
+`,
+  },
+  {
+    name: "Schedules",
+    route: "/coordinate",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+          </svg>
+
+
 `,
   },
 ];
 onMounted(async () => {
-//   await userStore.fetchUser();
-
-  // Đăng ký sự kiện nhấp chuột để xử lý ẩn sidebar khi nhấp ra ngoài
   document.addEventListener("click", handleClickOutside);
 });
 
-// Hủy bỏ sự kiện nhấp chuột khi component bị hủy để tránh rò rỉ bộ nhớ
 onBeforeUnmount(() => {
   document.removeEventListener("click", handleClickOutside);
 });
