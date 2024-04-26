@@ -55,7 +55,7 @@ export default defineComponent({
       }
     };
     // Hàm để xóa người dùng
-    const deleteUser = async (id) => {
+    const deleteDepartment = async (id) => {
       try {
         // Hiển thị cửa sổ xác nhận
         const confirmed = confirm(
@@ -79,14 +79,14 @@ export default defineComponent({
           }, 2000);
         }
       } catch (error) {
-        console.error("Error deleting user:", error);
+        console.error("Error deleting department:", error);
       }
     };
 
 
     return {
       departments,
-      deleteUser,
+      deleteDepartment,
       showDeleteSuccess,
       currentPage,
       totalPages,
@@ -191,7 +191,7 @@ export default defineComponent({
               </button>
               <button
                 class="py-2 px-4 m-2 bg-red-500 rounded-lg hover:bg-red-400"
-                @click="deleteUser(department.id)"
+                @click="deleteDepartment(department.id)"
               >
                 Delete
               </button>
@@ -211,19 +211,19 @@ export default defineComponent({
           <div class="text-gray-900">email: {{ department.id }}</div>
         </div>
         <div class="text-sm text-gray-700">Chức vụ: {{ department.id }}</div>
-        <!-- <button
+        <button
           class="py-2 px-4 m-2 bg-orange-500 rounded-lg hover:bg-orange-400"
         >
-          <router-link :to="{ name: 'EditUser', params: { id: user.id } }"
+          <router-link :to="{ name: 'EditUser', params: { id: department.id } }"
             >Edit</router-link
           >
         </button>
         <button
           class="py-2 px-4 m-2 bg-red-500 rounded-lg hover:bg-red-400"
-          @click="deleteUser(user.id)"
+          @click="deleteDepartment(department.id)"
         >
           Delete
-        </button> -->
+        </button>
       </div>
     </div>
     <!-- Điều khiển phân trang -->

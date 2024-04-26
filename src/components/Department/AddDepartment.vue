@@ -5,10 +5,10 @@
     >
       <div>
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          ADD USER INFORMATION
+          ADD DEPARTMENT INFORMATION
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage users in the company
+          Manage departments in the company
         </p>
       </div>
       <button

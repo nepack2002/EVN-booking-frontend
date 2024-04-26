@@ -99,7 +99,7 @@ const routes = [
     path: "/home",
     name: "Home",
     component: Home,
-    meta: { requiresAuth: true, roles: [Roles.ADMIN, Roles.USER] }
+    // meta: { requiresAuth: true, roles: [Roles.ADMIN, Roles.USER] }
   },
   {
     path: "/department",
@@ -166,7 +166,7 @@ router.beforeEach(async (to, from, next) => {
 
     if (to.meta.requiresAuth) {
         if (!userStore.getToken) {
-            next({ name: 'Login', query: { redirect: to.fullPath } });
+            next({ name: 'Home', query: { redirect: to.fullPath } });
         } else {
             const userRole = userStore.user.role;
 

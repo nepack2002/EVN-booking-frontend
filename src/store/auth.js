@@ -6,14 +6,14 @@ export const useUserStore = defineStore("userStore", {
         token: localStorage.getItem("token") || null,
         user: null,
         errorMessage: {},
-        error : null
-        
+        error : null,
     }),
     getters: {
         getToken: (state) => state.token,
         getUser: (state) => state.user,
         getErrorMessage: (state) => state.errorMessage,
-        getError: (state) => state.error
+        getError: (state) => state.error,
+
     },
     actions: {
         async login(email, password) {

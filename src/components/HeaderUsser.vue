@@ -1,5 +1,5 @@
 <template>
-    <header
+  <header
     class="border-b py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px]"
   >
     <div class="flex flex-wrap items-center gap-x-2 max-lg:gap-y-6">
@@ -47,9 +47,47 @@
           >
         </li>
         <li class="max-lg:border-b max-lg:py-2 px-3 lg:fixed lg:right-10">
-          <a class="text-gray-500 block font-semibold text-[15px]" href="#"
-            >Login</a
-          >
+          <li v-if="isLoggedIn">
+            <span @click="logout" class="header-a group">
+              <svg
+                class="header-svg"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 18 16"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
+                />
+              </svg>
+              <span class="flex-1 ms-3 whitespace-nowrap">Log out</span>
+            </span>
+          </li>
+          <li v-else>
+            <router-link :to="{name: 'Login'}" class="header-a group">
+              <svg
+                class="header-svg"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 18 16"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
+                />
+              </svg>
+
+              <span class="flex-1 ms-3 whitespace-nowrap">Sign In</span>
+            </router-link>
+          </li>
         </li>
         <li>
           <div class="flex lg:ml-auto max-lg:w-full">
@@ -78,3 +116,30 @@
     </div>
   </header>
 </template>
+<script setup>
+import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { useUserStore } from "../store/auth.js";
+
+const router = useRouter();
+const route = useRoute();
+const userStore = useUserStore();
+const user = computed(() => userStore.getUser);
+const isLoggedIn = computed(() => !!user.value);
+
+// Trạng thái hiển thị của sidebar
+const showSidebar = ref(false);
+// Trạng thái active của mục trong sidebar
+const activeIndex = ref(null);
+
+// Hàm để chuyển đổi trạng thái của sidebar
+const toggleSidebar = () => {
+  showSidebar.value = !showSidebar.value;
+};
+
+// Hàm đăng xuất
+const logout = async () => {
+  await userStore.logout();
+  router.push("/home");
+};
+</script>

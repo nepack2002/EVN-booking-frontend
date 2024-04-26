@@ -1,7 +1,7 @@
 <script>
 import Header from "./components/Header.vue";
 import HeaderUsser from "./components/HeaderUsser.vue";
-import { computed } from 'vue';
+import { computed, onMounted, ref } from "vue";
 import { useUserStore } from "./store/auth.js";
 
 export default {
@@ -11,35 +11,43 @@ export default {
   },
   setup() {
     const userStore = useUserStore();
+    const isReady = ref(false); // Biến kiểm tra trạng thái sẵn sàng của dữ liệu người dùng
 
-    // Sử dụng computed để kiểm tra vai trò của người dùng
+    // Đảm bảo rằng thông tin người dùng đã được tải xong
     const IsUser = computed(() => {
-      const user = userStore.getUser; // Lấy người dùng hiện tại
-      return user && user.role === 'user'; // Kiểm tra role nếu user tồn tại
+      const user = userStore.getUser;
+      return !user || (user && user.role === "user");
     });
-    const IsNotUser = computed(() => {
-      const user = userStore.getUser; // Lấy người dùng hiện tại
-      return user && user.role !== 'user'; // Kiểm tra role nếu user tồn tại
+
+    onMounted(async () => {
+      await userStore.fetchUser(); // Giả sử đây là thao tác lấy thông tin người dùng từ API
+      isReady.value = true; // Cập nhật trạng thái sẵn sàng sau khi lấy thông tin
     });
 
     // Tạo một computed để quản lý lớp điều kiện
     const containerClass = computed(() => {
-      return IsUser.value ? '' : 'flex';
+      return IsUser.value ? "" : "flex";
     });
 
     return {
       IsUser,
-      IsNotUser,
+      isReady,
       containerClass,
     };
-  }
+  },
 };
 </script>
 
 <template>
-  <div :class="['w-full min-h-screen font-sans text-gray-900 bg-gray-50', containerClass]">
-    <HeaderUsser v-if="IsUser" />
-    <Header v-if="IsNotUser" />
-    <router-view></router-view>
+  <div
+    :class="[
+      'w-full min-h-screen font-sans text-gray-900 bg-gray-50',
+      containerClass,
+    ]"
+  >
+    <!-- Khi isReady là true thì mới hiển thị Header tương ứng -->
+    <HeaderUsser v-if="IsUser && isReady" />
+    <Header v-else-if="!IsUser && isReady" />
+    <router-view v-if="isReady"></router-view>
   </div>
 </template>

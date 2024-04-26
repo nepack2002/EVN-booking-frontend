@@ -360,7 +360,6 @@ export default {
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
       form.value.anh_xe = file;
-      console.log(form.value.anh_xe);
       const reader = new FileReader();
       reader.onload = () => {
         form.value.anh_xe_preview = reader.result;

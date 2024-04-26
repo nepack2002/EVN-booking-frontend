@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center w-full sm:ml-64">
+  <div class="flex items-center justify-center w-full my-20">
     <div class="text-center">
       <h1 class="mb-4 text-6xl font-semibold text-red-500">403</h1>
       <p class="mb-4 text-lg text-gray-600">Oops! Looks like you're lost.</p>

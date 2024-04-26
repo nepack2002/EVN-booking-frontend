@@ -24,12 +24,11 @@
               v-model="email"
             />
           </div>
-           <!-- Hiển thị lỗi email -->
-            <div v-if="error.email" class="text-red-500">
+            <!-- <div v-if="error.email" class="text-red-500">
               <ul>
                 <li>{{ error.email }}</li>
               </ul>
-            </div>
+            </div> -->
           <div class="">
             <div class="flex justify-between items-center">
               <label for="password" class="input">Password</label>
@@ -45,11 +44,11 @@
               v-model="password"
             />
           </div>
-          <div v-if="error.password" class="text-red-500">
+          <!-- <div v-if="error.password" class="text-red-500">
               <ul>
                 <li>{{ error.password }}</li>
               </ul>
-            </div>
+            </div> -->
           <div class="grid pt-7">
             <button
               type="submit"
@@ -81,7 +80,6 @@ export default {
     const userStore = useUserStore();
     const email = ref("");
     const password = ref("");
-    // const isFetchingUser = ref(true);
     const login = async () => {
       try {
           await userStore.login(email.value, password.value);
@@ -96,7 +94,7 @@ export default {
       await userStore.logout();
     };
 
-    const token = computed(() => userStore.getToken);
+    // const token = computed(() => userStore.getToken);
     const user = computed(() => userStore.getUser);
     const error = computed(() => userStore.getErrorMessage);
     const errors = computed(() => userStore.getError);
@@ -109,11 +107,9 @@ export default {
       password,
       login,
       logout,
-      token,
       user,
       error,
       errors,
-      // isFetchingUser
     };
   }
 };

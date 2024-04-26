@@ -70,7 +70,7 @@
             </span>
           </li>
           <li v-else>
-            <router-link to="/login" class="header-a group">
+            <router-link :to="{name: 'Login'}" class="header-a group">
               <svg
                 class="header-svg"
                 aria-hidden="true"
@@ -120,7 +120,7 @@ const toggleSidebar = () => {
 // Hàm đăng xuất
 const logout = async () => {
   await userStore.logout();
-  router.push("/login");
+  router.push("/home");
 };
 
 // Hàm xử lý sự kiện nhấp chuột để ẩn sidebar nếu nhấp ra ngoài
