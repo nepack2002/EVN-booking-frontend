@@ -93,10 +93,10 @@ export default defineComponent({
     <div class="flex flex-col md:flex-row gap-5 items-center py-7 px-10 border-y border-gray-200">
       <div class="basis-4/5">
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          Car
+          Ô TÔ
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage cars in the company
+          Quản lý ô tô trong công ty
         </p>
       </div>
       <input
@@ -110,7 +110,7 @@ export default defineComponent({
         class="inline-flex py-4 px-4  whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
       >
         <router-link :to="{ name: 'AddCar' }" class="text-sm font-semibold"
-          >Add Car</router-link
+          >Thêm ô tô</router-link
         >
       </button>
       <button
@@ -131,7 +131,7 @@ export default defineComponent({
           <tr>
             <th class="py-4 pl-10 text-center">
               <div class="flex items-center gap-x-4">
-                <span>List cars</span>
+                <span>Danh sách ô tô</span>
               </div>
             </th>
 
@@ -192,21 +192,21 @@ export default defineComponent({
       >
         <div class="flex items-center space-x-2 text-sm">
           <div class="text-gray-900">{{ car.ten_xe }}</div>
-          <div class="text-gray-900">User name: {{ car.user_id }}</div>
+          <div class="text-gray-900">Tên người lái: {{ car.user_id }}</div>
         </div>
         <div class="text-sm text-gray-700">Số chỗ: {{ car.so_cho }}</div>
         <button
           class="py-2 px-4 m-2 bg-orange-500 rounded-lg hover:bg-orange-400"
         >
           <router-link :to="{ name: 'Edit', params: { id: car.id } }"
-            >Edit</router-link
+            >Sửa</router-link
           >
         </button>
         <button
           class="py-2 px-4 m-2 bg-red-500 rounded-lg hover:bg-red-400"
           @click="deleteCar(car.id)"
         >
-          Delete
+          Xóa
         </button>
       </div>
     </div>

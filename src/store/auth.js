@@ -16,12 +16,12 @@ export const useUserStore = defineStore("userStore", {
 
     },
     actions: {
-        async login(email, password) {
+        async login(username, password) {
             try {
                 const response = await axios.post(
                     "http://127.0.0.1:8000/api/login",
                     {
-                        email,
+                        username,
                         password,
                     }
                 );

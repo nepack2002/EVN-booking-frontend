@@ -5,10 +5,10 @@
     >
       <div>
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          IMPORT FILE EXCEL TO DATABASE CAR
+          Thêm thông tin ô tô bằng excel
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage cars in the company
+          Quản lý tô tô trong công ty
         </p>
       </div>
       <button
@@ -17,7 +17,7 @@
         <router-link
           :to="{ name: 'Car' }"
           class="text-sm font-semibold tracking-wide"
-          >Back</router-link
+          >Trở lại</router-link
         >
       </button>
     </div>

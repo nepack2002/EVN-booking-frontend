@@ -117,10 +117,10 @@ export default defineComponent({
     >
       <div class="basis-4/5">
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          User
+          Người dùng
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage users in the company
+          Quản lý người dùng trong công ty
         </p>
       </div>
       <input
@@ -134,7 +134,7 @@ export default defineComponent({
           class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
         >
           <router-link :to="{ name: 'AddUser' }" class="text-sm font-semibold"
-            >Add User</router-link
+            >Thêm người dùng</router-link
           >
         </button>
         <button
@@ -156,14 +156,14 @@ export default defineComponent({
           >
             <th class="pl-10">
               <div class="flex items-center gap-x-4">
-                <span>List users</span>
+                <span>Danh sách người dùng</span>
               </div>
             </th>
 
-            <th class="py-4 px-4 text-center">Role</th>
-            <th class="py-4 px-4 text-center">Created At</th>
-            <th class="py-4 px-4 text-center">Updated at</th>
-            <th class="py-4 pr-10 pl-4 text-center">Actions</th>
+            <th class="py-4 px-4 text-center">Vai trò</th>
+            <th class="py-4 px-4 text-center">Thời gian tạo</th>
+            <th class="py-4 px-4 text-center">Thời gian cập nhật</th>
+            <th class="py-4 pr-10 pl-4 text-center">Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -178,13 +178,13 @@ export default defineComponent({
                   user.name
                 }}</a>
 
-                <div
+                <!-- <div
                   v-for="(car, index) in user.car"
                   :key="index"
                   class="font-medium text-gray-400"
                 >
                   {{ car.ten_xe }}
-                </div>
+                </div> -->
                 <div
                   v-if="user.department"
                 >
@@ -204,14 +204,14 @@ export default defineComponent({
                 class="py-2 px-4 m-2 bg-orange-500 rounded-lg hover:bg-orange-400"
               >
                 <router-link :to="{ name: 'EditUser', params: { id: user.id } }"
-                  >Edit</router-link
+                  >Sửa</router-link
                 >
               </button>
               <button
                 class="py-2 px-4 m-2 bg-red-500 rounded-lg hover:bg-red-400"
                 @click="deleteUser(user.id)"
               >
-                Delete
+                Xóa
               </button>
             </td>
           </tr>

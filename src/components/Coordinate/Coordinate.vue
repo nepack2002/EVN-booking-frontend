@@ -6,13 +6,13 @@ import { useUserStore } from "../../store/auth.js";
 export default defineComponent({
   setup() {
     const userStore = useUserStore();
-    const departments = ref([]);
+    const schedules = ref([]);
     const currentPage = ref(1); // Trang hiện tại
     const totalPages = ref(0); // Tổng số trang
     const showDeleteSuccess = ref(false);
     const searchQuery = ref("");
     // Hàm để lấy danh sách phong ban với phân trang
-    const fetchDepartments = async (page = 1) => {
+    const fetchSchedules = async (page = 1) => {
       try {
         const response = await axios.get(
           `http://127.0.0.1:8000/api/schedules?page=${page}&query=${searchQuery.value}`,
@@ -24,15 +24,15 @@ export default defineComponent({
         );
 
         // Lưu trữ dữ liệu trả về và thông tin phân trang
-        departments.value = response.data.data;
+        schedules.value = response.data.data;
         currentPage.value = response.data.current_page;
         totalPages.value = response.data.last_page;
-        if (departments.value.length === 0 && currentPage.value > 1) {
+        if (schedules.value.length === 0 && currentPage.value > 1) {
           // Nếu không còn người dùng trên trang hiện tại và không phải là trang đầu tiên
           // Chuyển về trang trước đó
           currentPage.value -= 1;
           console.log("hết");
-          await fetchDepartments(currentPage.value);
+          await fetchSchedules(currentPage.value);
         }
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -40,18 +40,18 @@ export default defineComponent({
     };
     // Khi giá trị của searchQuery thay đổi, gọi fetchUsers
     watch(searchQuery, () => {
-      fetchDepartments(currentPage.value);
+      fetchSchedules(currentPage.value);
     });
 
     // Gọi fetchUsers khi component được mounted
     onMounted(() => {
-      fetchDepartments(currentPage.value);
+      fetchSchedules(currentPage.value);
     });
 
     // Hàm để chuyển trang
     const changePage = async (newPage) => {
       if (newPage > 0 && newPage <= totalPages.value) {
-        await fetchDepartments(newPage);
+        await fetchSchedules(newPage);
       }
     };
     // Hàm để xóa người dùng
@@ -69,7 +69,7 @@ export default defineComponent({
             },
           });
 
-          await fetchDepartments(currentPage.value);
+          await fetchSchedules(currentPage.value);
 
           // Hiển thị thông báo xóa thành công
           showDeleteSuccess.value = true;
@@ -83,9 +83,8 @@ export default defineComponent({
       }
     };
 
-
     return {
-      departments,
+      schedules,
       deleteUser,
       showDeleteSuccess,
       currentPage,
@@ -111,10 +110,10 @@ export default defineComponent({
     >
       <div class="basis-4/5">
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          Schedule
+          LỊCH TRÌNH
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage schedules in the company
+          Quản lý lịch trình trong công ty
         </p>
       </div>
       <input
@@ -127,8 +126,10 @@ export default defineComponent({
         <button
           class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
         >
-          <router-link :to="{ name: 'AddCoordinate' }" class="text-sm font-semibold"
-            >Add Schedule</router-link
+          <router-link
+            :to="{ name: 'AddCoordinate' }"
+            class="text-sm font-semibold"
+            >Thêm lịch trình</router-link
           >
         </button>
         <button
@@ -150,46 +151,48 @@ export default defineComponent({
           >
             <th class="pl-10">
               <div class="flex items-center gap-x-4">
-                <span>List Schedule</span>
+                <span>Danh sách lịch trình</span>
               </div>
             </th>
-            <th class="py-4 px-4 text-center">Location</th>
-            <th class="py-4 px-4 text-center">Latitude</th>
+            <th class="py-4 px-4 text-center">Địa điểm</th>
+            <th class="py-4 px-4 text-center">Thời gian</th>
+            <th class="py-4 px-4 text-center">Hành động</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="department in departments"
-            :key="department.id"
+            v-for="schedule in schedules"
+            :key="schedule.id"
             class="hover:bg-gray-100 transition-colors group"
           >
             <td class="flex gap-x-4 items-center py-4 pl-10">
               <div>
-                <!-- <a href="#" class="text-lg font-semibold text-gray-700">{{
-                  department.name
-                }}</a> -->
-                <div class="font-medium text-gray-400">
-                  {{ department.program }}
+                <div class="font-medium">
+                  {{ schedule.program }}
                 </div>
               </div>
             </td>
             <td class="font-medium text-center">
-              {{department.lat_location}}
+              {{ schedule.datetime }}
+            </td>
+            <td class="font-medium text-center">
+              {{ schedule.location }}
             </td>
 
             <td class="font-medium text-center">
               <button
                 class="py-2 px-4 m-2 bg-orange-500 rounded-lg hover:bg-orange-400"
               >
-                <router-link :to="{ name: 'EditCoordinate', params: { id: department.id } }"
-                  >Edit</router-link
+                <router-link
+                  :to="{ name: 'EditCoordinate', params: { id: schedule.id } }"
+                  >Sửa</router-link
                 >
               </button>
               <button
                 class="py-2 px-4 m-2 bg-red-500 rounded-lg hover:bg-red-400"
-                @click="deleteUser(department.id)"
+                @click="deleteUser(schedule.id)"
               >
-                Delete
+                Xóa
               </button>
             </td>
           </tr>
@@ -199,27 +202,32 @@ export default defineComponent({
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:hidden p-5">
       <div
         class="bg-white space-y-3 p-4 rounded-lg shadow"
-        v-for="department in departments"
-        :key="department.id"
+        v-for="schedule in schedules"
+        :key="schedule.id"
       >
         <div class="">
-          <div class="text-gray-900">{{}}</div>
-          <div class="text-gray-900">email: {{ department.id }}</div>
+          <div class="text-lg text-gray-900">Program: {{ schedule.program }}</div>
         </div>
-        <div class="text-sm text-gray-700">Chức vụ: {{ department.id }}</div>
-        <!-- <button
-          class="py-2 px-4 m-2 bg-orange-500 rounded-lg hover:bg-orange-400"
-        >
-          <router-link :to="{ name: 'EditUser', params: { id: user.id } }"
-            >Edit</router-link
-          >
-        </button>
-        <button
-          class="py-2 px-4 m-2 bg-red-500 rounded-lg hover:bg-red-400"
-          @click="deleteUser(user.id)"
-        >
-          Delete
-        </button> -->
+        <div class="text-lg text-gray-700">
+          Thời gian: {{ schedule.datetime }}
+        </div>
+        <div class="text-lg text-gray-700">
+          Địa điểm: {{ schedule.location }}
+        </div>
+         <button
+                class="py-2 px-4 m-2 bg-orange-500 rounded-lg hover:bg-orange-400"
+              >
+                <router-link
+                  :to="{ name: 'EditCoordinate', params: { id: schedule.id } }"
+                  >Sửa</router-link
+                >
+              </button>
+              <button
+                class="py-2 px-4 m-2 bg-red-500 rounded-lg hover:bg-red-400"
+                @click="deleteUser(schedule.id)"
+              >
+                Xóa
+              </button>
       </div>
     </div>
     <!-- Điều khiển phân trang -->

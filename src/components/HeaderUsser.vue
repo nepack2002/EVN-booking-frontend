@@ -1,145 +1,253 @@
 <template>
   <header
-    class="border-b py-4 px-4 sm:px-10 bg-white font-[sans-serif] min-h-[70px]"
+    class="flex shadow-md py-4 px-4 sm:px-10 bg-white font-sans min-h-[70px] tracking-wide relative z-50"
   >
-    <div class="flex flex-wrap items-center gap-x-2 max-lg:gap-y-6">
-      <a href="javascript:void(0)">
-        <img
-          src="https://file.hstatic.net/1000172157/collection/anh_nhom_san_pham_-_blumaan_1024x1024.jpg"
-          alt="logo"
-          class="w-36"
-        />
-      </a>
-      <button id="toggle" class="lg:hidden ml-auto">
-        <svg
-          class="w-7 h-7"
-          fill="#000"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </button>
-      <ul
-        id="collapseMenu"
-        class="lg:!flex lg:ml-14 lg:space-x-5 items-center max-lg:space-y-2 max-lg:hidden max-lg:py-4 max-lg:w-full cursor-pointer"
-      >
-        <li class="max-lg:border-b max-lg:py-2 px-3">
-          <a class="block font-semibold text-[15px]" href="#">Home</a>
-        </li>
-        <li class="max-lg:border-b max-lg:py-2 px-3">
-          <a class="text-gray-500 block font-semibold text-[15px]" href="#"
-            >Product</a
-          >
-        </li>
-        <li class="max-lg:border-b max-lg:py-2 px-3">
-          <a class="text-gray-500 block font-semibold text-[15px]" href="#"
-            >About</a
-          >
-        </li>
-        <li class="max-lg:border-b max-lg:py-2 px-3">
-          <a class="text-gray-500 block font-semibold text-[15px]" href="#"
-            >Contact</a
-          >
-        </li>
-        <li class="max-lg:border-b max-lg:py-2 px-3 lg:fixed lg:right-10">
-          <li v-if="isLoggedIn">
-            <span @click="logout" class="header-a group">
-              <svg
-                class="header-svg"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 16"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
-                />
-              </svg>
-              <span class="flex-1 ms-3 whitespace-nowrap">Log out</span>
-            </span>
-          </li>
-          <li v-else>
-            <router-link :to="{name: 'Login'}" class="header-a group">
-              <svg
-                class="header-svg"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 18 16"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
-                />
-              </svg>
+    <div class="flex flex-wrap items-center justify-around gap-4 w-full">
+     <div id="logo" class="font-bold text-gray-600 text-2xl cursor-none">NEPACK</div>
 
-              <span class="flex-1 ms-3 whitespace-nowrap">Sign In</span>
-            </router-link>
-          </li>
-        </li>
-        <li>
-          <div class="flex lg:ml-auto max-lg:w-full">
-            <div
-              class="flex xl:w-80 max-xl:w-full bg-gray-100 px-6 py-3 rounded outline outline-transparent focus-within:outline-[#007bff]"
-            >
-              <input
-                type="text"
-                placeholder="Search something..."
-                class="w-full text-sm bg-transparent rounded outline-none pr-2"
+      <div
+        id="collapseMenu"
+        class="max-lg:hidden lg:!block max-lg:before:fixed max-lg:before:bg-black max-lg:before:opacity-50 max-lg:before:inset-0 max-lg:before:z-50"
+      >
+        <button
+          id="toggleClose"
+          class="lg:hidden fixed top-2 right-4 z-[100] rounded-full bg-white p-3"
+          @click="handleClick"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 fill-black"
+            viewBox="0 0 320.591 320.591"
+          >
+            <path
+              d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
+              data-original="#000000"
+            ></path>
+            <path
+              d="M287.9 318.583a30.37 30.37 0 0 1-21.257-8.806L8.83 51.963C-2.078 39.225-.595 20.055 12.143 9.146c11.369-9.736 28.136-9.736 39.504 0l259.331 257.813c12.243 11.462 12.876 30.679 1.414 42.922-.456.487-.927.958-1.414 1.414a30.368 30.368 0 0 1-23.078 7.288z"
+              data-original="#000000"
+            ></path>
+          </svg>
+        </button>
+
+        <ul
+          class="lg:flex gap-x-36 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50"
+        >
+          <li class="mb-6 hidden max-lg:block">
+            <a href="javascript:void(0)"
+              ><img
+                src="https://readymadeui.com/readymadeui.svg"
+                alt="logo"
+                class="w-36"
               />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 192.904 192.904"
-                width="16px"
-                class="cursor-pointer fill-gray-400"
+            </a>
+          </li>
+          <li class="max-lg:border-b max-lg:py-3 px-3">
+            <router-link
+              :to="{ name: 'CarOfUser' }"
+              class="hover:text-[#007bff] text-gray-600 font-bold block text-base"
+              >Trang chủ</router-link
+            >
+          </li>
+          <li class="max-lg:border-b max-lg:py-3 px-3">
+            <router-link
+              :to="{ name: 'Account' }"
+              class="hover:text-[#007bff] text-gray-600 font-bold block text-base"
+              >Tài khoản</router-link
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex items-center space-x-10 cursor-pointer">
+        <div class="relative" v-if="userStore.user">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            width="20px"
+            height="20px"
+            class="cursor-pointer hover:fill-[#007bff] inline"
+            @click="toggleNotifications"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+            />
+          </svg>
+
+          <span
+            class="absolute left-auto -ml-1 top-0 rounded-full bg-red-500 px-1 py-0 text-xs text-white"
+            >{{ notificationUnRead }}</span
+          >
+
+          <!-- Danh sách thông báo -->
+          <div
+            v-if="showNotifications"
+            class="absolute top-full -left-[150px] mt-2 bg-white border border-gray-200 shadow-md rounded-md w-52"
+          >
+            <ul>
+              <h1 class="text-xl font-medium px-4 py-2">Thông báo</h1>
+              <li
+                v-for="notification in notifications"
+                :key="notification.id"
+                class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                @click="markNotificationAsRead(notification.id)"
               >
-                <path
-                  d="m190.707 180.101-47.078-47.077c11.702-14.072 18.752-32.142 18.752-51.831C162.381 36.423 125.959 0 81.191 0 36.422 0 0 36.423 0 81.193c0 44.767 36.422 81.187 81.191 81.187 19.688 0 37.759-7.049 51.831-18.751l47.079 47.078a7.474 7.474 0 0 0 5.303 2.197 7.498 7.498 0 0 0 5.303-12.803zM15 81.193C15 44.694 44.693 15 81.191 15c36.497 0 66.189 29.694 66.189 66.193 0 36.496-29.692 66.187-66.189 66.187C44.693 147.38 15 117.689 15 81.193z"
-                ></path>
-              </svg>
-            </div>
+                <div class="flex items-center">
+                  <div class="w-[90%]">{{ notification.message }}</div>
+                  <div
+                    v-if="notification.read == 0"
+                    class="w-3 h-3 bg-blue-600 rounded-full"
+                  ></div>
+                </div>
+              </li>
+            </ul>
           </div>
-        </li>
-      </ul>
+        </div>
+        <div class="">
+          <div v-if="isLoggedIn">
+            <span @click="logout">
+              <span
+                class="hover:text-[#007bff] text-gray-600 font-bold block text-base"
+                >Đăng xuất</span
+              >
+            </span>
+          </div>
+          <div v-else>
+            <router-link :to="{ name: 'Login' }">
+              <span
+                class="hover:text-[#007bff] text-gray-600 font-bold block text-base"
+                >Đăng nhập</span
+              >
+            </router-link>
+          </div>
+        </div>
+        <button id="toggleOpen" class="lg:hidden !ml-7" @click="handleClick">
+          <svg
+            class="w-7 h-7"
+            fill="#000"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 </template>
+
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { useUserStore } from "../store/auth.js";
+import axios from "axios";
 
 const router = useRouter();
-const route = useRoute();
 const userStore = useUserStore();
+if (userStore) {
+  userStore.fetchUser();
+}
+
 const user = computed(() => userStore.getUser);
 const isLoggedIn = computed(() => !!user.value);
-
-// Trạng thái hiển thị của sidebar
-const showSidebar = ref(false);
-// Trạng thái active của mục trong sidebar
-const activeIndex = ref(null);
-
-// Hàm để chuyển đổi trạng thái của sidebar
-const toggleSidebar = () => {
-  showSidebar.value = !showSidebar.value;
-};
 
 // Hàm đăng xuất
 const logout = async () => {
   await userStore.logout();
   router.push("/home");
 };
+// Trạng thái hiển thị của danh sách thông báo
+const showNotifications = ref(false);
+
+// Danh sách thông báo
+const notifications = ref([]);
+const notificationUnRead = ref();
+
+// Hàm lấy danh sách thông báo
+const fetchNotifications = async () => {
+  try {
+    const response = await axios.get(
+      `http://127.0.0.1:8000/api/users/notification/${userStore.user.id}`
+    );
+    notifications.value = response.data;
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+  }
+};
+
+const fetchNotificationUnRead = async () => {
+  try {
+    const response = await axios.get(
+      `http://127.0.0.1:8000/api/users/notificationUnRead/${userStore.user.id}`
+    );
+    notificationUnRead.value = response.data;
+  } catch (error) {
+    console.error("Error fetching notifications:", error);
+  }
+};
+const markNotificationAsRead = async (notificationId) => {
+  try {
+    await axios.put(
+      `http://127.0.0.1:8000/api/notifications/${notificationId}/mark-as-read`,
+      {
+        read: true,
+      }
+    );
+    fetchNotificationUnRead();
+    fetchNotifications();
+  } catch (error) {
+    console.error("Error marking notification as read:", error);
+  }
+};
+
+// Hàm toggle hiển thị danh sách thông báo
+const toggleNotifications = () => {
+  showNotifications.value = !showNotifications.value;
+};
+
+// Lấy danh sách thông báo khi component được mounted
+if (userStore.user) {
+  onMounted(() => {
+    fetchNotifications();
+    fetchNotificationUnRead();
+  });
+}
+
+// Hàm xử lý hiển thị menu
+const handleClick = () => {
+  const collapseMenu = document.getElementById("collapseMenu");
+  if (collapseMenu.style.display === "block") {
+    collapseMenu.style.display = "none";
+  } else {
+    collapseMenu.style.display = "block";
+  }
+};
 </script>
+
+<style>
+.header-a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #000;
+  transition: color 0.3s;
+}
+
+.header-a:hover {
+  color: #007bff;
+}
+
+.header-svg {
+  width: 20px;
+  height: 20px;
+}
+</style>

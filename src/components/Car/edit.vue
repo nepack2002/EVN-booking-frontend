@@ -5,10 +5,10 @@
     >
       <div>
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          CHANGE INFORMATION
+         Cập nhật thông tin ô tô
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage cars in the company
+          Quản lý ô tô trong công ty
         </p>
       </div>
       <button
@@ -17,7 +17,7 @@
         <router-link
           :to="{ name: 'Car' }"
           class="text-sm font-semibold tracking-wide"
-          >Back</router-link
+          >Trở lại</router-link
         >
       </button>
     </div>
@@ -260,14 +260,20 @@
                 type="submit"
                 class="btn bg-gray-600 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded mt-4"
               >
-                Change
+                Cập nhật
               </button>
               <p
                 v-if="showAddSuccess"
                 class="text-green-500 ml-10 font-semibold text-md"
               >
-                Change succesfully
+               Cập nhật thành công
               </p>
+              <div
+                v-if="messages"
+                class="w-[100%] bg-red-400 text-white rounded-md p-2 my-5"
+              >
+                {{ messages }}
+              </div>
             </div>
           </div>
         </form>
@@ -284,6 +290,7 @@ import { useRoute } from "vue-router";
 export default {
   setup() {
     const errorMessage = ref({});
+    const messages = ref('');
     const showAddSuccess = ref(false);
     const form = ref({
       ten_xe: "",
@@ -377,10 +384,16 @@ export default {
         setTimeout(() => {
           showAddSuccess.value = false;
         }, 2000);
+        messages.value = null;
         console.log(response.data); // Log response từ máy chủ
         // Reset form hoặc thực hiện các hành động khác sau khi cập nhật thành công
       } catch (error) {
-        errorMessage.value = error.response.data.errors;
+         if (error.response && error.response.status === 409) {
+          messages.value = error.response.data.messages;
+        } else {
+          errorMessage.value = error.response.data.errors;
+          messages.value = null;
+        }
       }
     };
     onMounted(() => {
@@ -404,6 +417,7 @@ export default {
       handleSubmit,
       showAddSuccess,
       errorMessage,
+      messages, 
     };
   },
 };

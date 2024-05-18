@@ -5,10 +5,10 @@
     >
       <div>
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          ADD NEW CAR
+          THÊM MỚI Ô TÔ
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage cars in the company
+          Quản lý ô tô trong công ty
         </p>
       </div>
       <button
@@ -17,7 +17,7 @@
         <router-link
           :to="{ name: 'Car' }"
           class="text-sm font-semibold tracking-wide"
-          >Back</router-link
+          >Trở lại</router-link
         >
       </button>
     </div>
@@ -78,6 +78,9 @@
             <select class="input2" v-model="form.user_id">
               <option v-for="user in users" :key="user.id" :value="user.id">
                 {{ user.id }} - {{ user.name }}
+                <div v-if="user.car">
+                  {{ user.car.ten_xe }}
+                </div>
               </option>
             </select>
             <span v-if="errorMessage.user_id" class="text-red-500 text-sm">{{
@@ -265,8 +268,14 @@
                 v-if="showAddSuccess"
                 class="text-green-500 ml-10 font-semibold text-md"
               >
-                Add car succesfully to the database
+                Thêm xe thành công
               </p>
+              <div
+                v-if="messages"
+                class="w-[100%] bg-red-400 text-white rounded-md p-2 my-5"
+              >
+                {{ messages }}
+              </div>
             </div>
           </div>
         </form>
@@ -283,6 +292,7 @@ export default {
   setup() {
     const showAddSuccess = ref(false);
     const errorMessage = ref({});
+    const messages = ref("");
     const form = ref({
       ten_xe: "",
       mau_xe: "",
@@ -331,29 +341,42 @@ export default {
         formData.append("so_khung", form.value.so_khung);
         formData.append("so_cho", form.value.so_cho);
         formData.append("dac_diem_mac_dinh", form.value.dac_diem_mac_dinh);
-        formData.append("so_dau_xang_tieu_thu", form.value.so_dau_xang_tieu_thu);
-        formData.append("ngay_bao_duong_gan_nhat", form.value.ngay_bao_duong_gan_nhat);
-        formData.append("han_dang_kiem_tiep_theo", form.value.han_dang_kiem_tiep_theo);
-        if (form.value.anh_xe) {formData.append("anh_xe", form.value.anh_xe);}
-        await axios.post(
-          "http://127.0.0.1:8000/api/cars",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${userStore.token}`,
-            },
-          }
+        formData.append(
+          "so_dau_xang_tieu_thu",
+          form.value.so_dau_xang_tieu_thu
         );
-        errorMessage.value = []
+        formData.append(
+          "ngay_bao_duong_gan_nhat",
+          form.value.ngay_bao_duong_gan_nhat
+        );
+        formData.append(
+          "han_dang_kiem_tiep_theo",
+          form.value.han_dang_kiem_tiep_theo
+        );
+        if (form.value.anh_xe) {
+          formData.append("anh_xe", form.value.anh_xe);
+        }
+        await axios.post("http://127.0.0.1:8000/api/cars", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${userStore.token}`,
+          },
+        });
+        errorMessage.value = [];
         showAddSuccess.value = true;
         // Tự động ẩn thông báo sau 2 giây
         setTimeout(() => {
           showAddSuccess.value = false;
         }, 2000);
+        messages.value = null;
         resetForm(); // Reset form sau khi thêm mới thành công
       } catch (error) {
-        errorMessage.value = error.response.data.errors;
+        if (error.response && error.response.status === 409) {
+          messages.value = error.response.data.messages;
+        } else {
+          errorMessage.value = error.response.data.errors;
+          messages.value = null;
+        }
       }
     };
 
@@ -390,6 +413,7 @@ export default {
       handleFileUpload,
       errorMessage,
       showAddSuccess,
+      messages,
     };
   },
 };

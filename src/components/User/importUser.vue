@@ -8,7 +8,7 @@
           IMPORT FILE EXCEL TO DATABASE USER
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage users in the company
+          Quản lý người dùng trong công ty
         </p>
       </div>
       <button
@@ -17,7 +17,7 @@
         <router-link
           :to="{ name: 'User' }"
           class="text-sm font-semibold tracking-wide"
-          >Back</router-link
+          >Trở lại</router-link
         >
       </button>
     </div>

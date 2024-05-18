@@ -83,7 +83,6 @@ export default defineComponent({
       }
     };
 
-
     return {
       departments,
       deleteDepartment,
@@ -111,10 +110,10 @@ export default defineComponent({
     >
       <div class="basis-4/5">
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          Department
+          PHÒNG BAN
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage departments in the company
+          Quản lý phòng ban trong công ty
         </p>
       </div>
       <input
@@ -127,8 +126,10 @@ export default defineComponent({
         <button
           class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
         >
-          <router-link :to="{ name: 'AddDepartment' }" class="text-sm font-semibold"
-            >Add Department</router-link
+          <router-link
+            :to="{ name: 'AddDepartment' }"
+            class="text-sm font-semibold"
+            >Thêm phòng ban</router-link
           >
         </button>
         <button
@@ -150,11 +151,11 @@ export default defineComponent({
           >
             <th class="pl-10">
               <div class="flex items-center gap-x-4">
-                <span>List Departments</span>
+                <span>Danh sách phòng ban</span>
               </div>
             </th>
-            <th class="py-4 px-4 text-center">Children</th>
-            <th class="py-4 px-4 text-center">Created At</th>
+            <th class="py-4 px-4 text-center">Phòng ban con</th>
+            <th class="py-4 px-4 text-center">Thời gian tạo</th>
           </tr>
         </thead>
         <tbody>
@@ -176,7 +177,7 @@ export default defineComponent({
             <td class="font-medium text-center">
               <ul v-if="department.children && department.children.length > 0">
                 <li v-for="child in department.children" :key="child.id">
-                  {{child.id}} - {{child.name }}
+                  {{ child.id }} - {{ child.name }}
                 </li>
               </ul>
             </td>
@@ -185,15 +186,19 @@ export default defineComponent({
               <button
                 class="py-2 px-4 m-2 bg-orange-500 rounded-lg hover:bg-orange-400"
               >
-                <router-link :to="{ name: 'EditDepartment', params: { id: department.id } }"
-                  >Edit</router-link
+                <router-link
+                  :to="{
+                    name: 'EditDepartment',
+                    params: { id: department.id },
+                  }"
+                  >Sửa</router-link
                 >
               </button>
               <button
                 class="py-2 px-4 m-2 bg-red-500 rounded-lg hover:bg-red-400"
                 @click="deleteDepartment(department.id)"
               >
-                Delete
+                Xóa
               </button>
             </td>
           </tr>
@@ -208,21 +213,26 @@ export default defineComponent({
       >
         <div class="">
           <div class="text-gray-900">{{}}</div>
-          <div class="text-gray-900">email: {{ department.id }}</div>
+          <div class="text-gray-900">Tên phòng ban: {{ department.name }}</div>
         </div>
-        <div class="text-sm text-gray-700">Chức vụ: {{ department.id }}</div>
+        <div class="text-sm text-gray-700">Phòng ban con:</div>
+        <ul v-if="department.children && department.children.length > 0">
+          <li v-for="child in department.children" :key="child.id">
+            {{ child.id }} - {{ child.name }}
+          </li>
+        </ul>
         <button
           class="py-2 px-4 m-2 bg-orange-500 rounded-lg hover:bg-orange-400"
         >
           <router-link :to="{ name: 'EditUser', params: { id: department.id } }"
-            >Edit</router-link
-          >
+            >Sửa
+          </router-link>
         </button>
         <button
           class="py-2 px-4 m-2 bg-red-500 rounded-lg hover:bg-red-400"
           @click="deleteDepartment(department.id)"
         >
-          Delete
+          Xóa
         </button>
       </div>
     </div>

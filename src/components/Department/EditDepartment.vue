@@ -5,10 +5,10 @@
     >
       <div>
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          CHANGE INFORMATION
+          CẬP NHẬT THÔNG TIN PHÒNG BAN
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage departments in the company
+          Quản lý phòng ban trong công ty
         </p>
       </div>
       <button
@@ -17,7 +17,7 @@
         <router-link
           :to="{ name: 'Department' }"
           class="text-sm font-semibold tracking-wide"
-          >Back</router-link
+          >Trở lại</router-link
         >
       </button>
     </div>
@@ -36,7 +36,7 @@
               }"
               for="name"
               class="input"
-              >Name:</label
+              >Tên phòng ban:</label
             >
             <input type="text" id="name" v-model="form.name" class="input2" />
             <span v-if="errorMessage.name" class="text-red-500 text-sm">{{
@@ -52,6 +52,7 @@
               >Phòng ban:</label
             >
             <select class="input2" v-model="form.parent_id">
+              <option value="">-- Chọn phòng ban --</option>
               <option
                 v-for="department in departments"
                 :key="department.id"
@@ -72,13 +73,13 @@
                 type="submit"
                 class="btn bg-gray-600 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded mt-4"
               >
-                Change
+                Cập nhật
               </button>
               <p
                 v-if="showAddSuccess"
                 class="text-green-500 ml-10 font-semibold text-md"
               >
-                Change successfully
+                Cập nhật thành công
               </p>
             </div>
           </div>
@@ -105,8 +106,8 @@ export default {
     const userStore = useUserStore();
     onMounted(async () => {
       await userStore.fetchUser();
-      fetchDepartments();
       getDepartments();
+      fetchDepartments();
     });
 
     const departments = ref([]);
@@ -147,12 +148,9 @@ export default {
       event.preventDefault();
 
       try {
-        const formData = new FormData();
-        formData.append("name", form.value.name);
-        formData.append("parent_id", form.value.parent_id);
         await axios.post(
           `http://127.0.0.1:8000/api/departments/${route.params.id}`,
-          formData,
+          form.value,
           {
             headers: {
               Authorization: `Bearer ${userStore.token}`,

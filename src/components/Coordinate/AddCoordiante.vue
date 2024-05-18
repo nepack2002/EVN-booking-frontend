@@ -5,10 +5,10 @@
     >
       <div>
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          ADD SCHEDULE INFORMATION
+          THÊM MỚI LỊCH TRÌNH
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage schedules in the company
+         Quản lý lịch trình trong công ty
         </p>
       </div>
       <button
@@ -17,7 +17,7 @@
         <router-link
           :to="{ name: 'Coordinate' }"
           class="text-sm font-semibold tracking-wide"
-          >Back</router-link
+          >Trở lại</router-link
         >
       </button>
     </div>
@@ -61,10 +61,10 @@
               >Thời gian</label
             >
             <input
-              type="date"
+              type="datetime"
               class="input2"
               v-model="form.datetime"
-              placeholder="Phòng ban..."
+              placeholder="Thời gian"
             />
             <span v-if="errorMessage.datetime" class="text-red-500 text-sm">{{
               errorMessage.datetime[0]
@@ -76,7 +76,7 @@
               :class="{
                 'text-red-500': errorMessage.location,
               }"
-              >Location:</label
+              >Địa điểm bắt đầu:</label
             >
             <input
               type="text"
@@ -88,7 +88,7 @@
             <span v-if="errorMessage.location" class="text-red-500 text-sm">{{
               errorMessage.location[0]
             }}</span>
-            <div id="suggestions">
+            <div>
               <ul class="divide-y divide-gray-300">
                 <li
                   v-for="prediction in predictions"
@@ -102,7 +102,7 @@
             </div>
             <div class="flex gap-5 my-2">
               <div>
-                <label class="input">Latitude:</label>
+                <label class="input">Vĩ độ bắt đầu:</label>
                 <input
                   v-model="form.lat_location"
                   class="input2"
@@ -111,11 +111,63 @@
                 />
               </div>
               <div>
-                <label class="input">Longitude:</label>
+                <label class="input">Kinh độ bắt đầu:</label>
                 <input
                   v-model="form.long_location"
                   class="input2"
                   placeholder="Longitude"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                class="input"
+                :class="{
+                  'text-red-500': errorMessage.location,
+                }"
+                >Địa điểm kết thúc:</label
+              >
+              <input
+                type="text"
+                class="input2"
+                v-model="form.location_2"
+                placeholder="Type to get suggestions..."
+                @input="showSuggestions_2"
+              />
+              <span v-if="errorMessage.location" class="text-red-500 text-sm">{{
+                errorMessage.location[0]
+              }}</span>
+              <div>
+                <ul class="divide-y divide-gray-300">
+                  <li
+                    v-for="prediction in predictions_2"
+                    :key="prediction"
+                    @click="selectSuggestion_2(prediction.description)"
+                    class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                  >
+                    {{ prediction.description }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="flex gap-5 my-2">
+              <div>
+                <label class="input">Vĩ độ kết thúc:</label>
+                <input
+                  v-model="form.lat_location_2"
+                  class="input2"
+                  placeholder="Latitude_2"
+                  readonly
+                />
+              </div>
+              <div>
+                <label class="input">Kinh độ kết thúc:</label>
+                <input
+                  v-model="form.long_location_2"
+                  class="input2"
+                  placeholder="Longitude_2"
                   readonly
                 />
               </div>
@@ -129,8 +181,9 @@
                 >Loại phương tiên</label
               >
               <select class="input2" v-model="form.car_id">
-                <option v-for="car in cars" :key="car.id" :value="car.id">
-                  {{ car.id }} - {{ car.ten_xe }}
+                <option v-for="car in cars" :key="car.car_id" :value="car.car_id">
+                  {{ car.car_id }} - {{ car.name }} -
+                  {{ roundedDistance(car.distance) }} KM
                 </option>
               </select>
               <span v-if="errorMessage.car_id" class="text-red-500 text-sm">{{
@@ -188,7 +241,7 @@
                 v-if="showAddSuccess"
                 class="text-green-500 ml-10 font-semibold text-md"
               >
-                Add car succesfully to the database
+                Thêm mới lịch trình thành công
               </p>
             </div>
           </div>
@@ -209,11 +262,15 @@ const form = ref({
   location: "",
   lat_location: "",
   long_location: "",
+  location_2: "",
+  lat_location_2: "",
+  long_location_2: "",
   car_id: "",
   participants: "",
   program: "",
 });
 const predictions = ref([]);
+const predictions_2 = ref([]);
 const departments = ref([]);
 const cars = ref([]);
 const userStore = useUserStore();
@@ -236,12 +293,19 @@ const fetchDepartments = async () => {
 };
 const fetchCars = async () => {
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/cars", {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`,
+    const response = await axios.post(
+      "http://127.0.0.1:8000/api/coordinates",
+      {
+        lat: form.value.lat_location,
+        long: form.value.long_location,
       },
-    });
-    cars.value = response.data.data;
+      {
+        headers: {
+          Authorization: `Bearer ${userStore.token}`,
+        },
+      }
+    );
+    cars.value = response.data;
   } catch (error) {
     console.error("Lỗi khi lấy danh sách xe:", error);
   }
@@ -285,6 +349,25 @@ async function showSuggestions() {
     form.value.long_location = "";
   }
 }
+async function showSuggestions_2() {
+  const apiKey = "RCVIYChDbq94jwTbS8nAaqJJ1WBC5QvDyj3pEle9";
+  const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(
+    form.value.location_2
+  )}`;
+  if (form.value.location_2.length > 0) {
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      predictions_2.value = data.predictions;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  } else {
+    predictions_2.value = "";
+    form.value.lat_location_2 = "";
+    form.value.long_location_2 = "";
+  }
+}
 
 async function selectSuggestion(selectedDescription) {
   const selectedPrediction = predictions.value.find(
@@ -299,17 +382,44 @@ async function selectSuggestion(selectedDescription) {
     try {
       const response = await fetch(placeDetailUrl);
       const data = await response.json();
-      //   console.log(data);
       form.value.lat_location = data.result.geometry.location.lat;
       form.value.long_location = data.result.geometry.location.lng;
       form.value.location = data.result.formatted_address;
       predictions.value = "";
+      await fetchCars();
+      console.log("Coordinates sent successfully to Laravel.");
     } catch (error) {
       console.error("Error:", error);
     }
   } else {
     console.error("Selected prediction not found.");
   }
+}
+async function selectSuggestion_2(selectedDescription) {
+  const selectedPrediction = predictions_2.value.find(
+    (prediction) => prediction.description === selectedDescription
+  );
+  if (selectedPrediction) {
+    const placeId = selectedPrediction.place_id;
+    const apiKey = "RCVIYChDbq94jwTbS8nAaqJJ1WBC5QvDyj3pEle9";
+    const placeDetailUrl = `https://rsapi.goong.io/Place/Detail?place_id=${placeId}&api_key=${apiKey}`;
+
+    try {
+      const response = await fetch(placeDetailUrl);
+      const data = await response.json();
+      form.value.lat_location_2 = data.result.geometry.location.lat;
+      form.value.long_location_2 = data.result.geometry.location.lng;
+      form.value.location_2 = data.result.formatted_address;
+      predictions_2.value = "";
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  } else {
+    console.error("Selected prediction not found.");
+  }
+}
+function roundedDistance(distance) {
+  return Math.round(distance);
 }
 function resetForm() {
   form.value = {
@@ -318,6 +428,9 @@ function resetForm() {
     location: "",
     lat_location: "",
     long_location: "",
+    location_2: "",
+    lat_location_2: "",
+    long_location_2: "",
     car_id: "",
     participants: "",
     program: "",

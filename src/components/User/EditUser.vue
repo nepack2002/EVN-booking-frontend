@@ -5,10 +5,10 @@
     >
       <div>
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          CHANGE INFORMATION
+          CẬP NHẬT THÔNG TIN NGƯỜI DÙNG
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage users in the company
+          Quản lý người dùng trong công ty
         </p>
       </div>
       <button
@@ -17,7 +17,7 @@
         <router-link
           :to="{ name: 'User' }"
           class="text-sm font-semibold tracking-wide"
-          >Back</router-link
+          >Trở lại</router-link
         >
       </button>
     </div>
@@ -36,7 +36,7 @@
               }"
               for="name"
               class="input"
-              >Name:</label
+              >Tên:</label
             >
             <input type="text" id="name" v-model="form.name" class="input2" />
             <span v-if="errorMessage.name" class="text-red-500 text-sm">{{
@@ -46,20 +46,20 @@
           <div>
             <label
               :class="{
-                'text-red-500': errorMessage.email,
+                'text-red-500': errorMessage.username,
               }"
               for="email"
               class="input"
-              >Email:</label
+              >Tên người dùng:</label
             >
             <input
-              type="email"
+              type="text"
               id="email"
-              v-model="form.email"
+              v-model="form.username"
               class="input2"
             />
-            <span v-if="errorMessage.email" class="text-red-500 text-sm">{{
-              errorMessage.email[0]
+            <span v-if="errorMessage.username" class="text-red-500 text-sm">{{
+              errorMessage.username[0]
             }}</span>
           </div>
           <div>
@@ -69,7 +69,7 @@
               }"
               for="role"
               class="input"
-              >Role:</label
+              >Vai trò:</label
             >
             <select id="role" class="input2" v-model="form.role">
               <option value="admin">admin</option>
@@ -79,6 +79,19 @@
             </select>
             <span v-if="errorMessage.role" class="text-red-500 text-sm">{{
               errorMessage.role[0]
+            }}</span>
+          </div>
+          <div>
+            <label
+              :class="{
+                'text-red-500': errorMessage.phone,
+              }"
+              class="input"
+              >Số điện thoại:</label
+            >
+            <input v-model="form.phone" class="input2" />
+            <span v-if="errorMessage.phone" class="text-red-500 text-sm">{{
+              errorMessage.phone[0]
             }}</span>
           </div>
           <div>
@@ -110,13 +123,13 @@
                 type="submit"
                 class="btn bg-gray-600 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded mt-4"
               >
-                Change
+                Cập nhật
               </button>
               <p
                 v-if="showAddSuccess"
                 class="text-green-500 ml-10 font-semibold text-md"
               >
-                Change successfully
+                Cập nhật thành công
               </p>
             </div>
           </div>
@@ -137,8 +150,9 @@ export default {
     const showAddSuccess = ref(false);
     const form = ref({
       name: "",
-      email: "",
+      username: "",
       role: "",
+      phone: null,
       department_id: "",
     });
     const userStore = useUserStore();
@@ -179,14 +193,17 @@ export default {
       }
     };
     const handleSubmit = async (event) => {
-      event.preventDefault(); // Ngăn chặn form gửi đi mặc định
+      event.preventDefault();
 
       try {
         const formData = new FormData();
         formData.append("name", form.value.name);
-        formData.append("email", form.value.email);
+        formData.append("username", form.value.username);
         formData.append("role", form.value.role);
         formData.append("department_id", form.value.department_id);
+        if (form.value.phone) {
+          formData.append("phone", form.value.phone);
+        }
         await axios.post(
           `http://127.0.0.1:8000/api/users/${route.params.id}`,
           formData,

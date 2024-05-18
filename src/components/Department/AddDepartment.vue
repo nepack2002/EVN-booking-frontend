@@ -5,10 +5,10 @@
     >
       <div>
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          ADD DEPARTMENT INFORMATION
+          THÊM MỚI PHÒNG BAN
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage departments in the company
+          Quản lý phòng ban trong công ty
         </p>
       </div>
       <button
@@ -17,7 +17,7 @@
         <router-link
           :to="{ name: 'Department' }"
           class="text-sm font-semibold tracking-wide"
-          >Back</router-link
+          >Trở lại</router-link
         >
       </button>
     </div>
@@ -36,7 +36,7 @@
               }"
               for="name"
               class="input"
-              >Name:</label
+              >Tên:</label
             >
             <input type="text" id="name" v-model="form.name" class="input2" />
             <span v-if="errorMessage.name" class="text-red-500 text-sm">{{
@@ -69,13 +69,13 @@
                 type="submit"
                 class="btn bg-gray-600 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded mt-4"
               >
-                Add
+                Thêm mới
               </button>
               <p
                 v-if="showAddSuccess"
                 class="text-green-500 ml-10 font-semibold text-md"
               >
-                Add successfully
+                Thêm mới thành công
               </p>
             </div>
           </div>

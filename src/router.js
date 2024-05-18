@@ -19,6 +19,9 @@ import ImportCoordinate from "./components/Coordinate/ImportCoordinate.vue";
 import login from "./Auth/login.vue";
 import Unauthorized from "./components/Unauthorized.vue";
 import ForgotPassword from "./Auth/ForgotPassword.vue";
+import CarOfUser from "./components/ForUsers/CarOfUser.vue";
+import View from "./components/ForUsers/View.vue";
+import account from "./components/ForUsers/account.vue";
 import Home from "./components/Home.vue";
 const Roles = {
   ADMIN: 'admin',
@@ -148,6 +151,24 @@ const routes = [
     name: "ImportCoordinate",
     component: ImportCoordinate,
     meta: { requiresAuth: true, roles: [Roles.ADMIN, Roles.QUAN_TRI_CONG_TAC] }
+  },
+  {
+    path: "/carsofuser",
+    name: "CarOfUser",
+    component: CarOfUser,
+    // meta: { requiresAuth: true, roles: [Roles.USER] }
+  },
+  {
+    path: "/view/:id",
+    name: "View",
+    component: View,
+    // meta: { requiresAuth: true, roles: [Roles.USER] }
+  },
+  {
+    path: "/account",
+    name: "Account",
+    component: account,
+    // meta: { requiresAuth: true, roles: [Roles.USER] }
   }
 
 ];
@@ -158,34 +179,40 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-    const userStore = useUserStore();
+  const userStore = useUserStore();
 
-    if (!userStore.getUser && userStore.getToken) {
-        await userStore.fetchUser();
-    }
+  if (!userStore.getUser && userStore.getToken) {
+    await userStore.fetchUser();
+  }
 
-    if (to.meta.requiresAuth) {
-        if (!userStore.getToken) {
-            next({ name: 'Home', query: { redirect: to.fullPath } });
-        } else {
-            const userRole = userStore.user.role;
-
-            if (!canAccess(userRole, to.meta.roles)) {
-                next({ name: 'Unauthorized' });
-            } else {
-                if (to.name === 'Login' && (userRole === Roles.ADMIN || userRole === Roles.QUAN_TRI_CONG_TAC || userRole === Roles.QUAN_TRI_VAT_TU)) {
-                    next({ name: 'Car' });
-                } else if (to.name === 'Login' && userRole === Roles.USER) {
-                    next({ name: 'Home' });
-                } else {
-                    next();
-                }
-            }
-        }
+  if (to.meta.requiresAuth) {
+    if (!userStore.getToken) {
+      next({ name: 'Home' });
     } else {
+      const userRole = userStore.user.role;
+
+      if (!canAccess(userRole, to.meta.roles)) {
+        if (userRole === Roles.ADMIN) {
+          next({ name: 'User' });
+        } else if (userRole === Roles.QUAN_TRI_CONG_TAC) {
+          next({ name: 'Coordinate' });
+        } else if (userRole === Roles.QUAN_TRI_VAT_TU) {
+          next({ name: 'Car' });
+        } else if (userRole === Roles.USER) {
+          next({ name: 'CarOfUser' });
+        } else {
+          next({ name: 'Unauthorized' });
+        }
+      } else {
         next();
+      }
     }
+  } else {
+    next();
+  }
 });
+
+
 
 
 export default router;

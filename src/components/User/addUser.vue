@@ -5,10 +5,10 @@
     >
       <div>
         <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
-          ADD USER INFORMATION
+          THÊM NGƯỜI DÙNG
         </h1>
         <p class="text-sm font-medium text-gray-500">
-          Manage users in the company
+          Quản lý người dùng trong công ty
         </p>
       </div>
       <button
@@ -17,7 +17,7 @@
         <router-link
           :to="{ name: 'User' }"
           class="text-sm font-semibold tracking-wide"
-          >Back</router-link
+          >Trở lại</router-link
         >
       </button>
     </div>
@@ -36,7 +36,7 @@
               }"
               for="name"
               class="input"
-              >Name:</label
+              >Tên:</label
             >
             <input type="text" id="name" v-model="form.name" class="input2" />
             <span v-if="errorMessage.name" class="text-red-500 text-sm">{{
@@ -46,20 +46,15 @@
           <div>
             <label
               :class="{
-                'text-red-500': errorMessage.email,
+                'text-red-500': errorMessage.username,
               }"
               for="email"
               class="input"
-              >Email:</label
+              >Tên người dùng:</label
             >
-            <input
-              type="email"
-              id="email"
-              v-model="form.email"
-              class="input2"
-            />
-            <span v-if="errorMessage.email" class="text-red-500 text-sm">{{
-              errorMessage.email[0]
+            <input id="email" v-model="form.username" class="input2" />
+            <span v-if="errorMessage.username" class="text-red-500 text-sm">{{
+              errorMessage.username[0]
             }}</span>
           </div>
           <div>
@@ -69,7 +64,7 @@
               }"
               for="role"
               class="input"
-              >Role:</label
+              >Vai trò:</label
             >
             <select id="role" class="input2" v-model="form.role">
               <option value="admin">1 - Admin</option>
@@ -84,19 +79,39 @@
           <div>
             <label
               :class="{
+                'text-red-500': errorMessage.phone,
+              }"
+              
+              class="input"
+              >Số điện thoại:</label
+            >
+            <input  v-model="form.phone" class="input2" />
+            <span v-if="errorMessage.phone" class="text-red-500 text-sm">{{
+              errorMessage.phone[0]
+            }}</span>
+          </div>
+          <div>
+            <label
+              :class="{
                 'text-red-500': errorMessage.department_id,
               }"
               class="input"
               >Phòng ban:</label
             >
             <select class="input2" v-model="form.department_id">
-              <option v-for="department in departments" :key="department.id" :value="department.id">
+              <option
+                v-for="department in departments"
+                :key="department.id"
+                :value="department.id"
+              >
                 {{ department.id }} - {{ department.name }}
               </option>
             </select>
-            <span v-if="errorMessage.department_id" class="text-red-500 text-sm">{{
-              errorMessage.department_id[0]
-            }}</span>
+            <span
+              v-if="errorMessage.department_id"
+              class="text-red-500 text-sm"
+              >{{ errorMessage.department_id[0] }}</span
+            >
           </div>
           <div>
             <label
@@ -105,7 +120,7 @@
               }"
               for="password"
               class="input"
-              >Password:</label
+              >Mật khẩu:</label
             >
             <input
               type="password"
@@ -123,13 +138,13 @@
                 type="submit"
                 class="btn bg-gray-600 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded mt-4"
               >
-                Add
+                Thêm mới
               </button>
               <p
                 v-if="showAddSuccess"
                 class="text-green-500 ml-10 font-semibold text-md"
               >
-                Add successfully
+                Thêm thành công
               </p>
             </div>
           </div>
@@ -150,8 +165,9 @@ export default {
     const showAddSuccess = ref(false);
     const form = ref({
       name: "",
-      email: "",
+      username: "",
       role: "",
+      phone: null,
       password: "",
       department_id: "",
     });
@@ -160,11 +176,14 @@ export default {
     const departments = ref([]);
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/departments", {
-          headers: {
-            Authorization: `Bearer ${userStore.token}`,
-          },
-        });
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/departments",
+          {
+            headers: {
+              Authorization: `Bearer ${userStore.token}`,
+            },
+          }
+        );
         departments.value = response.data.data;
       } catch (error) {
         console.error("Lỗi khi lấy danh sách phòng ban:", error);
@@ -194,8 +213,9 @@ export default {
     const resetForm = () => {
       form.value = {
         name: "",
-        email: "",
+        username: "",
         role: "",
+        phone: "",
         password: "",
         department_id: "",
       };
@@ -206,7 +226,7 @@ export default {
       handleSubmit,
       showAddSuccess,
       errorMessage,
-      departments
+      departments,
     };
   },
 };

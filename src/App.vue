@@ -13,15 +13,15 @@ export default {
     const userStore = useUserStore();
     const isReady = ref(false); // Biến kiểm tra trạng thái sẵn sàng của dữ liệu người dùng
 
-    // Đảm bảo rằng thông tin người dùng đã được tải xong
+  
     const IsUser = computed(() => {
       const user = userStore.getUser;
       return !user || (user && user.role === "user");
     });
 
     onMounted(async () => {
-      await userStore.fetchUser(); // Giả sử đây là thao tác lấy thông tin người dùng từ API
-      isReady.value = true; // Cập nhật trạng thái sẵn sàng sau khi lấy thông tin
+      await userStore.fetchUser(); 
+      isReady.value = true;
     });
 
     // Tạo một computed để quản lý lớp điều kiện
@@ -47,7 +47,7 @@ export default {
   >
     <!-- Khi isReady là true thì mới hiển thị Header tương ứng -->
     <HeaderUsser v-if="IsUser && isReady" />
-    <Header v-else-if="!IsUser && isReady" />
-    <router-view v-if="isReady"></router-view>
+    <Header v-else-if="!IsUser" />
+    <router-view></router-view>
   </div>
 </template>
