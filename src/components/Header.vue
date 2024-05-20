@@ -3,7 +3,7 @@
     id="toggle-top-menu-icon"
     @click="toggleSidebar"
     type="button"
-    class="inline-flex p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg md:hidden dark:text-gray-400"
+    class="inline-flex p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg md:hidden dark:text-gray-400 fixed left-0 top-0"
     aria-label="Toggle Sidebar"
   >
     <svg
@@ -38,7 +38,7 @@
       </a>
       <ul class="space-y-2 font-medium mt-[60px]">
         <li
-          v-for="(item, index) in menuItems"
+          v-for="(item, index) in filteredMenuItems"
           :key="index"
           :class="{ 'bg-blue-500 text-white hover:translate-x-4': isItemActive(item.route) }"
           class="py-2 pl-2 rounded-md hover:bg-blue-500 hover:text-white hover:translate-x-4"
@@ -148,7 +148,6 @@ const updateActiveIndex = () => {
   });
 };
 
-// Đăng ký watcher để lắng nghe thay đổi của route
 watch(() => route.path, updateActiveIndex);
 const menuItems = [
   {
@@ -198,6 +197,19 @@ const menuItems = [
 `,
   },
 ];
+const userRoles = user.value.role; 
+
+const filteredMenuItems = computed(() => {
+  if (userRoles.value == "admin") {
+    return menuItems;
+  } else if (userRoles == "quản trị vật tư") {
+    return menuItems.filter(item => item.route === "/cars");
+  } else if (userRoles == "quản trị công tác") {
+    return menuItems.filter(item => item.route === "/coordinate");
+  }
+  return [];
+});
+
 onMounted(async () => {
   document.addEventListener("click", handleClickOutside);
 });
