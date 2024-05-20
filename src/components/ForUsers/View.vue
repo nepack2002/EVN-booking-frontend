@@ -13,7 +13,7 @@
         </div>
         <div class="pr-5" v-if="schedule.status">
           <button
-            @click="updateRun(schedule.status == '2' ? '1' : '2')"
+            @click="handleStopButton"
             class="py-2.5 px-4 text-white bg-green-500 rounded-xl hover:bg-green-600 focus:outline-none mx-2"
           >
             {{ schedule.status == 1 ? "Stop" : "Start" }}
@@ -55,6 +55,11 @@
         </tbody>
       </table>
     </div>
+    <confirm-modal
+      :is-visible="isModalVisible"
+      @confirm="confirmStop"
+      @cancel="cancelStop"
+    ></confirm-modal>
   </div>
 </template>
 
@@ -63,8 +68,12 @@ import { ref, onMounted, onUnmounted, computed } from "vue";
 import axios from "axios";
 import { useRoute } from "vue-router";
 import { useUserStore } from "../../store/auth.js";
+import ConfirmModal from "./Confirm.vue"; 
 
 export default {
+  components: {
+    ConfirmModal,
+  },
   setup() {
     const schedule = ref({});
     const route = useRoute();
@@ -77,6 +86,7 @@ export default {
     const message = ref(null);
     const elapsedSeconds = ref(0);
     let intervalId;
+    const isModalVisible = ref(false);
     const formattedTime = computed(() => formatTime(elapsedSeconds.value));
     if (userStore) {
       userStore.fetchUser();
@@ -249,6 +259,23 @@ export default {
       }
     });
 
+    const handleStopButton = () => {
+      if (schedule.value.status == "1") {
+        isModalVisible.value = true;
+      } else {
+        updateRun("1");
+      }
+    };
+
+    const confirmStop = () => {
+      updateRun("2");
+      isModalVisible.value = false;
+    };
+
+    const cancelStop = () => {
+      isModalVisible.value = false;
+    };
+
     return {
       schedule,
       updateRun,
@@ -256,6 +283,10 @@ export default {
       elapsedSeconds,
       formattedTime,
       locations,
+      handleStopButton,
+      confirmStop,
+      cancelStop,
+      isModalVisible,
     };
   },
 };

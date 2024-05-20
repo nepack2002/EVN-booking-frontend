@@ -155,6 +155,7 @@
         <div
           class="border-2 flex justify-between p-5"
           v-if="scheduleDate.status == '1'"
+          @click="handleStopButton(scheduleDate.status)"
         >
           <div>
             <span>Bạn đang trong chuyến đi tới </span>
@@ -164,7 +165,7 @@
           <div class="flex items-center">
             <button
               class="h-[70%] text-white hover:bg-red-600 px-8 rounded-lg bg-red-500"
-              @click="endSchedule(scheduleDate.id)"
+              @click="handleStopButton(scheduleDate.status)"
             >
               Kết thúc
             </button>
@@ -172,13 +173,22 @@
         </div>
       </div>
     </div>
+    <confirm-modal
+      :is-visible="isModalVisible"
+      @confirm="confirmStop"
+      @cancel="cancelStop"
+    ></confirm-modal>
   </div>
 </template>
 <script>
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 import { useUserStore } from "../../store/auth.js";
+import ConfirmModal from "./Confirm.vue";
 export default {
+  components: {
+    ConfirmModal,
+  },
   setup() {
     const schedules = ref([]);
     const car = ref("");
@@ -186,6 +196,8 @@ export default {
     const savedTime = ref(null);
     const userStore = useUserStore();
     const isLoading = ref(true);
+    const isModalVisible = ref(false);
+
     userStore.fetchUser();
     const fetchSchedules = async () => {
       try {
@@ -266,6 +278,22 @@ export default {
         savedTime.value = storedElapsedSeconds;
       }
     });
+    const handleStopButton = (a) => {
+      if (a == "1") {
+        isModalVisible.value = true;
+      } else {
+        endSchedule("1");
+      }
+    };
+
+    const confirmStop = () => {
+      endSchedule("2");
+      isModalVisible.value = false;
+    };
+
+    const cancelStop = () => {
+      isModalVisible.value = false;
+    };
     return {
       schedules,
       car,
@@ -275,6 +303,10 @@ export default {
       displayTime,
       endSchedule,
       isLoading,
+      handleStopButton,
+      confirmStop,
+      cancelStop,
+      isModalVisible,
     };
   },
 };

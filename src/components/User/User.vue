@@ -126,7 +126,7 @@ export default defineComponent({
       <input
         type="text"
         v-model="searchQuery"
-        placeholder="Search cars..."
+        placeholder="Tìm kiếm người dùng..."
         class="py-2 px-4 border-2 border-black rounded-lg"
       />
       <div class="flex gap-5">
