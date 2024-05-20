@@ -198,9 +198,9 @@ const menuItems = [
   },
 ];
 const userRoles = user.value.role; 
-
+console.log(userRoles);
 const filteredMenuItems = computed(() => {
-  if (userRoles.value == "admin") {
+  if (userRoles == "admin") {
     return menuItems;
   } else if (userRoles == "quản trị vật tư") {
     return menuItems.filter(item => item.route === "/cars");
