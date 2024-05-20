@@ -315,7 +315,7 @@ export default {
     const users = ref([]);
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/users", {
+        const response = await axios.get("/users", {
           headers: {
             Authorization: `Bearer ${userStore.token}`,
           },
@@ -356,7 +356,7 @@ export default {
         if (form.value.anh_xe) {
           formData.append("anh_xe", form.value.anh_xe);
         }
-        await axios.post("http://127.0.0.1:8000/api/cars", formData, {
+        await axios.post("/cars", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${userStore.token}`,

@@ -1,9 +1,10 @@
 <template>
   <header
     class="flex shadow-md py-4 px-4 sm:px-10 bg-white font-sans min-h-[70px] tracking-wide relative z-50"
+    v-if="userStore.user"
   >
     <div class="flex flex-wrap items-center justify-around gap-4 w-full">
-     <div id="logo" class="font-bold text-gray-600 text-2xl cursor-none">NEPACK</div>
+     <div id="logo" class="w-20 cursor-none"><img src="../../public/img/Asset 1 1.png" alt=""></div>
 
       <div
         id="collapseMenu"
@@ -33,15 +34,6 @@
         <ul
           class="lg:flex gap-x-36 max-lg:space-y-3 max-lg:fixed max-lg:bg-white max-lg:w-1/2 max-lg:min-w-[300px] max-lg:top-0 max-lg:left-0 max-lg:p-6 max-lg:h-full max-lg:shadow-md max-lg:overflow-auto z-50"
         >
-          <li class="mb-6 hidden max-lg:block">
-            <a href="javascript:void(0)"
-              ><img
-                src="https://readymadeui.com/readymadeui.svg"
-                alt="logo"
-                class="w-36"
-              />
-            </a>
-          </li>
           <li class="max-lg:border-b max-lg:py-3 px-3">
             <router-link
               :to="{ name: 'CarOfUser' }"
@@ -163,7 +155,7 @@ const isLoggedIn = computed(() => !!user.value);
 // Hàm đăng xuất
 const logout = async () => {
   await userStore.logout();
-  router.push("/home");
+  router.push("/login");
 };
 // Trạng thái hiển thị của danh sách thông báo
 const showNotifications = ref(false);
@@ -176,7 +168,7 @@ const notificationUnRead = ref();
 const fetchNotifications = async () => {
   try {
     const response = await axios.get(
-      `http://127.0.0.1:8000/api/users/notification/${userStore.user.id}`
+      `/users/notification/${userStore.user.id}`
     );
     notifications.value = response.data;
   } catch (error) {
@@ -187,7 +179,7 @@ const fetchNotifications = async () => {
 const fetchNotificationUnRead = async () => {
   try {
     const response = await axios.get(
-      `http://127.0.0.1:8000/api/users/notificationUnRead/${userStore.user.id}`
+      `users/notificationUnRead/${userStore.user.id}`
     );
     notificationUnRead.value = response.data;
   } catch (error) {
@@ -197,7 +189,7 @@ const fetchNotificationUnRead = async () => {
 const markNotificationAsRead = async (notificationId) => {
   try {
     await axios.put(
-      `http://127.0.0.1:8000/api/notifications/${notificationId}/mark-as-read`,
+      `/notifications/${notificationId}/mark-as-read`,
       {
         read: true,
       }
@@ -215,12 +207,12 @@ const toggleNotifications = () => {
 };
 
 // Lấy danh sách thông báo khi component được mounted
-if (userStore.user) {
-  onMounted(() => {
-    fetchNotifications();
-    fetchNotificationUnRead();
-  });
-}
+
+ onMounted(async () => {
+  await fetchNotificationUnRead();
+  await fetchNotifications();
+});
+
 
 // Hàm xử lý hiển thị menu
 const handleClick = () => {

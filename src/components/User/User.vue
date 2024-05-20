@@ -15,7 +15,7 @@ export default defineComponent({
     const fetchUsers = async (page = 1) => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/users?page=${page}&query=${searchQuery.value}`,
+          `/users?page=${page}&query=${searchQuery.value}`,
           {
             headers: {
               Authorization: `Bearer ${userStore.token}`,
@@ -64,7 +64,7 @@ export default defineComponent({
         );
 
         if (confirmed) {
-          await axios.delete(`http://127.0.0.1:8000/api/users/${id}`, {
+          await axios.delete(`/users/${id}`, {
             headers: {
               Authorization: `Bearer ${userStore.token}`,
             },

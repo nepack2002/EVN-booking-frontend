@@ -63,15 +63,12 @@
   </body>
 </template>
 <script>
-import { ref, onMounted, onUnmounted, computed } from "vue";
-import axios from "axios";
-import { useRoute } from "vue-router";
 import { useUserStore } from "../../store/auth.js";
 export default {
   setup() {
     const userStore = useUserStore();
 
-    userStore.fetchUser(); // Fetch user information when component is mounted
+    userStore.fetchUser();
 
     return {
       user: userStore.user,

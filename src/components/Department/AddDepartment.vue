@@ -103,7 +103,7 @@ export default {
     const departments = ref([]);
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/departments", {
+        const response = await axios.get("/departments", {
           headers: {
             Authorization: `Bearer ${userStore.token}`,
           },
@@ -115,7 +115,7 @@ export default {
     };
     const handleSubmit = async () => {
       try {
-        await axios.post("http://127.0.0.1:8000/api/departments", form.value, {
+        await axios.post("/departments", form.value, {
           headers: {
             Authorization: `Bearer ${userStore.token}`,
           },

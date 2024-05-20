@@ -4,6 +4,8 @@ import './assets/style.css'
 import App from './App.vue'
 import axios from 'axios';
 
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+
 import router from './router'
 const pinia = createPinia()
 createApp(App).use(pinia).use(router).mount('#app')

@@ -94,7 +94,7 @@ export default {
     const fetchLocations = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/users/ScheduleLocation/${route.params.id}`
+          `/users/ScheduleLocation/${route.params.id}`
         );
         locations.value = response.data;
         console.log(locations.value);
@@ -106,7 +106,7 @@ export default {
     const fetchStatus = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/users/${userStore.user.id}/schedules`
+          `/users/${userStore.user.id}/schedules`
         );
         status.value = response.data;
       } catch (e) {
@@ -129,7 +129,7 @@ export default {
       if (!hasActiveSchedule) {
         try {
           await axios.post(
-            `http://127.0.0.1:8000/api/cars/update/${route.params.id}`,
+            `/cars/update/${route.params.id}`,
             { status: newValue }
           );
           if (newValue === "1") {
@@ -160,7 +160,7 @@ export default {
     const fetchSchedules = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/users/schedule/${route.params.id}`
+          `/users/schedule/${route.params.id}`
         );
         schedule.value = response.data;
       } catch (e) {
@@ -226,7 +226,7 @@ export default {
     const sendLocation = async (latitude, longitude, location) => {
       try {
         await axios.post(
-          `http://127.0.0.1:8000/api/schedule/location/${route.params.id}`,
+          `/schedule/location/${route.params.id}`,
           {
             lat_location: latitude,
             long_location: longitude,

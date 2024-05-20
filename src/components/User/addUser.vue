@@ -177,7 +177,7 @@ export default {
     const fetchDepartments = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:8000/api/departments",
+          "/departments",
           {
             headers: {
               Authorization: `Bearer ${userStore.token}`,
@@ -191,7 +191,7 @@ export default {
     };
     const handleSubmit = async () => {
       try {
-        await axios.post("http://127.0.0.1:8000/api/users", form.value, {
+        await axios.post("/users", form.value, {
           headers: {
             Authorization: `Bearer ${userStore.token}`,
           },

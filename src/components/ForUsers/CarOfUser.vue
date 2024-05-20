@@ -202,7 +202,7 @@ export default {
     const fetchSchedules = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/users/${userStore.user.id}/schedulesDate`
+          `/users/${userStore.user.id}/schedulesDate`
         );
         schedules.value = response.data;
         console.log(schedules.value);
@@ -228,7 +228,7 @@ export default {
     const fetchCar = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/schedule/car/${userStore.user.id}`
+          `/schedule/car/${userStore.user.id}`
         );
         car.value = response.data;
         imageUrl.value = `http://127.0.0.1:8000/${response.data.anh_xe}`;
@@ -262,7 +262,7 @@ export default {
     });
     const endSchedule = async (id) => {
       try {
-        await axios.post(`http://127.0.0.1:8000/api/cars/update/${id}`, {
+        await axios.post(`/cars/update/${id}`, {
           status: "2",
         });
         await fetchSchedules();

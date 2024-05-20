@@ -19,7 +19,7 @@ export const useUserStore = defineStore("userStore", {
         async login(username, password) {
             try {
                 const response = await axios.post(
-                    "http://127.0.0.1:8000/api/login",
+                    "/login",
                     {
                         username,
                         password,
@@ -39,7 +39,7 @@ export const useUserStore = defineStore("userStore", {
         async fetchUser() {
                 if (!this.token) return;
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/user', {
+                const response = await axios.get('/user', {
                     headers: {
                         'Authorization': `Bearer ${this.token}`
                     }
@@ -51,7 +51,7 @@ export const useUserStore = defineStore("userStore", {
         },
         async logout() {
             try {
-                await axios.get("http://127.0.0.1:8000/api/logout", {
+                await axios.get("/logout", {
                     headers: {
                         'Authorization': `Bearer ${this.token}`
                     }

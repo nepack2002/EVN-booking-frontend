@@ -314,7 +314,7 @@ export default {
 
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/users", {
+        const response = await axios.get("/users", {
           headers: {
             Authorization: `Bearer ${userStore.token}`,
           },
@@ -328,7 +328,7 @@ export default {
     const getCars = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/cars/${route.params.id}`,
+          `/cars/${route.params.id}`,
           {
             headers: {
               Authorization: `Bearer ${userStore.token}`,
@@ -369,7 +369,7 @@ export default {
           formData.append("anh_xe", form.value.anh_xe);
         }
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/cars/${route.params.id}`,
+          `/cars/${route.params.id}`,
           formData,
           {
             headers: {

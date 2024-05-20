@@ -79,7 +79,7 @@ export default {
     formData.append("file", selectedFile.value);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/department/import", formData, {
+      const response = await axios.post("/department/import", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${userStore.token}`,

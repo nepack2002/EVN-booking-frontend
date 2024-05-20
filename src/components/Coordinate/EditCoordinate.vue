@@ -287,7 +287,7 @@ onMounted(async () => {
 const getDepartments = async () => {
   try {
     const response = await axios.get(
-      `http://127.0.0.1:8000/api/schedules/${route.params.id}`,
+      `/schedules/${route.params.id}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -301,7 +301,7 @@ const getDepartments = async () => {
 };
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/departments", {
+    const response = await axios.get("/departments", {
       headers: {
         Authorization: `Bearer ${userStore.token}`,
       },
@@ -314,7 +314,7 @@ const fetchDepartments = async () => {
 const fetchCars = async () => {
   try {
     const response = await axios.post(
-      "http://127.0.0.1:8000/api/coordinates",
+      "/coordinates",
       {
         lat: form.value.lat_location,
         long: form.value.long_location,
@@ -336,7 +336,7 @@ const handleSubmit = async (event) => {
 
   try {
     await axios.post(
-      `http://127.0.0.1:8000/api/schedules/${route.params.id}`,
+      `/schedules/${route.params.id}`,
       form.value,
       {
         headers: {
@@ -355,7 +355,7 @@ const handleSubmit = async (event) => {
 };
 
 async function showSuggestions() {
-  const apiKey = "RCVIYChDbq94jwTbS8nAaqJJ1WBC5QvDyj3pEle9";
+  const apiKey =  import.meta.env.VITE_KEY;
   const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(
     form.value.location
   )}`;
@@ -374,7 +374,7 @@ async function showSuggestions() {
   }
 }
 async function showSuggestions_2() {
-  const apiKey = "RCVIYChDbq94jwTbS8nAaqJJ1WBC5QvDyj3pEle9";
+  const apiKey =  import.meta.env.VITE_KEY;
   const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(
     form.value.location_2
   )}`;
@@ -400,7 +400,7 @@ async function selectSuggestion(selectedDescription) {
   //   console.log(selectedPrediction);
   if (selectedPrediction) {
     const placeId = selectedPrediction.place_id;
-    const apiKey = "RCVIYChDbq94jwTbS8nAaqJJ1WBC5QvDyj3pEle9";
+    const apiKey =  import.meta.env.VITE_KEY;
     const placeDetailUrl = `https://rsapi.goong.io/Place/Detail?place_id=${placeId}&api_key=${apiKey}`;
 
     try {
@@ -425,7 +425,7 @@ async function selectSuggestion_2(selectedDescription) {
   );
   if (selectedPrediction) {
     const placeId = selectedPrediction.place_id;
-    const apiKey = "RCVIYChDbq94jwTbS8nAaqJJ1WBC5QvDyj3pEle9";
+    const apiKey =  import.meta.env.VITE_KEY;
     const placeDetailUrl = `https://rsapi.goong.io/Place/Detail?place_id=${placeId}&api_key=${apiKey}`;
 
     try {

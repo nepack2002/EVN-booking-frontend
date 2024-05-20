@@ -15,7 +15,7 @@ export default defineComponent({
     const fetchSchedules = async (page = 1) => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/schedules?page=${page}&query=${searchQuery.value}`,
+          `/schedules?page=${page}&query=${searchQuery.value}`,
           {
             headers: {
               Authorization: `Bearer ${userStore.token}`,
@@ -63,7 +63,7 @@ export default defineComponent({
         );
 
         if (confirmed) {
-          await axios.delete(`http://127.0.0.1:8000/api/schedules/${id}`, {
+          await axios.delete(`/schedules/${id}`, {
             headers: {
               Authorization: `Bearer ${userStore.token}`,
             },

@@ -120,7 +120,7 @@ const toggleSidebar = () => {
 // Hàm đăng xuất
 const logout = async () => {
   await userStore.logout();
-  router.push("/home");
+  router.push("/login");
 };
 
 // Hàm xử lý sự kiện nhấp chuột để ẩn sidebar nếu nhấp ra ngoài

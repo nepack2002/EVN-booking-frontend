@@ -187,7 +187,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.meta.requiresAuth) {
     if (!userStore.getToken) {
-      next({ name: 'Home' });
+      next({ name: 'Login' });
     } else {
       const userRole = userStore.user.role;
 
