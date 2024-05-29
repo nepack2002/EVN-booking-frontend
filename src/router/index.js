@@ -9,7 +9,7 @@ import EditCar from "@/components/Car/EditCar.vue";
 import AddCar from "@/components/Car/AddCar.vue";
 import ImportCar from "@/components/Car/ImportCar.vue";
 import User from "@/components/User/User.vue";
-import AddUser from "@/components/User/AddUser.vue";
+import AddUser from "@/components/User/addUser.vue";
 import EditUser from "@/components/User/EditUser.vue";
 import ImportUser from "@/components/User/importUser.vue";
 import Department from "@/components/Department/Department.vue";
