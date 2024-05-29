@@ -15,7 +15,7 @@ import ImportUser from "@/components/User/importUser.vue";
 import Department from "@/components/Department/Department.vue";
 import AddDepartment from "@/components/Department/AddDepartment.vue";
 import EditDepartment from "@/components/Department/EditDepartment.vue";
-import ImportDepartment from "@/components/Department/ImportDepartment.vue";
+import ImportDepartment from "@/components/Department/importDepartment.vue";
 import Schedule from "@/components/Schedule/Schedule.vue";
 import AddSchedule from "@/components/Schedule/AddSchedule.vue";
 import EditSchedule from "@/components/Schedule/EditSchedule.vue";
