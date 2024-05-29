@@ -75,9 +75,6 @@
               <p v-if="showAddSuccess" class="text-green-500 ml-10 font-semibold text-md">
                 Thêm phòng ban thành công
               </p>
-              <div v-if="messages" class="w-[100%] bg-red-400 text-white rounded-md p-2 my-5">
-                {{ messages }}
-              </div>
             </form>
           </div>
         </div>
