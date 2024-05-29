@@ -12,25 +12,26 @@ const totalPages = ref(0) // Tổng số trang
 const showDeleteSuccess = ref(false)
 const searchQuery = ref('')
 // Hàm để lấy danh sách phong ban với phân trang
-const fetchDepartments = async (page = 1) => {
+const fetchDepartments = async () => {
   try {
-    const response = await axios.get(`/departments?page=${page}&query=${searchQuery.value}`, {
+    const response = await axios.get(`/departments2`, {
       headers: {
         Authorization: `Bearer ${userStore.token}`
       }
     })
 
     // Lưu trữ dữ liệu trả về và thông tin phân trang
-    departments.value = response.data.data
-    currentPage.value = response.data.current_page
-    totalPages.value = response.data.last_page
-    if (departments.value.length === 0 && currentPage.value > 1) {
-      // Nếu không còn người dùng trên trang hiện tại và không phải là trang đầu tiên
-      // Chuyển về trang trước đó
-      currentPage.value -= 1
-      console.log('hết')
-      await fetchDepartments(currentPage.value)
-    }
+    departments.value = response.data
+    console.log(departments.value)
+    // currentPage.value = response.data.current_page
+    // totalPages.value = response.data.last_page
+    // if (departments.value.length === 0 && currentPage.value > 1) {
+    //   // Nếu không còn người dùng trên trang hiện tại và không phải là trang đầu tiên
+    //   // Chuyển về trang trước đó
+    //   currentPage.value -= 1
+    //   console.log('hết')
+    //   await fetchDepartments(currentPage.value)
+    // }
   } catch (error) {
     console.error('Error fetching users:', error)
   }
@@ -98,12 +99,6 @@ const deleteDepartment = async (id) => {
           <div
             class="md:absolute md:right-5 md:top-[50%] md:-translate-y-[50%] flex gap-5 flex-col md:flex-row items-center"
           >
-            <input
-              type="text"
-              v-model="searchQuery"
-              placeholder="Tìm kiếm..."
-              class="py-2 px-4 border border-black rounded-lg"
-            />
             <div class="flex gap-5">
               <button
                 class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
@@ -137,135 +132,38 @@ const deleteDepartment = async (id) => {
           </div>
         </div>
 
-        <!-- Table Header -->
-        <div
-          class="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark dark:text-white dark:bg-meta-4 sm:grid-cols-6 md:px-6 2xl:px-7.5 text-black"
-        >
-          <div class="col-span-2 md:col-span-2 flex items-center">
-            <p class="font-bold">Phòng ban</p>
-          </div>
-
-          <div class="col-span-2 flex items-center justify-center">
-            <p class="font-bold">Phòng ban con</p>
-          </div>
-         
-          <div class="col-span-2 flex items-center justify-center">
-            <p class="font-bold text-nowrap">Hành động</p>
-          </div>
-        </div>
-
         <!-- Table Rows -->
-        <div
-          v-for="department in departments"
-          :key="department.id"
-          class="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-6 md:px-6 2xl:px-7.5"
-        >
-          <div class="col-span-2 md:col-span-2 flex items-center">
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <p class="text-base font-medium text-black dark:text-white">
-                {{ department.name }}
-              </p>
-            </div>
-          </div>
-          
-          <div class="col-span-2 flex items-center justify-center">
-            <p class="text-base font-medium text-black dark:text-white">
-             <ul v-if="department.children && department.children.length > 0">
-                <li v-for="child in department.children" :key="child.id">
-                  {{ child.name }}
-                </li>
-              </ul>
-            </p>
-          </div>
-
-          <div class="col-span-2 flex items-center justify-center">
-            <div class="flex items-center space-x-10">
-              <router-link
-                :to="{ name: 'EditDepartment', params: { id: department.id } }"
-                class="hover:text-primary"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                  />
-                </svg>
+        <ul class="list-none px-10 mt-10">
+          <ul v-for="department in departments" :key="department.id" class="my-2">
+            <div class="flex relative">
+              <!-- Cột cho full_name -->
+              <router-link  :to="{ name: 'EditDepartment', params: { id: department.id } }" :style="{ paddingLeft: department.level * 30 + 'px' }" class="flex-1 my-2 hover:underline hover:text-indigo-600">
+                <span class="text-lg font-semibold">{{ department.full_name }}</span>
               </router-link>
-
-              <button class="hover:text-primary" @click="deleteDepartment(department.id)">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                  />
-                </svg>
-              </button>
+              <!-- Cột cho các nút -->
+              <div class="flex items-center space-x-5 absolute left-[50%]">
+              
+                <button class="hover:text-primary" @click="deleteDepartment(department.id)">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
+          </ul>
+        </ul>
       </div>
-
-      <!--====== Điều khiển phân trang ======-->
-      <div class="flex justify-center my-4">
-        <button
-          class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg mx-1 disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
-          @click="changePage(currentPage - 1)"
-          :disabled="currentPage === 1"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
-            />
-          </svg>
-        </button>
-        <span class="px-4 py-2 text-gray-700"> Trang {{ currentPage }} trên {{ totalPages }} </span>
-        <button
-          class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg mx-1 disabled:opacity-50 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
-          @click="changePage(currentPage + 1)"
-          :disabled="currentPage === totalPages"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-            />
-          </svg>
-        </button>
-      </div>
-      <!--====== Điều khiển phân trang ======-->
     </main>
   </DefaultLayout>
 </template>

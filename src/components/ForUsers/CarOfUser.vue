@@ -103,7 +103,7 @@
                   />
                 </svg>
               </div>
-              <div class="flex flex-col items-center gap-9">
+              <div class="flex flex-col gap-9">
                 <div>
                   <p>{{ scheduleDate.location }}</p>
                   <p>

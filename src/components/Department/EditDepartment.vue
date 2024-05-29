@@ -46,6 +46,7 @@
                     class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.parent_id"
                   >
+                    <option value="">Không chọn phòng ban nào</option>
                     <option
                       v-for="department in departments"
                       :key="department.id"
@@ -75,7 +76,6 @@
               <p v-if="showAddSuccess" class="text-green-500 ml-10 font-semibold text-md">
                 Cập nhật thành công
               </p>
-             
             </form>
           </div>
         </div>
