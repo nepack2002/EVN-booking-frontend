@@ -1,6 +1,6 @@
 <template>
-  <DefaultLayout
-    ><div class="mx-auto w-[50%]">
+  <DefaultLayout>
+    <div class="mx-auto w-[50%]">
       <div class="flex items-center justify-between py-7">
         <div>
           <h1 class="text-2xl font-semibold leading-relaxed text-gray-800">
@@ -9,13 +9,13 @@
           <p class="text-sm font-medium text-gray-500">Quản lý tô tô trong công ty</p>
         </div>
         <button
-          class="inline-flex gap-x-2 items-center py-2.5 px-4 text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
+          @click="downloadFile"
+          class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring"
         >
-          <router-link :to="{ name: 'Car' }" class="text-sm font-semibold tracking-wide"
-            >Trở lại</router-link
-          >
+          Tải file mẫu
         </button>
       </div>
+
       <DefaultCard cardTitle="Tải tệp">
         <div class="flex flex-col gap-5.5 p-6.5">
           <form @submit.prevent="handleSubmit" method="POST" enctype="multipart/form-data">
@@ -94,5 +94,11 @@ const handleSubmit = () => {
     console.error('No file selected.')
   }
 }
-</script>
 
+const downloadFile = () => {
+  const link = document.createElement('a')
+  link.href = '/Car.xlsx'
+  link.download = 'Car.xlsx'
+  link.click()
+}
+</script>

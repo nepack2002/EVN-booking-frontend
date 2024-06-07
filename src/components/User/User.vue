@@ -4,13 +4,14 @@ import { ref, onMounted, watch } from 'vue'
 import axios from 'axios'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import { useUserStore } from '@/stores/auth.js'
-
+import OneSignal from '@onesignal/onesignal-vue3';
 const userStore = useUserStore()
 const users = ref([])
 const currentPage = ref(1) // Trang hiện tại
 const totalPages = ref(0) // Tổng số trang
 const showDeleteSuccess = ref(false)
 const searchQuery = ref('')
+
 // Hàm để lấy danh sách người dùng với phân trang
 const fetchUsers = async (page = 1) => {
   try {
@@ -140,6 +141,7 @@ const formatDate = (dateString) => {
                 ></router-link>
               </button>
             </div>
+            
           </div>
         </div>
 
@@ -283,3 +285,4 @@ const formatDate = (dateString) => {
     </main>
   </DefaultLayout>
 </template>
+

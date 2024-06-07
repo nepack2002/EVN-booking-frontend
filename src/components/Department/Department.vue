@@ -7,10 +7,8 @@ import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 const userStore = useUserStore()
 const departments = ref([])
-const currentPage = ref(1) // Trang hiện tại
-const totalPages = ref(0) // Tổng số trang
 const showDeleteSuccess = ref(false)
-const searchQuery = ref('')
+
 // Hàm để lấy danh sách phong ban với phân trang
 const fetchDepartments = async () => {
   try {
@@ -22,41 +20,23 @@ const fetchDepartments = async () => {
 
     // Lưu trữ dữ liệu trả về và thông tin phân trang
     departments.value = response.data
-    console.log(departments.value)
-    // currentPage.value = response.data.current_page
-    // totalPages.value = response.data.last_page
-    // if (departments.value.length === 0 && currentPage.value > 1) {
-    //   // Nếu không còn người dùng trên trang hiện tại và không phải là trang đầu tiên
-    //   // Chuyển về trang trước đó
-    //   currentPage.value -= 1
-    //   console.log('hết')
-    //   await fetchDepartments(currentPage.value)
-    // }
   } catch (error) {
     console.error('Error fetching users:', error)
   }
 }
-// Khi giá trị của searchQuery thay đổi, gọi fetchUsers
-watch(searchQuery, () => {
-  fetchDepartments(currentPage.value)
-})
 
 // Gọi fetchUsers khi component được mounted
 onMounted(() => {
-  fetchDepartments(currentPage.value)
+  fetchDepartments()
 })
 
 // Hàm để chuyển trang
-const changePage = async (newPage) => {
-  if (newPage > 0 && newPage <= totalPages.value) {
-    await fetchDepartments(newPage)
-  }
-}
+
 // Hàm để xóa người dùng
 const deleteDepartment = async (id) => {
   try {
     // Hiển thị cửa sổ xác nhận
-    const confirmed = confirm(`Bạn có muốn xóa người dùng có id là ${id} không?`)
+    const confirmed = confirm(`Bạn có muốn xóa phòng ban này không?`)
 
     if (confirmed) {
       await axios.delete(`/departments/${id}`, {
@@ -65,7 +45,7 @@ const deleteDepartment = async (id) => {
         }
       })
 
-      await fetchDepartments(currentPage.value)
+      await fetchDepartments()
 
       // Hiển thị thông báo xóa thành công
       showDeleteSuccess.value = true
@@ -137,12 +117,15 @@ const deleteDepartment = async (id) => {
           <ul v-for="department in departments" :key="department.id" class="my-2">
             <div class="flex relative">
               <!-- Cột cho full_name -->
-              <router-link  :to="{ name: 'EditDepartment', params: { id: department.id } }" :style="{ paddingLeft: department.level * 30 + 'px' }" class="flex-1 my-2 hover:underline hover:text-indigo-600">
+              <router-link
+                :to="{ name: 'EditDepartment', params: { id: department.id } }"
+                :style="{ paddingLeft: department.level * 30 + 'px' }"
+                class="flex-1 my-2 hover:underline hover:text-indigo-600"
+              >
                 <span class="text-lg font-semibold">{{ department.full_name }}</span>
               </router-link>
               <!-- Cột cho các nút -->
               <div class="flex items-center space-x-5 absolute left-[50%]">
-              
                 <button class="hover:text-primary" @click="deleteDepartment(department.id)">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

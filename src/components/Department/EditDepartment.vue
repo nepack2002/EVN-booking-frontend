@@ -61,6 +61,9 @@
               <!-- Email Address Section -->
 
               <div class="w-[100%] flex justify-end gap-5">
+                <p v-if="showAddSuccess" class="text-green-500 ml-10 font-semibold text-md">
+                  Cập nhật thành công
+                </p>
                 <button
                   class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                 >
@@ -73,9 +76,6 @@
                   Cập nhật
                 </button>
               </div>
-              <p v-if="showAddSuccess" class="text-green-500 ml-10 font-semibold text-md">
-                Cập nhật thành công
-              </p>
             </form>
           </div>
         </div>

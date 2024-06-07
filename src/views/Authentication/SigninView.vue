@@ -35,7 +35,7 @@ onMounted(async () => {
             <div class="flex items-center w-full justify-center mb-10">
               <img src="@/assets/images/logo/Frame.png" class="w-[400px] object-cover" alt="" />
             </div>
-            <div v-if="errors" class="w-[100%] bg-red-400 text-white rounded-md p-2 my-5">
+            <div v-if="errors" class="w-[100%] bg-red text-white rounded-md p-2 my-5">
               {{ errors }}
             </div>
             <div class="mb-4">

@@ -8,11 +8,10 @@
           </h1>
         </div>
         <button
-          class="inline-flex gap-x-2 items-center py-2.5 px-4 text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
+          @click="downloadFile"
+          class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring"
         >
-          <router-link :to="{ name: 'Department' }" class="text-sm font-semibold tracking-wide"
-            >Trở lại</router-link
-          >
+          Tải file mẫu
         </button>
       </div>
       <DefaultCard cardTitle="Tải tệp">
@@ -46,6 +45,7 @@
               </svg>
             </button>
           </form>
+         
         </div>
       </DefaultCard>
     </div>
@@ -97,6 +97,13 @@ const handleSubmit = async () => {
   } else {
     console.error('No file selected.')
   }
+}
+
+const downloadFile = () => {
+  const link = document.createElement('a')
+  link.href = '/Department.xlsx'
+  link.download = 'Department.xlsx'
+  link.click()
 }
 </script>
 
