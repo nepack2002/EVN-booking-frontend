@@ -5,7 +5,6 @@ import axios from 'axios'
 import { useUserStore } from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import {useOneSignal} from "@onesignal/onesignal-vue3";
-import onesignalServiceWorker from "@/assets/js/OneSignalSDKWorker.js";
 
 const cars = ref([])
 const showDeleteSuccess = ref(false)
@@ -44,7 +43,7 @@ onMounted(async () => {
   let oneSignal = useOneSignal()
   oneSignal.init({
     appId: import.meta.env.VITE_ONESIGNAL_APP_ID,
-    serviceWorkerPath: onesignalServiceWorker
+    serviceWorkerPath: "@/assets/js/OneSignalSDKWorker.js"
   }).then(() => {
     oneSignal.User.PushSubscription.addEventListener("change", () => {
       console.log(oneSignal.User.PushSubscription.id)
