@@ -63,7 +63,7 @@ pinia
 
 const app = createApp(App);
 
-app.use(pinia).use(router).use(OneSignalVuePlugin).mount('#app')
+app.use(pinia).use(router).mount('#app')
 
 
 
