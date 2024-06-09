@@ -40,7 +40,7 @@ onMounted(async () => {
   await fetchCars();
 
   await this.$OneSignal.init({
-    appId: import.meta.env.ONESIGNAL_APP_ID
+    appId: import.meta.env.VITE_ONESIGNAL_APP_ID
   });
 
   let me = this;
