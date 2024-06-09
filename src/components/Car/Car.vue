@@ -41,7 +41,7 @@ onMounted(async () => {
   await fetchCars();
 
   let oneSignal = useOneSignal()
-  oneSignal.User.pushSubscription.addEventListener("change", () => {
+  oneSignal.User.PushSubscription.addEventListener("change", () => {
     console.log(oneSignal.User.PushSubscription.id)
   });
 })

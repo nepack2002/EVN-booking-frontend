@@ -239,7 +239,7 @@ import {useOneSignal} from "@onesignal/onesignal-vue3";
       }
 
       let oneSignal = useOneSignal()
-      oneSignal.User.pushSubscription.addEventListener("change", () => {
+      oneSignal.User.PushSubscription.addEventListener("change", () => {
         console.log(oneSignal.User.PushSubscription.id)
       });
     })
