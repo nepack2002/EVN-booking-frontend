@@ -41,13 +41,8 @@ onMounted(async () => {
   await fetchCars();
 
   let oneSignal = useOneSignal()
-  await oneSignal.init({
-    appId: import.meta.env.VITE_ONESIGNAL_APP_ID
-  }).then(() => {
-
-    oneSignal.User.pushSubscription.addEventListener("change", () => {
-      console.log(oneSignal.User.PushSubscription.id)
-    });
+  oneSignal.User.pushSubscription.addEventListener("change", () => {
+    console.log(oneSignal.User.PushSubscription.id)
   });
 })
 const changePage = async (newPage) => {
