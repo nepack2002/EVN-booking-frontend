@@ -243,8 +243,8 @@ import {useOneSignal} from "onesignal-vue-3";
         appId: import.meta.env.VITE_ONESIGNAL_APP_ID
       }).then(() => {
 
-        oneSignal.User.pushSubscription.addEventListener("change", () => {
-          console.log(oneSignal.User.PushSubscription.id)
+        oneSignal.isPushNotificationsEnabled(() => {
+          console.log(oneSignal.getUserId())
         });
       });
     })
