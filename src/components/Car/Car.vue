@@ -4,7 +4,6 @@ import { ref, onMounted, watch } from 'vue'
 import axios from 'axios'
 import { useUserStore } from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import {useOneSignal} from "@onesignal/onesignal-vue3";
 
 const cars = ref([])
 const showDeleteSuccess = ref(false)
@@ -13,7 +12,7 @@ const totalPages = ref(0) // Tổng số trang
 const userStore = useUserStore()
 const searchQuery = ref('')
 onMounted(async () => {
-  await userStore.fetchUser()
+  // await userStore.fetchUser()
 })
 const fetchCars = async (page = 1) => {
   try {
@@ -39,16 +38,6 @@ watch(searchQuery, () => {
 })
 onMounted(async () => {
   await fetchCars();
-
-  let oneSignal = useOneSignal()
-  oneSignal.init({
-    appId: import.meta.env.VITE_ONESIGNAL_APP_ID,
-    serviceWorkerPath: "https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js"
-  }).then(() => {
-    oneSignal.User.PushSubscription.addEventListener("change", () => {
-      console.log(oneSignal.User.PushSubscription.id)
-    });
-  })
 })
 const changePage = async (newPage) => {
   if (newPage > 0 && newPage <= totalPages.value) {

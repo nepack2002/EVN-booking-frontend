@@ -93,7 +93,7 @@ export default {
     const isModalVisible = ref(false);
     const formattedTime = computed(() => formatTime(elapsedSeconds.value));
     if (userStore) {
-      userStore.fetchUser();
+      // userStore.fetchUser();
     }
     const fetchLocations = async () => {
       try {

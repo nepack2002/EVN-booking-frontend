@@ -6,7 +6,7 @@ import { useUserStore } from '@/stores/auth.js'
 
 const userStore = useUserStore()
 
-userStore.fetchUser()
+// userStore.fetchUser()
 </script>
 
 <template>

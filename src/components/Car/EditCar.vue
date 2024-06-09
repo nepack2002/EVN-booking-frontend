@@ -273,7 +273,7 @@ import { useRoute } from "vue-router";
     const users = ref([]);
     const userStore = useUserStore();
     onMounted(async () => {
-      await userStore.fetchUser();
+      // await userStore.fetchUser();
     });
 
     const fetchUsers = async () => {

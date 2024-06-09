@@ -66,7 +66,7 @@ const selectedFile = ref(null)
 const userStore = useUserStore()
 
 onMounted(async () => {
-  await userStore.fetchUser()
+  // await userStore.fetchUser()
 })
 
 const handleFileChange = (event) => {

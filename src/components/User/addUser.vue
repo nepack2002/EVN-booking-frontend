@@ -201,7 +201,7 @@ const handleSubmit = async () => {
   }
 }
 onMounted(async () => {
-  await userStore.fetchUser()
+  // await userStore.fetchUser()
   fetchDepartments()
 })
 const resetForm = () => {

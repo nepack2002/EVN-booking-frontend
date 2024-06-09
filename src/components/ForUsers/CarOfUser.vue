@@ -162,7 +162,6 @@ import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 import { useUserStore } from '@/stores/auth.js'
 import DefaultLayoutForUser from './DefaultLayoutForUser.vue';
-import {useOneSignal} from "@onesignal/onesignal-vue3";
 
     const schedules = ref([])
     const car = ref('')
@@ -171,7 +170,7 @@ import {useOneSignal} from "@onesignal/onesignal-vue3";
     const userStore = useUserStore()
     const isLoading = ref(true)
 
-    userStore.fetchUser()
+    // userStore.fetchUser()
     const fetchSchedules = async () => {
       try {
         const response = await axios.get(`/users/${userStore.user.id}/schedulesDate`)
@@ -238,16 +237,6 @@ import {useOneSignal} from "@onesignal/onesignal-vue3";
       if (storedElapsedSeconds) {
         savedTime.value = storedElapsedSeconds
       }
-
-      let oneSignal = useOneSignal()
-      oneSignal.init({
-        appId: import.meta.env.VITE_ONESIGNAL_APP_ID,
-        serviceWorkerPath: "https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js"
-      }).then(() => {
-        oneSignal.User.PushSubscription.addEventListener("change", () => {
-          console.log(oneSignal.User.PushSubscription.id)
-        });
-      })
     })
 
 

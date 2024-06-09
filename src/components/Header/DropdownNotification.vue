@@ -9,7 +9,7 @@ import { useUserStore } from '@/stores/auth.js'
 
 const userStore = useUserStore()
 if (userStore) {
-  userStore.fetchUser()
+  // userStore.fetchUser()
 }
 
 // Danh sách thông báo

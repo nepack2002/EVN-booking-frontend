@@ -6,7 +6,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const userStore = useUserStore()
-userStore.fetchUser()
+// userStore.fetchUser()
 const user = userStore.user
 const target = ref(null)
 const dropdownOpen = ref(false)

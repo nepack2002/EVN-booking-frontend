@@ -158,7 +158,7 @@ const form = ref({
 })
 const userStore = useUserStore()
 onMounted(() => {
-  userStore.fetchUser()
+  // userStore.fetchUser()
   fetchDepartments()
 })
 const departments = ref([])

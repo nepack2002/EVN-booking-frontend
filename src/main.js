@@ -9,7 +9,6 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import axios from 'axios';
 import piniaPersist from 'pinia-plugin-persist'
-import OneSignalVuePlugin from '@onesignal/onesignal-vue3'
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.interceptors.request.use(config => {

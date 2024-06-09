@@ -146,7 +146,7 @@ import axios from "axios";
 const router = useRouter();
 const userStore = useUserStore();
 if (userStore) {
-  userStore.fetchUser();
+  // userStore.fetchUser();
 }
 
 const user = computed(() => userStore.getUser);

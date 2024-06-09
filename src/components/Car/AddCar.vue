@@ -282,7 +282,7 @@ const form = ref({
 
 const userStore = useUserStore()
 onMounted(async () => {
-  await userStore.fetchUser()
+  // await userStore.fetchUser()
 })
 //lấy thông tin trong bảng "User"
 const users = ref([])

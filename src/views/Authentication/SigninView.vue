@@ -21,7 +21,7 @@ const login = async () => {
 const user = computed(() => userStore.getUser)
 const errors = computed(() => userStore.getError)
 onMounted(async () => {
-  await userStore.fetchUser()
+  // await userStore.fetchUser()
 })
 </script>
 
