@@ -239,9 +239,14 @@ import {useOneSignal} from "@onesignal/onesignal-vue3";
       }
 
       let oneSignal = useOneSignal()
-      oneSignal.User.PushSubscription.addEventListener("change", () => {
-        console.log(oneSignal.User.PushSubscription.id)
-      });
+      oneSignal.init({
+        appId: import.meta.env.VITE_ONESIGNAL_APP_ID,
+        serviceWorkerPath: "@/assets/js/OneSignalSDKWorker.js"
+      }).then(() => {
+        oneSignal.User.PushSubscription.addEventListener("change", () => {
+          console.log(oneSignal.User.PushSubscription.id)
+        });
+      })
     })
 
 
