@@ -236,6 +236,15 @@ import DefaultLayoutForUser from './DefaultLayoutForUser.vue';
       if (storedElapsedSeconds) {
         savedTime.value = storedElapsedSeconds
       }
+
+      await this.$OneSignal.init({
+        appId: import.meta.env.ONESIGNAL_APP_ID
+      });
+
+      let me = this;
+      this.$OneSignal.User.pushSubscription.addEventListener("change", () => {
+        console.log(me.$OneSignal.User.PushSubscription.id)
+      });
     })
 
 

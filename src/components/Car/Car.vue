@@ -36,7 +36,18 @@ const fetchCars = async (page = 1) => {
 watch(searchQuery, () => {
   fetchCars(currentPage.value)
 })
-onMounted(fetchCars)
+onMounted(async () => {
+  await fetchCars();
+
+  await this.$OneSignal.init({
+    appId: import.meta.env.ONESIGNAL_APP_ID
+  });
+
+  let me = this;
+  this.$OneSignal.User.pushSubscription.addEventListener("change", () => {
+    console.log(me.$OneSignal.User.PushSubscription.id)
+  });
+})
 const changePage = async (newPage) => {
   if (newPage > 0 && newPage <= totalPages.value) {
     await fetchCars(newPage)

@@ -4,9 +4,6 @@
 
 <script setup>
 import { useUserStore } from '@/stores/auth.js'
-import { onMounted } from 'vue'
-import axios from 'axios'
-const a = localStorage.getItem('OneSignalUserId')
 const userStore = useUserStore()
 
 // onMounted(async () => {
