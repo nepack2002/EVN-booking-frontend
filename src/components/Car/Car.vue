@@ -39,13 +39,15 @@ watch(searchQuery, () => {
 onMounted(async () => {
   await fetchCars();
 
+  let me = this;
+  console.log(import.meta.env.VITE_ONESIGNAL_APP_ID)
   await this.$OneSignal.init({
     appId: import.meta.env.VITE_ONESIGNAL_APP_ID
-  });
+  }).then(() => {
 
-  let me = this;
-  this.$OneSignal.User.pushSubscription.addEventListener("change", () => {
-    console.log(me.$OneSignal.User.PushSubscription.id)
+    me.$OneSignal.User.pushSubscription.addEventListener("change", () => {
+      console.log(me.$OneSignal.User.PushSubscription.id)
+    });
   });
 })
 const changePage = async (newPage) => {
