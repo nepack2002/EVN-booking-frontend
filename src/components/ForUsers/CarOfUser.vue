@@ -192,7 +192,7 @@ import DefaultLayoutForUser from './DefaultLayoutForUser.vue';
       try {
         const response = await axios.get(`/schedule/car/${userStore.user.id}`)
         car.value = response.data
-        imageUrl.value = `http://127.0.0.1:8000/${response.data.anh_xe}`
+        imageUrl.value = `${import.meta.env.VITE_API_URL.replace('api','')}${response.data.anh_xe}`
       } catch (e) {
         console.log(e)
       }
