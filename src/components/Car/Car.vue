@@ -41,8 +41,8 @@ onMounted(async () => {
   await fetchCars();
 
   let oneSignal = useOneSignal()
-  await oneSignal.init({
-    appId: import.meta.env.VITE_ONESIGNAL_APP_ID
+  await oneSignal.registerForPushNotifications({
+    modalPrompt: true,
   }).then(() => {
 
     oneSignal.isPushNotificationsEnabled(() => {
