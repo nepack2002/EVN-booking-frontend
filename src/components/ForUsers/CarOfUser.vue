@@ -162,6 +162,7 @@ import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 import { useUserStore } from '@/stores/auth.js'
 import DefaultLayoutForUser from './DefaultLayoutForUser.vue';
+import {useOneSignal} from "onesignal-vue-3";
     const schedules = ref([])
     const car = ref('')
     const imageUrl = ref('')
@@ -237,14 +238,13 @@ import DefaultLayoutForUser from './DefaultLayoutForUser.vue';
         savedTime.value = storedElapsedSeconds
       }
 
-      let me = this;
-      console.log(import.meta.env.VITE_ONESIGNAL_APP_ID)
-      await this.$OneSignal.init({
+      let oneSignal = useOneSignal()
+      await oneSignal.init({
         appId: import.meta.env.VITE_ONESIGNAL_APP_ID
       }).then(() => {
 
-        me.$OneSignal.User.pushSubscription.addEventListener("change", () => {
-          console.log(me.$OneSignal.User.PushSubscription.id)
+        oneSignal.User.pushSubscription.addEventListener("change", () => {
+          console.log(oneSignal.User.PushSubscription.id)
         });
       });
     })
