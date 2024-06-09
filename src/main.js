@@ -63,7 +63,9 @@ pinia
 
 const app = createApp(App);
 
-app.use(pinia).use(router).mount('#app')
+app.use(pinia).use(router).use(OneSignalVuePlugin, {
+    appId: import.meta.env.VITE_ONESIGNAL_APP_ID
+}).mount('#app')
 
 
 
