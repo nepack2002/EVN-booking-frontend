@@ -9,7 +9,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import axios from 'axios';
 import piniaPersist from 'pinia-plugin-persist'
-import OneSignalVue from 'onesignal-vue-3';
+import OneSignalVuePlugin from '@onesignal/onesignal-vue3'
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.interceptors.request.use(config => {
@@ -63,7 +63,7 @@ pinia
 
 const app = createApp(App);
 
-app.use(pinia).use(router).use(OneSignalVue, {
+app.use(pinia).use(router).use(OneSignalVuePlugin, {
     appId: import.meta.env.VITE_ONESIGNAL_APP_ID
 }).mount('#app')
 

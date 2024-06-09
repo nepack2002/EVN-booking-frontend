@@ -4,7 +4,7 @@ import { ref, onMounted, watch } from 'vue'
 import axios from 'axios'
 import { useUserStore } from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import {useOneSignal} from "onesignal-vue-3";
+import {useOneSignal} from "@onesignal/onesignal-vue3";
 
 const cars = ref([])
 const showDeleteSuccess = ref(false)
@@ -41,12 +41,12 @@ onMounted(async () => {
   await fetchCars();
 
   let oneSignal = useOneSignal()
-  await oneSignal.registerForPushNotifications({
-    modalPrompt: true,
+  await oneSignal.init({
+    appId: import.meta.env.VITE_ONESIGNAL_APP_ID
   }).then(() => {
 
-    oneSignal.isPushNotificationsEnabled(() => {
-      console.log(oneSignal.getUserId())
+    oneSignal.User.pushSubscription.addEventListener("change", () => {
+      console.log(oneSignal.User.PushSubscription.id)
     });
   });
 })
