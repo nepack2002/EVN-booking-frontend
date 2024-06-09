@@ -4,11 +4,18 @@ import axios from "axios";
 
 export const useUserStore = defineStore("userStore", {
     state: () => ({
-        token: localStorage.getItem("token") || null,
+        token: '',
         user: null,
         errorMessage: {},
         error : null,
+        refreshToken: ''
     }),
+    persist: {
+        enabled: true,
+        strategies: [
+            {storage: localStorage, paths: ['at']},
+        ],
+    },
     getters: {
         getToken: (state) => state.token,
         getUser: (state) => state.user,
@@ -17,6 +24,9 @@ export const useUserStore = defineStore("userStore", {
 
     },
     actions: {
+        setToken(token) {
+          this.token = token;
+        },
         async login(username, password) {
             try {
                 const response = await axios.post(
@@ -27,7 +37,8 @@ export const useUserStore = defineStore("userStore", {
                     }
                 );
                 this.token = response.data.access_token;
-                localStorage.setItem("token", this.token);
+                this.refreshToken = response.data.refresh_token;
+
                 await this.fetchUser();
                 this.errorMessage = null;
                 this.error = null;
