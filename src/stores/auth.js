@@ -71,8 +71,9 @@ export const useUserStore = defineStore("userStore", {
                     serviceWorkerPath: "https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js"
                 }).then(() => {
                     oneSignal.User.PushSubscription.addEventListener("change", () => {
-                        me.postOnesignal(oneSignal.User.PushSubscription.id)
-                    });
+                        if (oneSignal.User.PushSubscription.id) {
+                            me.postOnesignal(oneSignal.User.PushSubscription.id)
+                        }                    });
                     if (oneSignal.User.PushSubscription.id) {
                         me.postOnesignal(oneSignal.User.PushSubscription.id)
                     }
