@@ -11,15 +11,15 @@ import axios from 'axios';
 import piniaPersist from 'pinia-plugin-persist'
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-axios.interceptors.request.use(config => {
-    const at = useUserStore(); // Get token from store
-    if (at && at.token) {
-        config.headers['Authorization'] = `Bearer ${at.token}`;
-    }
-    return config;
-}, error => {
-    return Promise.reject(error);
-});
+// axios.interceptors.request.use(config => {
+//     const at = useUserStore(); // Get token from store
+//     if (at && at.token) {
+//         config.headers['Authorization'] = `Bearer ${at.token}`;
+//     }
+//     return config;
+// }, error => {
+//     return Promise.reject(error);
+// });
 
 axios.interceptors.response.use(response => {
     return response;
