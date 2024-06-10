@@ -28,6 +28,9 @@ export const useUserStore = defineStore("userStore", {
         setToken(token) {
           this.token = token;
         },
+        setRefreshToken(token) {
+            this.refreshToken = token;
+        },
         async login(username, password) {
             try {
                 const response = await axios.post(

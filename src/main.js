@@ -25,9 +25,18 @@ axios.interceptors.response.use(response => {
     return response;
 }, async error => {
     const originalRequest = error.config;
+    const at = useUserStore(); // Get token from store
+
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
+        if (originalRequest.url === '/refresh-token') {
+            // If the request to refresh token fails, clear token and redirect
+            at.setToken('');
+            at.setRefreshToken('');
+            window.location.href = '/login';
+            return Promise.reject(error);
+        }
+
         originalRequest._retry = true;
-        const at = useUserStore(); // Get token from store
         try {
             // Call your refresh token endpoint
             const refreshToken = at.refreshToken; // Get refresh token from store
@@ -38,14 +47,17 @@ axios.interceptors.response.use(response => {
             });
 
             const newAccessToken = response.data.access_token;
+            const newRefreshToken = response.data.refresh_token;
             // Update the token in your store or localStorage
             at.setToken(newAccessToken)
+            at.setRefreshToken(newRefreshToken)
 
             // Retry the original request with the new token
             originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
             return axios(originalRequest);
         } catch (refreshError) {
             at.setToken('');
+            at.setRefreshToken('');
             window.location.href = '/login';
             return Promise.reject(refreshError);
         }
