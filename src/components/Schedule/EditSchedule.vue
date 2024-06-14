@@ -11,8 +11,8 @@
 
           <div class="p-7">
             <form @submit.prevent="handleSubmit" enctype="multipart/form-data" method="post">
-              <div v-if="form.status === 1" class="mb-5.5 text-red">Lịch trình này đang được chạy</div>
-              <div v-if="form.status === 2" class="mb-5.5 text-red">Lịch trình này đã kết thúc</div>
+              <div v-if="form.status === '1'" class="mb-5.5 text-red">Lịch trình này đang được chạy</div>
+              <div v-if="form.status === '2'" class="mb-5.5 text-red">Lịch trình này đã kết thúc</div>
               <!-- Full Name Section -->
               <div class="mb-5.5">
                 <label
@@ -162,7 +162,7 @@
                 </div>
               </div>
 
-              <div class="w-[100%] flex justify-end items-center gap-5" v-if="form.status === 0">
+              <div class="w-[100%] flex justify-end items-center gap-5" v-if="form.status === '0'">
                 <p v-if="showAddSuccess" class="text-green-500 ml-10 font-semibold text-md">
                   Cập nhật thành công
                 </p>
@@ -174,7 +174,7 @@
                 <button
                     type="submit"
                     class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
-                    :class="{ 'bg-red pointer-events-none': form.status !== 0 }"
+                    :class="{ 'bg-red pointer-events-none': form.status !== '0' }"
                 >
                   Cập nhật
                 </button>
