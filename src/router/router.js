@@ -38,7 +38,7 @@ const canAccess = (userRole, roles) => {
 const routes = [
     {
         path: "/",
-        redirect: "/department"
+        redirect: "/schedule"
     },
     {
         path: "/unauthorized",

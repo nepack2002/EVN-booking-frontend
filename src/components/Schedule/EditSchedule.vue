@@ -11,7 +11,8 @@
 
           <div class="p-7">
             <form @submit.prevent="handleSubmit" enctype="multipart/form-data" method="post">
-              <div v-if="form.status == 1" class="mb-5.5 text-red">Lịch trình này đang được chạy</div>
+              <div v-if="form.status === 1" class="mb-5.5 text-red">Lịch trình này đang được chạy</div>
+              <div v-if="form.status === 2" class="mb-5.5 text-red">Lịch trình này đã kết thúc</div>
               <!-- Full Name Section -->
               <div class="mb-5.5">
                 <label
@@ -161,7 +162,7 @@
                 </div>
               </div>
 
-              <div class="w-[100%] flex justify-end items-center gap-5">
+              <div class="w-[100%] flex justify-end items-center gap-5" v-if="form.status === 0">
                 <p v-if="showAddSuccess" class="text-green-500 ml-10 font-semibold text-md">
                   Cập nhật thành công
                 </p>
@@ -173,7 +174,7 @@
                 <button
                     type="submit"
                     class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
-                    :class="{ 'bg-red pointer-events-none': form.status == 1 }"
+                    :class="{ 'bg-red pointer-events-none': form.status !== 0 }"
                 >
                   Cập nhật
                 </button>
@@ -182,26 +183,19 @@
           </div>
         </div>
       </div>
-      <h2 class="text-2xl font-bold my-4">Danh sách địa điểm</h2>
-      <div class="bg-white shadow overflow-hidden sm:rounded-lg dark:bg-boxdark">
-        <table class="min-w-full divide-y-2 divide-boxdark-2">
-          <thead class="bg-gray-50">
-          <tr>
-            <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Địa điểm
-            </th>
-          </tr>
-          </thead>
-          <tbody class="bg-white divide-y-2 divide-boxdark-2 dark:bg-boxdark">
-          <tr v-for="location in locations" :key="location.id">
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-              {{ location.location }}
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <h2 class="text-2xl font-bold my-4">Lộ trình</h2>
+      <div class="bg-white shadow sm:rounded-lg dark:bg-boxdark">
+        <div v-for="location in locations" :key="location.id" class="px-6 py-4 gap-2 text-sm font-medium text-gray-900 flex items-center">
+          <div class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
+            <img src="@/assets/images/location_on_24px.svg" alt="location"/>
+          </div>
+          <div class="flex-1 break-words">
+            {{ location.location }}
+            <div class="text-bodydark text-xs">
+              {{location.lat}}, {{location.long}}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </DefaultLayout>

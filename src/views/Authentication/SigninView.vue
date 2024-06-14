@@ -11,7 +11,7 @@ const login = async () => {
   try {
     await userStore.login(username.value, password.value)
     if (user.value) {
-      router.push('/department')
+      router.push('/schedule')
     }
   } catch (error) {
     console.log('lỗi')
