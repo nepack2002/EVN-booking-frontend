@@ -141,7 +141,7 @@
                       v-model="form.car_id"
                   >
                     <option v-for="car in cars" :key="car.car_id" :value="car.car_id">
-                      {{ car.car_id }} - {{ car.name }} - {{ roundedDistance(car.distance) }} KM
+                      {{ car.car_id }} - {{ car.name }} (Cách điểm bắt đầu {{ roundedDistance(car.distance) }} KM)
                     </option>
                   </select>
                 </div>

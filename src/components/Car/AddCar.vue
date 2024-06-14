@@ -117,6 +117,24 @@
               <div class="mb-5.5">
                 <label
                     :class="{
+                    'text-red': errorMessage.so_may
+                  }"
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="so_may"
+                >Số máy</label
+                >
+                <input
+                    v-model="form.so_may"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    type="text"
+                    name="so_may"
+                    id="so_may"
+                    placeholder="Số máy"
+                />
+              </div>
+              <div class="mb-5.5">
+                <label
+                    :class="{
                     'text-red': errorMessage.so_cho
                   }"
                     class="mb-3 block text-sm font-medium text-black dark:text-white"
@@ -170,6 +188,16 @@
                 >Hạn đăng kiểm tiếp theo</label
                 >
                 <date-picker-one v-model="form.han_dang_kiem_tiep_theo"/>
+              </div>
+              <div class="mb-5.5">
+                <label
+                    :class="{
+                    'text-red': errorMessage.ngay_sua_chua_lon_gan_nhat
+                  }"
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="ngay_sua_chua_lon_gan_nhat"
+                >Ngày sửa chữa lớn gần nhất</label>
+                <date-picker-one v-model="form.ngay_sua_chua_lon_gan_nhat"/>
               </div>
               <div class="mb-5.5">
                 <label
@@ -268,11 +296,14 @@ const form = ref({
   bien_so_xe: '',
   so_khung: '',
   so_cho: '',
+  so_may: '',
   dac_diem_mac_dinh: '',
   so_dau_xang_tieu_thu: '',
   ngay_bao_duong_gan_nhat: '',
   han_dang_kiem_tiep_theo: '',
-  anh_xe: ''
+  anh_xe: '',
+  ngay_sua_chua_lon_gan_nhat: '',
+
 })
 const predictions = ref([])
 
@@ -309,10 +340,12 @@ const handleSubmit = async () => {
     formData.append('bien_so_xe', form.value.bien_so_xe)
     formData.append('so_khung', form.value.so_khung)
     formData.append('so_cho', form.value.so_cho)
+    formData.append('so_may', form.value.so_may)
     formData.append('dac_diem_mac_dinh', form.value.dac_diem_mac_dinh)
     formData.append('so_dau_xang_tieu_thu', form.value.so_dau_xang_tieu_thu)
     formData.append('ngay_bao_duong_gan_nhat', form.value.ngay_bao_duong_gan_nhat)
     formData.append('han_dang_kiem_tiep_theo', form.value.han_dang_kiem_tiep_theo)
+    formData.append('ngay_sua_chua_lon_gan_nhat', form.value.ngay_sua_chua_lon_gan_nhat)
     if (form.value.anh_xe) {
       formData.append('anh_xe', form.value.anh_xe)
     }
