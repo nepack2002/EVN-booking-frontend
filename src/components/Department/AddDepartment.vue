@@ -3,7 +3,7 @@
     <div class="mx-auto w-[80%]">
       <div class="col-span-5 xl:col-span-3">
         <div
-          class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
         >
           <div class="border-b border-stroke py-4 px-7 dark:border-strokedark">
             <h3 class="font-medium text-black dark:text-white">Thông tin phòng ban</h3>
@@ -15,20 +15,20 @@
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.name
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="name"
-                    >Tên phòng ban</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="name"
+                  >Tên phòng ban</label
                   >
                   <div class="">
                     <input
-                      v-model="form.name"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      type="text"
-                      id="name"
-                      placeholder="Tên phòng ban"
+                        v-model="form.name"
+                        class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        type="text"
+                        id="name"
+                        placeholder="Tên phòng ban"
                     />
                   </div>
                 </div>
@@ -36,22 +36,22 @@
                 <!-- Phone Number Section -->
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.parent_id
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="parent_id"
-                    >Phòng ban cha</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="parent_id"
+                  >Phòng ban cha</label
                   >
                   <select
                       id="parent_id"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    v-model="form.parent_id"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      v-model="form.parent_id"
                   >
                     <option
-                      v-for="department in departments"
-                      :key="department.id"
-                      :value="department.id"
+                        v-for="department in departments"
+                        :key="department.id"
+                        :value="department.id"
                     >
                       {{ department.full_name }}
                     </option>
@@ -63,13 +63,13 @@
 
               <div class="w-[100%] flex justify-end gap-5">
                 <button
-                  class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                    class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                 >
                   <router-link :to="{ name: 'Department' }">Hủy</router-link>
                 </button>
                 <button
-                  type="submit"
-                  class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
+                    type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
                 >
                   Thêm mới
                 </button>
@@ -87,9 +87,9 @@
 
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import {onMounted, ref} from 'vue'
 import axios from 'axios'
-import { useUserStore } from '@/stores/auth.js'
+import {useUserStore} from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 const errorMessage = ref({})

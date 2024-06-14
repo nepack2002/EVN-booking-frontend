@@ -1,4 +1,4 @@
-import { defineStore } from "pinia";
+import {defineStore} from "pinia";
 import axios from "axios";
 import {useOneSignal} from "@onesignal/onesignal-vue3";
 
@@ -8,7 +8,7 @@ export const useUserStore = defineStore("userStore", {
         token: '',
         user: null,
         errorMessage: {},
-        error : null,
+        error: null,
         refreshToken: ''
     }),
     persist: {
@@ -26,7 +26,7 @@ export const useUserStore = defineStore("userStore", {
     },
     actions: {
         setToken(token) {
-          this.token = token;
+            this.token = token;
         },
         setRefreshToken(token) {
             this.refreshToken = token;
@@ -53,9 +53,9 @@ export const useUserStore = defineStore("userStore", {
             }
         },
         async fetchUser() {
-            
+
             if (!this.token) return;
-            
+
             try {
                 const response = await axios.get('/user', {
                     headers: {
@@ -73,7 +73,8 @@ export const useUserStore = defineStore("userStore", {
                     oneSignal.User.PushSubscription.addEventListener("change", () => {
                         if (oneSignal.User.PushSubscription.id) {
                             me.postOnesignal(oneSignal.User.PushSubscription.id)
-                        }                    });
+                        }
+                    });
                     if (oneSignal.User.PushSubscription.id) {
                         me.postOnesignal(oneSignal.User.PushSubscription.id)
                     }
@@ -96,7 +97,7 @@ export const useUserStore = defineStore("userStore", {
                 console.error('Logout error:', error);
             }
         },
-        async postOnesignal (onesignalId){
+        async postOnesignal(onesignalId) {
             try {
                 await axios.post('/send-oneSignal', {
                     onesignal_id: onesignalId,

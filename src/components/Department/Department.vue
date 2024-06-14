@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import {onMounted, ref} from 'vue'
 import axios from 'axios'
-import { useUserStore } from '@/stores/auth.js'
+import {useUserStore} from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 const userStore = useUserStore()
@@ -63,50 +63,54 @@ const deleteDepartment = async (id) => {
   <DefaultLayout>
     <main class="flex-1 mx-auto">
       <div
-        v-if="showDeleteSuccess"
-        class="fixed inset-0 animate-slideDown2 flex items-center justify-center bg-black bg-opacity-0"
+          v-if="showDeleteSuccess"
+          class="fixed inset-0 animate-slideDown2 flex items-center justify-center bg-black bg-opacity-0"
       >
         <div class="bg-green-500 text-white py-2 px-4 rounded-md">Đã xóa thành công!</div>
       </div>
 
       <div
-        class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+          class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
       >
         <div class="py-6 px-4 md:px-6 xl:px-7.5 relative">
           <h4 class="text-xl font-bold text-black dark:text-white hidden md:block">
             Danh sách phòng ban
           </h4>
           <div
-            class="md:absolute md:right-5 md:top-[50%] md:-translate-y-[50%] flex gap-5 flex-col md:flex-row items-center"
+              class="md:absolute md:right-5 md:top-[50%] md:-translate-y-[50%] flex gap-5 flex-col md:flex-row items-center"
           >
             <div class="flex gap-5">
               <button
-                class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
+                  class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
               >
                 <router-link :to="{ name: 'AddDepartment' }" class="text-sm font-semibold"
-                  >Thêm phòng ban</router-link
+                >Thêm phòng ban
+                </router-link
                 >
               </button>
               <button
-                class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
+                  class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
               >
                 <router-link
-                  :to="{ name: 'ImportDepartment' }"
-                  class="text-sm font-semibold tracking-wide"
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
+                    :to="{ name: 'ImportDepartment' }"
+                    class="text-sm font-semibold tracking-wide"
+                >
+                  <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="w-6 h-6"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12-3-3m0 0-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-                    /></svg
-                ></router-link>
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12-3-3m0 0-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
+                    />
+                  </svg
+                  >
+                </router-link>
               </button>
             </div>
           </div>
@@ -123,7 +127,8 @@ const deleteDepartment = async (id) => {
           </div>
         </div>
         <!-- Table Rows -->
-        <div v-for="department in departments" :key="department.id" class="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
+        <div v-for="department in departments" :key="department.id"
+             class="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark md:px-6 2xl:px-7.5">
           <!-- Cột cho full_name -->
           <router-link
               :to="{ name: 'EditDepartment', params: { id: department.id } }"

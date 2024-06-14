@@ -1,14 +1,15 @@
-
 import './assets/css/satoshi.css'
 import './assets/css/style.css'
 import 'jsvectormap/dist/css/jsvectormap.min.css'
 import 'flatpickr/dist/flatpickr.min.css'
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import {createApp} from 'vue'
+import {createPinia} from 'pinia'
 import App from './App.vue'
 import axios from 'axios';
 import piniaPersist from 'pinia-plugin-persist'
+import router from '../src/router/index.js'
+import {useUserStore} from "@/stores/auth.js";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 // axios.interceptors.request.use(config => {
@@ -64,9 +65,6 @@ axios.interceptors.response.use(response => {
     }
     return Promise.reject(error);
 });
-
-import router from '../src/router/index.js'
-import {useUserStore} from "@/stores/auth.js";
 
 const pinia = createPinia()
 pinia

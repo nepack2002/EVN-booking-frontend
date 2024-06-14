@@ -7,13 +7,13 @@ import SidebarArea from '@/components/Sidebar/SidebarArea.vue'
   <!-- ===== Page Wrapper Start ===== -->
   <div class="flex h-screen overflow-hidden">
     <!-- ===== Sidebar Start ===== -->
-    <SidebarArea />
+    <SidebarArea/>
     <!-- ===== Sidebar End ===== -->
 
     <!-- ===== Content Area Start ===== -->
     <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
       <!-- ===== Header Start ===== -->
-      <HeaderArea />
+      <HeaderArea/>
       <!-- ===== Header End ===== -->
 
       <!-- ===== Main Content Start ===== -->

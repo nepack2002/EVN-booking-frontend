@@ -1,9 +1,10 @@
 <template>
-  <RouterView />
+  <RouterView/>
 </template>
 
 <script setup>
-import { useUserStore } from '@/stores/auth.js'
+import {useUserStore} from '@/stores/auth.js'
+
 const userStore = useUserStore()
 
 // onMounted(async () => {

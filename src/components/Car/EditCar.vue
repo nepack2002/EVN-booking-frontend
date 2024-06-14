@@ -3,7 +3,7 @@
     <div class="mx-auto w-[80%]">
       <div class="col-span-5 xl:col-span-3">
         <div
-          class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
         >
           <div class="border-b border-stroke py-4 px-7 dark:border-strokedark">
             <h3 class="font-medium text-black dark:text-white">Thông tin ô tô</h3>
@@ -188,10 +188,10 @@
                 />
                 <!-- Hiển thị ảnh đã chọn -->
                 <div v-if="form.anh_xe">
-                  <img :src="form.anh_xe" alt="" />
+                  <img :src="form.anh_xe" alt=""/>
                 </div>
                 <div v-if="form.anh_xe_preview">
-                  <img :src="form.anh_xe_preview" alt="" />
+                  <img :src="form.anh_xe_preview" alt=""/>
                 </div>
               </div>
               <div class="mb-5.5">
@@ -226,13 +226,13 @@
               </div>
               <div class="w-[100%] flex justify-end gap-5">
                 <button
-                  class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                    class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                 >
                   <router-link :to="{ name: 'Car' }">Hủy</router-link>
                 </button>
                 <button
-                  type="submit"
-                  class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
+                    type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
                 >
                   Cập nhật
                 </button>
@@ -252,133 +252,133 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useUserStore } from "@/stores/auth.js";
+import {onMounted, ref} from "vue";
+import {useUserStore} from "@/stores/auth.js";
 import axios from "axios";
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import { useRoute } from "vue-router";
+import {useRoute} from "vue-router";
 import DatePickerOne from "@/components/Forms/DatePicker/DatePickerOne.vue";
 
-    const errorMessage = ref({});
-    const messages = ref('');
-    const showAddSuccess = ref(false);
-    const form = ref({
-      ten_xe: "",
-      mau_xe: "",
-      user_id: "",
-      bien_so_xe: "",
-      so_khung: "",
-      so_cho: "",
-      dac_diem_mac_dinh: "",
-      so_dau_xang_tieu_thu: "",
-      ngay_bao_duong_gan_nhat: "",
-      han_dang_kiem_tiep_theo: "",
-      anh_xe: "",
-    });
+const errorMessage = ref({});
+const messages = ref('');
+const showAddSuccess = ref(false);
+const form = ref({
+  ten_xe: "",
+  mau_xe: "",
+  user_id: "",
+  bien_so_xe: "",
+  so_khung: "",
+  so_cho: "",
+  dac_diem_mac_dinh: "",
+  so_dau_xang_tieu_thu: "",
+  ngay_bao_duong_gan_nhat: "",
+  han_dang_kiem_tiep_theo: "",
+  anh_xe: "",
+});
 
-    const users = ref([]);
-    const userStore = useUserStore();
-    onMounted(async () => {
-      // await userStore.fetchUser();
-    });
+const users = ref([]);
+const userStore = useUserStore();
+onMounted(async () => {
+  // await userStore.fetchUser();
+});
 
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("/users", {
+const fetchUsers = async () => {
+  try {
+    const response = await axios.get("/users", {
+      headers: {
+        Authorization: `Bearer ${userStore.token}`,
+      },
+    });
+    users.value = response.data.data;
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách người lái:", error);
+  }
+};
+const route = useRoute();
+const getCars = async () => {
+  try {
+    const response = await axios.get(
+        `/cars/${route.params.id}`,
+        {
           headers: {
             Authorization: `Bearer ${userStore.token}`,
           },
-        });
-        users.value = response.data.data;
-      } catch (error) {
-        console.error("Lỗi khi lấy danh sách người lái:", error);
-      }
-    };
-    const route = useRoute();
-    const getCars = async () => {
-      try {
-        const response = await axios.get(
-          `/cars/${route.params.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${userStore.token}`,
-            },
-          }
-        );
-        form.value = response.data; // Cập nhật giá trị của reactivity object form với thông tin của chiếc xe
-      } catch (error) {
-        console.error("Lỗi khi lấy thông tin xe:", error);
-      }
-    };
-    const handleSubmit = async (event) => {
-      event.preventDefault(); // Ngăn chặn form gửi đi mặc định
+        }
+    );
+    form.value = response.data; // Cập nhật giá trị của reactivity object form với thông tin của chiếc xe
+  } catch (error) {
+    console.error("Lỗi khi lấy thông tin xe:", error);
+  }
+};
+const handleSubmit = async (event) => {
+  event.preventDefault(); // Ngăn chặn form gửi đi mặc định
 
-      try {
-        const formData = new FormData();
-        // Thêm các trường vào FormData
-        formData.append("ten_xe", form.value.ten_xe);
-        formData.append("mau_xe", form.value.mau_xe);
-        formData.append("user_id", form.value.user_id);
-        formData.append("bien_so_xe", form.value.bien_so_xe);
-        formData.append("so_khung", form.value.so_khung);
-        formData.append("so_cho", form.value.so_cho);
-        formData.append("dac_diem_mac_dinh", form.value.dac_diem_mac_dinh);
-        formData.append(
-          "so_dau_xang_tieu_thu",
-          form.value.so_dau_xang_tieu_thu
-        );
-        formData.append(
-          "ngay_bao_duong_gan_nhat",
-          form.value.ngay_bao_duong_gan_nhat
-        );
-        formData.append(
-          "han_dang_kiem_tiep_theo",
-          form.value.han_dang_kiem_tiep_theo
-        );
-        if (form.value.anh_xe) {
-          formData.append("anh_xe", form.value.anh_xe);
-        }
-        const response = await axios.post(
-          `/cars/${route.params.id}`,
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${userStore.token}`,
-            },
-          } // Gửi dữ liệu form lên máy chủ
-        );
-        console.log(formData);
-        showAddSuccess.value = true;
-        // Tự động ẩn thông báo sau 2 giây
-        setTimeout(() => {
-          showAddSuccess.value = false;
-        }, 2000);
-        messages.value = null;
-        console.log(response.data); // Log response từ máy chủ
-        // Reset form hoặc thực hiện các hành động khác sau khi cập nhật thành công
-      } catch (error) {
-         if (error.response && error.response.status === 409) {
-          messages.value = error.response.data.messages;
-        } else {
-          errorMessage.value = error.response.data.errors;
-          messages.value = null;
-        }
-      }
-    };
-    onMounted(() => {
-      fetchUsers();
-      getCars();
-    });
-    const handleFileUpload = (event) => {
-      const file = event.target.files[0];
-      form.value.anh_xe = file;
-      console.log(form.value.anh_xe);
-      const reader = new FileReader();
-      reader.onload = () => {
-        form.value.anh_xe_preview = reader.result;
-      };
-      reader.readAsDataURL(file);
+  try {
+    const formData = new FormData();
+    // Thêm các trường vào FormData
+    formData.append("ten_xe", form.value.ten_xe);
+    formData.append("mau_xe", form.value.mau_xe);
+    formData.append("user_id", form.value.user_id);
+    formData.append("bien_so_xe", form.value.bien_so_xe);
+    formData.append("so_khung", form.value.so_khung);
+    formData.append("so_cho", form.value.so_cho);
+    formData.append("dac_diem_mac_dinh", form.value.dac_diem_mac_dinh);
+    formData.append(
+        "so_dau_xang_tieu_thu",
+        form.value.so_dau_xang_tieu_thu
+    );
+    formData.append(
+        "ngay_bao_duong_gan_nhat",
+        form.value.ngay_bao_duong_gan_nhat
+    );
+    formData.append(
+        "han_dang_kiem_tiep_theo",
+        form.value.han_dang_kiem_tiep_theo
+    );
+    if (form.value.anh_xe) {
+      formData.append("anh_xe", form.value.anh_xe);
     }
+    const response = await axios.post(
+        `/cars/${route.params.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${userStore.token}`,
+          },
+        } // Gửi dữ liệu form lên máy chủ
+    );
+    console.log(formData);
+    showAddSuccess.value = true;
+    // Tự động ẩn thông báo sau 2 giây
+    setTimeout(() => {
+      showAddSuccess.value = false;
+    }, 2000);
+    messages.value = null;
+    console.log(response.data); // Log response từ máy chủ
+    // Reset form hoặc thực hiện các hành động khác sau khi cập nhật thành công
+  } catch (error) {
+    if (error.response && error.response.status === 409) {
+      messages.value = error.response.data.messages;
+    } else {
+      errorMessage.value = error.response.data.errors;
+      messages.value = null;
+    }
+  }
+};
+onMounted(() => {
+  fetchUsers();
+  getCars();
+});
+const handleFileUpload = (event) => {
+  const file = event.target.files[0];
+  form.value.anh_xe = file;
+  console.log(form.value.anh_xe);
+  const reader = new FileReader();
+  reader.onload = () => {
+    form.value.anh_xe_preview = reader.result;
+  };
+  reader.readAsDataURL(file);
+}
 </script>
 

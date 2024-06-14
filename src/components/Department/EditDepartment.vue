@@ -3,7 +3,7 @@
     <div class="mx-auto w-[80%]">
       <div class="col-span-5 xl:col-span-3">
         <div
-          class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
         >
           <div class="border-b border-stroke py-4 px-7 dark:border-strokedark">
             <h3 class="font-medium text-black dark:text-white">Thông tin người dùng</h3>
@@ -66,13 +66,13 @@
                   Cập nhật thành công
                 </p>
                 <button
-                  class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                    class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                 >
                   <router-link :to="{ name: 'Department' }">Hủy</router-link>
                 </button>
                 <button
-                  type="submit"
-                  class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
+                    type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
                 >
                   Cập nhật
                 </button>
@@ -86,10 +86,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import {onMounted, ref} from 'vue'
 import axios from 'axios'
-import { useRoute } from 'vue-router'
-import { useUserStore } from '@/stores/auth.js'
+import {useRoute} from 'vue-router'
+import {useUserStore} from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 const errorMessage = ref({})

@@ -3,7 +3,7 @@
     <div class="mx-auto w-[80%]">
       <div class="col-span-5 xl:col-span-3">
         <div
-          class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
         >
           <div class="border-b border-stroke py-4 px-7 dark:border-strokedark">
             <h3 class="font-medium text-black dark:text-white">Thông tin lịch trình</h3>
@@ -166,14 +166,14 @@
                   Cập nhật thành công
                 </p>
                 <button
-                  class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                    class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                 >
                   <router-link :to="{ name: 'Schedule' }">Hủy</router-link>
                 </button>
                 <button
-                  type="submit"
-                  class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
-                  :class="{ 'bg-red pointer-events-none': form.status == 1 }"
+                    type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
+                    :class="{ 'bg-red pointer-events-none': form.status == 1 }"
                 >
                   Cập nhật
                 </button>
@@ -186,20 +186,20 @@
       <div class="bg-white shadow overflow-hidden sm:rounded-lg dark:bg-boxdark">
         <table class="min-w-full divide-y-2 divide-boxdark-2">
           <thead class="bg-gray-50">
-            <tr>
-              <th
+          <tr>
+            <th
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Địa điểm
-              </th>
-            </tr>
+            >
+              Địa điểm
+            </th>
+          </tr>
           </thead>
           <tbody class="bg-white divide-y-2 divide-boxdark-2 dark:bg-boxdark">
-            <tr v-for="location in locations" :key="location.id">
-              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                {{ location.location }}
-              </td>
-            </tr>
+          <tr v-for="location in locations" :key="location.id">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              {{ location.location }}
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -207,11 +207,12 @@
   </DefaultLayout>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useUserStore } from '@/stores/auth.js'
-import { useRoute } from 'vue-router'
+import {onMounted, ref} from 'vue'
+import {useUserStore} from '@/stores/auth.js'
+import {useRoute} from 'vue-router'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import axios from 'axios'
+
 const errorMessage = ref({})
 const showAddSuccess = ref(false)
 const locations = ref([])
@@ -276,16 +277,16 @@ const fetchDepartments = async () => {
 const fetchCars = async () => {
   try {
     const response = await axios.post(
-      '/coordinates',
-      {
-        lat: form.value.lat_location,
-        long: form.value.long_location
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${userStore.token}`
+        '/coordinates',
+        {
+          lat: form.value.lat_location,
+          long: form.value.long_location
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userStore.token}`
+          }
         }
-      }
     )
     console.log(form.value.lat_location)
     cars.value = response.data
@@ -315,7 +316,7 @@ const handleSubmit = async (event) => {
 async function showSuggestions() {
   const apiKey = import.meta.env.VITE_KEY
   const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(
-    form.value.location
+      form.value.location
   )}`
   if (form.value.location.length > 0) {
     try {
@@ -331,10 +332,11 @@ async function showSuggestions() {
     form.value.long_location = ''
   }
 }
+
 async function showSuggestions_2() {
   const apiKey = import.meta.env.VITE_KEY
   const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(
-    form.value.location_2
+      form.value.location_2
   )}`
   if (form.value.location_2.length > 0) {
     try {
@@ -353,7 +355,7 @@ async function showSuggestions_2() {
 
 async function selectSuggestion(selectedDescription) {
   const selectedPrediction = predictions.value.find(
-    (prediction) => prediction.description === selectedDescription
+      (prediction) => prediction.description === selectedDescription
   )
   //   console.log(selectedPrediction);
   if (selectedPrediction) {
@@ -377,9 +379,10 @@ async function selectSuggestion(selectedDescription) {
     console.error('Selected prediction not found.')
   }
 }
+
 async function selectSuggestion_2(selectedDescription) {
   const selectedPrediction = predictions_2.value.find(
-    (prediction) => prediction.description === selectedDescription
+      (prediction) => prediction.description === selectedDescription
   )
   if (selectedPrediction) {
     const placeId = selectedPrediction.place_id
@@ -400,6 +403,7 @@ async function selectSuggestion_2(selectedDescription) {
     console.error('Selected prediction not found.')
   }
 }
+
 function roundedDistance(distance) {
   return Math.round(distance)
 }

@@ -3,7 +3,7 @@
     <div class="mx-auto w-[80%]">
       <div class="col-span-5 xl:col-span-3">
         <div
-          class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
         >
           <div class="border-b border-stroke py-4 px-7 dark:border-strokedark">
             <h3 class="font-medium text-black dark:text-white">Thông tin ô tô</h3>
@@ -15,21 +15,21 @@
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.ten_xe
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="fullName"
-                    >Tên xe</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="fullName"
+                  >Tên xe</label
                   >
                   <div class="">
                     <input
-                      v-model="form.ten_xe"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      type="text"
-                      name="fullName"
-                      id="fullName"
-                      placeholder="Tên xe"
+                        v-model="form.ten_xe"
+                        class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        type="text"
+                        name="fullName"
+                        id="fullName"
+                        placeholder="Tên xe"
                     />
                   </div>
                 </div>
@@ -37,16 +37,16 @@
                 <!-- Phone Number Section -->
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.user_id
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="phoneNumber"
-                    >Tài xế</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="phoneNumber"
+                  >Tài xế</label
                   >
                   <select
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    v-model="form.user_id"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      v-model="form.user_id"
                   >
                     <option v-for="user in users.filter(user => !user.car)" :key="user.id" :value="user.id">
                       {{ user.id }} - {{ user.name }}
@@ -58,21 +58,21 @@
               <!-- Email Address Section -->
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.mau_xe
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="mauxe"
-                  >Màu xe</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="mauxe"
+                >Màu xe</label
                 >
                 <div class="relative">
                   <input
-                    v-model="form.mau_xe"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    type="text"
-                    name="mauxe"
-                    id="mauxe"
-                    placeholder="Màu xe"
+                      v-model="form.mau_xe"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      type="text"
+                      name="mauxe"
+                      id="mauxe"
+                      placeholder="Màu xe"
                   />
                 </div>
               </div>
@@ -80,118 +80,118 @@
               <!-- Username Section -->
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.bien_so_xe
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="biensoxe"
-                  >Biển số xe</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="biensoxe"
+                >Biển số xe</label
                 >
                 <input
-                  v-model="form.bien_so_xe"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  type="text"
-                  name="biensoxe"
-                  id="biensoxe"
-                  placeholder="Biển số xe"
+                    v-model="form.bien_so_xe"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    type="text"
+                    name="biensoxe"
+                    id="biensoxe"
+                    placeholder="Biển số xe"
                 />
               </div>
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.so_khung
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="sokhung"
-                  >Số khung</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="sokhung"
+                >Số khung</label
                 >
                 <input
-                  v-model="form.so_khung"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  type="text"
-                  name="sokhung"
-                  id="sokhung"
-                  placeholder="Số khung"
+                    v-model="form.so_khung"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    type="text"
+                    name="sokhung"
+                    id="sokhung"
+                    placeholder="Số khung"
                 />
               </div>
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.so_cho
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="socho">Số chỗ</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="socho">Số chỗ</label
                 >
                 <input
-                  v-model="form.so_cho"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  type="text"
-                  name="socho"
-                  id="socho"
-                  placeholder="Số chỗ"
+                    v-model="form.so_cho"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    type="text"
+                    name="socho"
+                    id="socho"
+                    placeholder="Số chỗ"
                 />
               </div>
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.so_dau_xang_tieu_thu
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="tieuthu"
-                  >Số xăng, dầu tiêu thụ (L/100KM)</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="tieuthu"
+                >Số xăng, dầu tiêu thụ (L/100KM)</label
                 >
                 <input
-                  v-model="form.so_dau_xang_tieu_thu"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  type="number"
-                  name="tieuthu"
-                  id="tieuthu"
-                  placeholder="L/100KM"
+                    v-model="form.so_dau_xang_tieu_thu"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    type="number"
+                    name="tieuthu"
+                    id="tieuthu"
+                    placeholder="L/100KM"
                 />
               </div>
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.ngay_bao_duong_gan_nhat
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="ngay_bao_duong"
-                  >Ngày bảo dưỡng gần nhất</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="ngay_bao_duong"
+                >Ngày bảo dưỡng gần nhất</label
                 >
                 <date-picker-one v-model="form.ngay_bao_duong_gan_nhat"/>
               </div>
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.han_dang_kiem_tiep_theo
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="han_dang_kiem_tiep_theo"
-                  >Hạn đăng kiểm tiếp theo</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="han_dang_kiem_tiep_theo"
+                >Hạn đăng kiểm tiếp theo</label
                 >
                 <date-picker-one v-model="form.han_dang_kiem_tiep_theo"/>
               </div>
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.anh_xe
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="Username"
-                  >Ảnh xe</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="Username"
+                >Ảnh xe</label
                 >
                 <input
-                  type="file"
-                  id="anh_xe"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  @change="handleFileUpload"
+                    type="file"
+                    id="anh_xe"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    @change="handleFileUpload"
                 />
                 <!-- Hiển thị ảnh đã chọn -->
                 <div v-if="form.anh_xe">
-                  <img :src="form.anh_xe" alt="" />
+                  <img :src="form.anh_xe" alt=""/>
                 </div>
                 <div v-if="form.anh_xe_preview">
-                  <img :src="form.anh_xe_preview" alt="" />
+                  <img :src="form.anh_xe_preview" alt=""/>
                 </div>
               </div>
               <div class="mb-5.5">
@@ -226,13 +226,13 @@
               </div>
               <div class="w-[100%] flex justify-end gap-5">
                 <button
-                  class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                    class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                 >
                   <router-link :to="{ name: 'Car' }">Hủy</router-link>
                 </button>
                 <button
-                  type="submit"
-                  class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
+                    type="submit"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
                 >
                   Thêm mới
                 </button>
@@ -252,9 +252,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import {onMounted, ref} from 'vue'
 import axios from 'axios'
-import { useUserStore } from '@/stores/auth.js'
+import {useUserStore} from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import DatePickerOne from "@/components/Forms/DatePicker/DatePickerOne.vue";
 
