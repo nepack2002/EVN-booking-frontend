@@ -184,7 +184,7 @@ const getUsers = async () => {
   try {
     const response = await axios.get(`/users/${route.params.id}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${userStore.token}`
       }
     }) // Sử dụng route.params.id để lấy ID từ URL
     form.value = response.data // Cập nhật giá trị của reactivity object form với thông tin của chiếc xe
@@ -206,7 +206,7 @@ const handleSubmit = async (event) => {
     }
     await axios.post(`/users/${route.params.id}`, formData, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${userStore.token}`
       }
     })
     showAddSuccess.value = true

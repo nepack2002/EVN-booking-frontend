@@ -124,7 +124,7 @@ const getDepartments = async () => {
   try {
     const response = await axios.get(`/departments/${route.params.id}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${userStore.token}`
       }
     })
     form.value = response.data

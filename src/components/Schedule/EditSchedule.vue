@@ -249,7 +249,7 @@ const getDepartments = async () => {
   try {
     const response = await axios.get(`/schedules/${route.params.id}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${userStore.token}`
       }
     })
     form.value = response.data
