@@ -147,7 +147,7 @@
                 </button>
               </div>
               <p v-if="showAddSuccess" class="text-green-500 ml-10 font-semibold text-md">
-                Thêm xe thành công
+                Thêm người dùng thành công
               </p>
             </form>
           </div>
