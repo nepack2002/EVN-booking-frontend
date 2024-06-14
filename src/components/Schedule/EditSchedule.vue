@@ -185,6 +185,17 @@
       </div>
       <h2 class="text-2xl font-bold my-4">Lộ trình</h2>
       <div class="bg-white shadow sm:rounded-lg dark:bg-boxdark">
+        <div class="px-6 py-4 gap-2 text-sm font-medium text-gray-900 flex items-center">
+          <div class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
+            <img src="@/assets/images/location_on_24px.svg" alt="location"/>
+          </div>
+          <div class="flex-1 break-words text-blue-700">
+            {{ form.location }}
+            <div class="text-bodydark text-xs">
+              {{form.lat_location}}, {{form.long_location}}
+            </div>
+          </div>
+        </div>
         <div v-for="location in locations" :key="location.id" class="px-6 py-4 gap-2 text-sm font-medium text-gray-900 flex items-center">
           <div class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
             <img src="@/assets/images/location_on_24px.svg" alt="location"/>
@@ -193,6 +204,18 @@
             {{ location.location }}
             <div class="text-bodydark text-xs">
               {{location.lat}}, {{location.long}}
+            </div>
+          </div>
+        </div>
+
+        <div v-if="form.status === '2'" class="px-6 py-4 gap-2 text-sm font-medium text-gray-900 flex items-center">
+          <div class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
+            <img src="@/assets/images/location_on_24px.svg" alt="location"/>
+          </div>
+          <div class="flex-1 break-words text-blue-700">
+            {{ form.location_2 }}
+            <div class="text-bodydark text-xs">
+              {{form.lat_location_2}}, {{form.long_location_2}}
             </div>
           </div>
         </div>
