@@ -15,10 +15,10 @@ const userStore = useUserStore()
     v-if="userStore.user"
   >
     <div class="flex flex-grow items-center justify-between py-4 px-4 shadow-2 md:px-6 2xl:px-11">
-      <div class="flex items-center gap-2 sm:gap-4 lg:hidden">
+      <div class="flex items-center gap-2 sm:gap-4">
         <!-- Hamburger Toggle BTN -->
         <button
-          class="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
+          class="z-99999 lg:hidden block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark"
           @click="
             () => {
               console.log('Toggling Sidebar')
@@ -54,7 +54,7 @@ const userStore = useUserStore()
           </span>
         </button>
         <!-- Hamburger Toggle BTN -->
-        <router-link class="block flex-shrink-0 lg:hidden" to="/">
+        <router-link class="flex-shrink-0" to="/">
           <img src="@/assets/images/logo/Asset.png" class="w-15" alt="Logo" />
         </router-link>
       </div>

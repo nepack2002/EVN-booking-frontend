@@ -15,19 +15,20 @@
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.name
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="fullName"
-                    >Tên</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="name"
+                  >Họ và tên</label
                   >
                   <div class="">
                     <input
-                      v-model="form.name"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      type="text"
-                      placeholder="nepack"
+                        v-model="form.name"
+                        class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        type="text"
+                        id="name"
+                        placeholder="Họ và tên"
                     />
                   </div>
                 </div>
@@ -35,17 +36,18 @@
                 <!-- Phone Number Section -->
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.username
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="phoneNumber"
-                    >Tên người dùng</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="username"
+                  >Tên người dùng</label
                   >
                   <input
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    id="email"
-                    v-model="form.username"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      id="username"
+                      v-model="form.username"
+                      placeholder="Tên người dùng"
                   />
                 </div>
               </div>
@@ -53,23 +55,23 @@
               <!-- Email Address Section -->
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.role
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="emailAddress"
-                  >Vai trò</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="role"
+                >Vai trò</label
                 >
                 <div class="relative">
                   <select
-                    id="role"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    v-model="form.role"
+                      id="role"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      v-model="form.role"
                   >
-                    <option value="admin">1 - Admin</option>
-                    <option value="quản trị công tác">2 - Quản trị công tác</option>
-                    <option value="quản trị vật tư">3 - Quản trị vật tư</option>
-                    <option value="user">4 - User</option>
+                    <option value="admin">Admin</option>
+                    <option value="qtct">Quản trị công tác</option>
+                    <option value="qtvt">Quản trị vật tư</option>
+                    <option value="user">User</option>
                   </select>
                 </div>
               </div>
@@ -77,38 +79,41 @@
               <!-- Username Section -->
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.phone
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="Username"
-                  >Số điện thoại</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="phone"
+                >Số điện thoại</label
                 >
                 <input
-                  v-model="form.phone"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  type="text"
+                    v-model="form.phone"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    type="text"
+                    id="phone"
+                    placeholder="Số điện thoại"
                 />
               </div>
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.department_id
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="Username"
-                  >Phòng ban</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                    for="department"
+                >Phòng ban</label
                 >
                 <select
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  v-model="form.department_id"
+                    id="department"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    v-model="form.department_id"
                 >
                   <option
-                    v-for="department in departments"
-                    :key="department.id"
-                    :value="department.id"
+                      v-for="department in departments"
+                      :key="department.id"
+                      :value="department.id"
                   >
-                    {{ department.id }} - {{ department.name }}
+                    {{ department.full_name }}
                   </option>
                 </select>
               </div>

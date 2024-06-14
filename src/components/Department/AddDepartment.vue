@@ -6,7 +6,7 @@
           class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
         >
           <div class="border-b border-stroke py-4 px-7 dark:border-strokedark">
-            <h3 class="font-medium text-black dark:text-white">Thông tin người dùng</h3>
+            <h3 class="font-medium text-black dark:text-white">Thông tin phòng ban</h3>
           </div>
 
           <div class="p-7">
@@ -19,7 +19,7 @@
                       'text-red': errorMessage.name
                     }"
                     class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="fullName"
+                    for="name"
                     >Tên phòng ban</label
                   >
                   <div class="">
@@ -27,7 +27,8 @@
                       v-model="form.name"
                       class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       type="text"
-                      placeholder="nepack"
+                      id="name"
+                      placeholder="Tên phòng ban"
                     />
                   </div>
                 </div>
@@ -39,10 +40,11 @@
                       'text-red': errorMessage.parent_id
                     }"
                     class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="phoneNumber"
-                    >Phòng ban con</label
+                    for="parent_id"
+                    >Phòng ban cha</label
                   >
                   <select
+                      id="parent_id"
                     class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.parent_id"
                   >
@@ -51,7 +53,7 @@
                       :key="department.id"
                       :value="department.id"
                     >
-                      {{ department.id }} - {{ department.name }}
+                      {{ department.full_name }}
                     </option>
                   </select>
                 </div>
@@ -101,12 +103,12 @@ const userStore = useUserStore()
 const departments = ref([])
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get('/departments', {
+    const response = await axios.get('/departments2', {
       headers: {
         Authorization: `Bearer ${userStore.token}`
       }
     })
-    departments.value = response.data.data
+    departments.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy danh sách phòng ban:', error)
   }

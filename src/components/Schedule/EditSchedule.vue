@@ -13,27 +13,41 @@
             <form @submit.prevent="handleSubmit" enctype="multipart/form-data" method="post">
               <div v-if="form.status == 1" class="mb-5.5 text-red">Lịch trình này đang được chạy</div>
               <!-- Full Name Section -->
-              <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
-                
-                <div class="w-full sm:w-1/2">
-                  <label
+              <div class="mb-5.5">
+                <label
                     :class="{
-                      'text-red': errorMessage.department_id
+                      'text-red': errorMessage.program
                     }"
                     class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    >Tên phòng ban</label
+                >Chương trình công tác</label
+                >
+                <input
+                    type="text"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    v-model="form.program"
+                    placeholder="Chương trình công tác"
+                />
+              </div>
+              <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
+                <div class="w-full sm:w-1/2">
+                  <label
+                      :class="{
+                      'text-red': errorMessage.department_id
+                    }"
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                  >Tên phòng ban</label
                   >
                   <div class="">
                     <select
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      v-model="form.department_id"
+                        class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        v-model="form.department_id"
                     >
                       <option
-                        v-for="department in departments"
-                        :key="department.id"
-                        :value="department.id"
+                          v-for="department in departments"
+                          :key="department.id"
+                          :value="department.id"
                       >
-                        {{ department.id }} - {{ department.name }}
+                        {{ department.full_name }}
                       </option>
                     </select>
                   </div>
@@ -42,45 +56,40 @@
                 <!-- Phone Number Section -->
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.datetime
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    >Thời gian</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                  >Thời gian</label
                   >
-                  <input
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    id="email"
-                    type="datetime"
-                    v-model="form.datetime"
-                  />
+                  <date-picker-one v-model="form.datetime"/>
                 </div>
               </div>
 
               <!-- Email Address Section -->
               <div class="mb-5.5">
                 <label
-                  :class="{
+                    :class="{
                     'text-red': errorMessage.location
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Địa điểm bắt đầu</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                >Địa điểm bắt đầu</label
                 >
                 <div class="relative">
                   <input
-                    type="text"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    v-model="form.location"
-                    placeholder="Type to get suggestions..."
-                    @input="showSuggestions"
+                      type="text"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      v-model="form.location"
+                      placeholder="Điền địa chỉ để hiển thị gợi ý..."
+                      @input="showSuggestions"
                   />
                   <div>
                     <ul class="divide-y divide-gray-300">
                       <li
-                        v-for="prediction in predictions"
-                        :key="prediction"
-                        @click="selectSuggestion(prediction.description)"
-                        class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                          v-for="prediction in predictions"
+                          :key="prediction"
+                          @click="selectSuggestion(prediction.description)"
+                          class="cursor-pointer py-2 px-4 hover:bg-gray-200"
                       >
                         {{ prediction.description }}
                       </li>
@@ -92,104 +101,43 @@
               <!-- Username Section -->
               <div class="mb-5.5">
                 <label
-                  :class="{
-                    'text-red': errorMessage.phone
+                    :class="{
+                    'text-red': errorMessage.location_2
                   }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Vĩ độ 1</label
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                >Địa điểm kết thúc</label
                 >
                 <input
-                  v-model="form.lat_location"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  placeholder="Latitude"
-                  readonly
+                    type="text"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    v-model="form.location_2"
+                    placeholder="Điền địa chỉ để hiển thị gợi ý..."
+                    @input="showSuggestions_2"
                 />
-              </div>
-              <div class="mb-5.5">
-                <label
-                  :class="{
-                    'text-red': errorMessage.department_id
-                  }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Kinh độ 1</label
-                >
-                <input
-                  v-model="form.long_location"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  placeholder="Longitude"
-                  readonly
-                />
-              </div>
-              <div class="mb-5.5">
-                <label
-                  :class="{
-                    'text-red': errorMessage.password
-                  }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Địa điểm kết thúc</label
-                >
-                <input
-                  type="text"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  v-model="form.location_2"
-                  placeholder="Type to get suggestions..."
-                  @input="showSuggestions_2"
-                />
-                <div>
+                <div class="mb-5.5">
                   <ul class="divide-y divide-gray-300">
                     <li
-                      v-for="prediction in predictions_2"
-                      :key="prediction"
-                      @click="selectSuggestion_2(prediction.description)"
-                      class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                        v-for="prediction in predictions_2"
+                        :key="prediction"
+                        @click="selectSuggestion_2(prediction.description)"
+                        class="cursor-pointer py-2 px-4 hover:bg-gray-200"
                     >
                       {{ prediction.description }}
                     </li>
                   </ul>
                 </div>
-                <div class="my-5.5">
-                  <label
-                    :class="{
-                      'text-red': errorMessage.phone
-                    }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    >Vĩ độ 2</label
-                  >
-                  <input
-                    v-model="form.lat_location_2"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    placeholder="Latitude"
-                    readonly
-                  />
-                </div>
                 <div class="mb-5.5">
                   <label
-                    :class="{
-                      'text-red': errorMessage.department_id
+                      :class="{
+                      'text-red': errorMessage.car_id
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="Username"
-                    >Kinh độ 2</label
-                  >
-                  <input
-                    v-model="form.long_location_2"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    placeholder="Longitude"
-                    readonly
-                  />
-                </div>
-                <div class="mb-5.5">
-                  <label
-                    :class="{
-                      'text-red': errorMessage.department_id
-                    }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="Username"
-                    >Loại phương tiện</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="Username"
+                  >Loại phương tiện</label
                   >
                   <select
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    v-model="form.car_id"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      v-model="form.car_id"
                   >
                     <option v-for="car in cars" :key="car.car_id" :value="car.car_id">
                       {{ car.car_id }} - {{ car.name }} - {{ roundedDistance(car.distance) }} KM
@@ -198,32 +146,17 @@
                 </div>
                 <div class="mb-5.5">
                   <label
-                    :class="{
-                      'text-red': errorMessage.department_id
+                      :class="{
+                      'text-red': errorMessage.participants
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    >Người tham gia</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                  >Người tham gia</label
                   >
                   <input
-                    type="text"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    v-model="form.participants"
-                    placeholder="Người tham gia..."
-                  />
-                </div>
-                <div class="mb-5.5">
-                  <label
-                    :class="{
-                      'text-red': errorMessage.department_id
-                    }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    >Chương trình công tác</label
-                  >
-                  <input
-                    type="text"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    v-model="form.program"
-                    placeholder="Người tham gia..."
+                      type="text"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      v-model="form.participants"
+                      placeholder="Người tham gia"
                   />
                 </div>
               </div>

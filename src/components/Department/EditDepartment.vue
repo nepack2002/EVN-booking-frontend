@@ -15,19 +15,20 @@
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.name
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="fullName"
-                    >Tên phòng ban</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="name"
+                  >Tên phòng ban</label
                   >
                   <div class="">
                     <input
-                      v-model="form.name"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      type="text"
-                      placeholder="nepack"
+                        v-model="form.name"
+                        class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        type="text"
+                        id="name"
+                        placeholder="Tên phòng ban"
                     />
                   </div>
                 </div>
@@ -35,24 +36,24 @@
                 <!-- Phone Number Section -->
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.parent_id
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="phoneNumber"
-                    >Phòng ban con</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="parent_id"
+                  >Phòng ban cha</label
                   >
                   <select
-                    class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    v-model="form.parent_id"
+                      id="parent_id"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      v-model="form.parent_id"
                   >
-                    <option value="">Không chọn phòng ban nào</option>
                     <option
-                      v-for="department in departments"
-                      :key="department.id"
-                      :value="department.id"
+                        v-for="department in departments"
+                        :key="department.id"
+                        :value="department.id"
                     >
-                      {{ department.id }} - {{ department.name }}
+                      {{ department.full_name }}
                     </option>
                   </select>
                 </div>
@@ -108,12 +109,12 @@ onMounted(async () => {
 const departments = ref([])
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get('/departments', {
+    const response = await axios.get('/departments2', {
       headers: {
         Authorization: `Bearer ${userStore.token}`
       }
     })
-    departments.value = response.data.data.filter((department) => department.id !== form.value.id)
+    departments.value = response.data.filter((department) => department.id !== form.value.id)
   } catch (error) {
     console.error('Lỗi khi lấy danh sách phòng ban:', error)
   }

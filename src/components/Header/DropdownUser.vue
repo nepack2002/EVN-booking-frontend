@@ -33,9 +33,9 @@ const logout = async () => {
         <span class="block text-xs font-medium">{{ user.username }}</span>
       </span>
 
-      <span class="h-12 w-12 rounded-full">
-        <img src="@/assets/images/user/user-01.png" alt="User" />
-      </span>
+<!--      <span class="h-12 w-12 rounded-full">-->
+<!--        <img src="@/assets/images/user/user-01.png" alt="User" />-->
+<!--      </span>-->
 
       <svg
         :class="dropdownOpen && 'rotate-180'"

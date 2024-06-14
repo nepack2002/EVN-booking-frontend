@@ -12,6 +12,21 @@
           <div class="p-7">
             <form @submit.prevent="handleSubmit" enctype="multipart/form-data" method="post">
               <!-- Full Name Section -->
+              <div class="mb-5.5">
+                <label
+                    :class="{
+                      'text-red': errorMessage.program
+                    }"
+                    class="mb-3 block text-sm font-medium text-black dark:text-white"
+                >Chương trình công tác</label
+                >
+                <input
+                    type="text"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    v-model="form.program"
+                    placeholder="Chương trình công tác"
+                />
+              </div>
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                 <div class="w-full sm:w-1/2">
                   <label
@@ -31,7 +46,7 @@
                         :key="department.id"
                         :value="department.id"
                       >
-                        {{ department.id }} - {{ department.name }}
+                        {{ department.full_name }}
                       </option>
                     </select>
                   </div>
@@ -46,12 +61,7 @@
                     class="mb-3 block text-sm font-medium text-black dark:text-white"
                     >Thời gian</label
                   >
-                  <input
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    id="email"
-                    type="datetime"
-                    v-model="form.datetime"
-                  />
+                  <date-picker-one v-model="form.datetime"/>
                 </div>
               </div>
 
@@ -69,7 +79,7 @@
                     type="text"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.location"
-                    placeholder="Type to get suggestions..."
+                    placeholder="Điền địa chỉ để hiển thị gợi ý..."
                     @input="showSuggestions"
                   />
                   <div>
@@ -91,37 +101,7 @@
               <div class="mb-5.5">
                 <label
                   :class="{
-                    'text-red': errorMessage.phone
-                  }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Vĩ độ 1</label
-                >
-                <input
-                  v-model="form.lat_location"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  placeholder="Latitude"
-                  readonly
-                />
-              </div>
-              <div class="mb-5.5">
-                <label
-                  :class="{
-                    'text-red': errorMessage.department_id
-                  }"
-                  class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Kinh độ 1</label
-                >
-                <input
-                  v-model="form.long_location"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                  placeholder="Longitude"
-                  readonly
-                />
-              </div>
-              <div class="mb-5.5">
-                <label
-                  :class="{
-                    'text-red': errorMessage.password
+                    'text-red': errorMessage.location_2
                   }"
                   class="mb-3 block text-sm font-medium text-black dark:text-white"
                   >Địa điểm kết thúc</label
@@ -130,10 +110,10 @@
                   type="text"
                   class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   v-model="form.location_2"
-                  placeholder="Type to get suggestions..."
+                  placeholder="Điền địa chỉ để hiển thị gợi ý..."
                   @input="showSuggestions_2"
                 />
-                <div>
+                <div class="mb-5.5">
                   <ul class="divide-y divide-gray-300">
                     <li
                       v-for="prediction in predictions_2"
@@ -145,41 +125,10 @@
                     </li>
                   </ul>
                 </div>
-                <div class="my-5.5">
-                  <label
-                    :class="{
-                      'text-red': errorMessage.phone
-                    }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    >Vĩ độ 2</label
-                  >
-                  <input
-                    v-model="form.lat_location_2"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    placeholder="Latitude"
-                    readonly
-                  />
-                </div>
                 <div class="mb-5.5">
                   <label
                     :class="{
-                      'text-red': errorMessage.department_id
-                    }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="Username"
-                    >Kinh độ 2</label
-                  >
-                  <input
-                    v-model="form.long_location_2"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    placeholder="Longitude"
-                    readonly
-                  />
-                </div>
-                <div class="mb-5.5">
-                  <label
-                    :class="{
-                      'text-red': errorMessage.department_id
+                      'text-red': errorMessage.car_id
                     }"
                     class="mb-3 block text-sm font-medium text-black dark:text-white"
                     for="Username"
@@ -197,7 +146,7 @@
                 <div class="mb-5.5">
                   <label
                     :class="{
-                      'text-red': errorMessage.department_id
+                      'text-red': errorMessage.participants
                     }"
                     class="mb-3 block text-sm font-medium text-black dark:text-white"
                     >Người tham gia</label
@@ -206,22 +155,7 @@
                     type="text"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.participants"
-                    placeholder="Người tham gia..."
-                  />
-                </div>
-                <div class="mb-5.5">
-                  <label
-                    :class="{
-                      'text-red': errorMessage.department_id
-                    }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    >Chương trình công tác</label
-                  >
-                  <input
-                    type="text"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    v-model="form.program"
-                    placeholder="Người tham gia..."
+                    placeholder="Người tham gia"
                   />
                 </div>
               </div>
@@ -254,6 +188,7 @@ import { ref, onMounted } from 'vue'
 import { useUserStore } from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import axios from 'axios'
+import DatePickerOne from "@/components/Forms/DatePicker/DatePickerOne.vue";
 const errorMessage = ref({})
 const showAddSuccess = ref(false)
 const form = ref({
@@ -281,12 +216,12 @@ onMounted(async () => {
 })
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get('/departments', {
+    const response = await axios.get('/departments2', {
       headers: {
         Authorization: `Bearer ${userStore.token}`
       }
     })
-    departments.value = response.data.data
+    departments.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy danh sách phòng ban:', error)
   }
@@ -344,7 +279,7 @@ async function showSuggestions() {
       console.error('Error:', error)
     }
   } else {
-    predictions.value = ''
+    predictions.value = []
     form.value.lat_location = ''
     form.value.long_location = ''
   }
@@ -363,7 +298,7 @@ async function showSuggestions_2() {
       console.error('Error:', error)
     }
   } else {
-    predictions_2.value = ''
+    predictions_2.value = []
     form.value.lat_location_2 = ''
     form.value.long_location_2 = ''
   }
