@@ -62,7 +62,7 @@
                       class="mb-3 block text-sm font-medium text-black dark:text-white"
                   >Thời gian</label
                   >
-                  <date-picker-one v-model="form.datetime"/>
+                  <datetime-picker-one v-model="form.datetime"/>
                 </div>
               </div>
 
@@ -212,6 +212,7 @@ import {useUserStore} from '@/stores/auth.js'
 import {useRoute} from 'vue-router'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import axios from 'axios'
+import DatetimePickerOne from "@/components/Forms/DatePicker/DatetimePickerOne.vue";
 
 const errorMessage = ref({})
 const showAddSuccess = ref(false)
@@ -264,12 +265,12 @@ const getDepartments = async () => {
 }
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get('/departments', {
+    const response = await axios.get('/departments2', {
       headers: {
         Authorization: `Bearer ${userStore.token}`
       }
     })
-    departments.value = response.data.data
+    departments.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy danh sách phòng ban:', error)
   }

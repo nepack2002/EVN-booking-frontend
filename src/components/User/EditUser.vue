@@ -169,12 +169,12 @@ onMounted(() => {
 const departments = ref([])
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get('/departments', {
+    const response = await axios.get('/departments2', {
       headers: {
         Authorization: `Bearer ${userStore.token}`
       }
     })
-    departments.value = response.data.data
+    departments.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy danh sách phòng ban:', error)
   }
