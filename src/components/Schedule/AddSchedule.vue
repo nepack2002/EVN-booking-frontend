@@ -61,7 +61,7 @@
                       class="mb-3 block text-sm font-medium text-black dark:text-white"
                   >Thời gian</label
                   >
-                  <date-picker-one v-model="form.datetime"/>
+                  <datetime-picker-one v-model="form.datetime"/>
                 </div>
               </div>
 
@@ -188,7 +188,7 @@ import {onMounted, ref} from 'vue'
 import {useUserStore} from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import axios from 'axios'
-import DatePickerOne from "@/components/Forms/DatePicker/DatePickerOne.vue";
+import DatetimePickerOne from "@/components/Forms/DatePicker/DatetimePickerOne.vue";
 
 const errorMessage = ref({})
 const showAddSuccess = ref(false)
