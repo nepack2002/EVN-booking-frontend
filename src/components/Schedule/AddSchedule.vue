@@ -80,7 +80,7 @@
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.location"
                       placeholder="Điền địa chỉ để hiển thị gợi ý..."
-                      @input="showSuggestions"
+                      @input="handleShowSuggestion"
                   />
                   <div>
                     <ul class="divide-y divide-gray-300">
@@ -111,7 +111,7 @@
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.location_2"
                     placeholder="Điền địa chỉ để hiển thị gợi ý..."
-                    @input="showSuggestions_2"
+                    @input="handleShowSuggestion_2"
                 />
                 <div class="mb-5.5">
                   <ul class="divide-y divide-gray-300">
@@ -189,6 +189,7 @@ import {useUserStore} from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import axios from 'axios'
 import DatetimePickerOne from "@/components/Forms/DatePicker/DatetimePickerOne.vue";
+import debounce from "lodash.debounce";
 
 const errorMessage = ref({})
 const showAddSuccess = ref(false)
@@ -265,7 +266,12 @@ const handleSubmit = async () => {
     errorMessage.value = error.response.data.errors
   }
 }
-
+function handleShowSuggestion() {
+  debounce(() => showSuggestions(), 1000)
+}
+function handleShowSuggestion_2() {
+  debounce(() => showSuggestions_2(), 1000)
+}
 async function showSuggestions() {
   const apiKey = import.meta.env.VITE_KEY
   const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(
@@ -322,7 +328,7 @@ async function selectSuggestion(selectedDescription) {
       form.value.lat_location = data.result.geometry.location.lat
       form.value.long_location = data.result.geometry.location.lng
       form.value.location = data.result.formatted_address
-      predictions.value = ''
+      predictions.value = []
       await fetchCars()
       console.log('Coordinates sent successfully to Laravel.')
     } catch (error) {
@@ -348,7 +354,7 @@ async function selectSuggestion_2(selectedDescription) {
       form.value.lat_location_2 = data.result.geometry.location.lat
       form.value.long_location_2 = data.result.geometry.location.lng
       form.value.location_2 = data.result.formatted_address
-      predictions_2.value = ''
+      predictions_2.value = []
     } catch (error) {
       console.error('Error:', error)
     }

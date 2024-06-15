@@ -236,7 +236,7 @@
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.location"
                       placeholder="Điền địa chỉ để hiển thị gợi ý..."
-                      @input="showSuggestions"
+                      @input="handleShowSuggestion"
                   />
                   <div>
                     <ul class="divide-y divide-gray-300">
@@ -286,6 +286,7 @@ import axios from "axios";
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import {useRoute} from "vue-router";
 import DatePickerOne from "@/components/Forms/DatePicker/DatePickerOne.vue";
+import debounce from "lodash.debounce";
 
 const errorMessage = ref({});
 const messages = ref('');
@@ -305,6 +306,7 @@ const form = ref({
   ngay_sua_chua_lon_gan_nhat: '',
   so_may: '',
 });
+const predictions = ref([])
 
 const users = ref([]);
 const userStore = useUserStore();
@@ -411,6 +413,55 @@ const handleFileUpload = (event) => {
     form.value.anh_xe_preview = reader.result;
   };
   reader.readAsDataURL(file);
+}
+
+function handleShowSuggestion() {
+  debounce(() => showSuggestions(), 1000)
+}
+
+async function showSuggestions() {
+  const apiKey = import.meta.env.VITE_KEY
+  const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(
+      form.value.location
+  )}`
+  if (form.value.location.length > 0) {
+    try {
+      const response = await fetch(url)
+      const data = await response.json()
+      predictions.value = data.predictions
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  } else {
+    predictions.value = []
+    form.value.lat_location = ''
+    form.value.long_location = ''
+  }
+}
+async function selectSuggestion(selectedDescription) {
+  const selectedPrediction = predictions.value.find(
+      (prediction) => prediction.description === selectedDescription
+  )
+  //   console.log(selectedPrediction);
+  if (selectedPrediction) {
+    const placeId = selectedPrediction.place_id
+    const apiKey = import.meta.env.VITE_KEY
+    const placeDetailUrl = `https://rsapi.goong.io/Place/Detail?place_id=${placeId}&api_key=${apiKey}`
+
+    try {
+      const response = await fetch(placeDetailUrl)
+      const data = await response.json()
+      form.value.lat_location = data.result.geometry.location.lat
+      form.value.long_location = data.result.geometry.location.lng
+      form.value.location = data.result.formatted_address
+      predictions.value = [];
+      console.log('Coordinates sent successfully to Laravel.')
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  } else {
+    console.error('Selected prediction not found.')
+  }
 }
 </script>
 

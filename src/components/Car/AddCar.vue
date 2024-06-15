@@ -236,7 +236,7 @@
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.location"
                       placeholder="Điền địa chỉ để hiển thị gợi ý..."
-                      @input="showSuggestions"
+                      @input="handleShowSuggestion"
                   />
                   <div>
                     <ul class="divide-y divide-gray-300">
@@ -285,6 +285,7 @@ import axios from 'axios'
 import {useUserStore} from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import DatePickerOne from "@/components/Forms/DatePicker/DatePickerOne.vue";
+import debounce from 'lodash.debounce'
 
 const showAddSuccess = ref(false)
 const errorMessage = ref({})
@@ -399,6 +400,9 @@ const resetForm = () => {
   }
 }
 
+function handleShowSuggestion() {
+  debounce(() => showSuggestions(), 1000)
+}
 
 async function showSuggestions() {
   const apiKey = import.meta.env.VITE_KEY
