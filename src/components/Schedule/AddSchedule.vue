@@ -82,18 +82,16 @@
                       placeholder="Điền địa chỉ để hiển thị gợi ý..."
                       @input="handleShowSuggestion"
                   />
-                  <div>
-                    <ul class="divide-y divide-gray-300">
-                      <li
-                          v-for="prediction in predictions"
-                          :key="prediction"
-                          @click="selectSuggestion(prediction.description)"
-                          class="cursor-pointer py-2 px-4 hover:bg-gray-200"
-                      >
-                        {{ prediction.description }}
-                      </li>
-                    </ul>
-                  </div>
+                  <ul class="mb-5.5">
+                    <li
+                        v-for="prediction in predictions"
+                        :key="prediction"
+                        @click="selectSuggestion(prediction.description)"
+                        class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                    >
+                      {{ prediction.description }}
+                    </li>
+                  </ul>
                 </div>
               </div>
 
@@ -113,18 +111,16 @@
                     placeholder="Điền địa chỉ để hiển thị gợi ý..."
                     @input="handleShowSuggestion_2"
                 />
-                <div class="mb-5.5">
-                  <ul class="divide-y divide-gray-300">
-                    <li
-                        v-for="prediction in predictions_2"
-                        :key="prediction"
-                        @click="selectSuggestion_2(prediction.description)"
-                        class="cursor-pointer py-2 px-4 hover:bg-gray-200"
-                    >
-                      {{ prediction.description }}
-                    </li>
-                  </ul>
-                </div>
+                <ul class="mb-5.5">
+                  <li
+                      v-for="prediction in predictions_2"
+                      :key="prediction"
+                      @click="selectSuggestion_2(prediction.description)"
+                      class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                  >
+                    {{ prediction.description }}
+                  </li>
+                </ul>
                 <div class="mb-5.5">
                   <label
                       :class="{
@@ -266,12 +262,8 @@ const handleSubmit = async () => {
     errorMessage.value = error.response.data.errors
   }
 }
-function handleShowSuggestion() {
-  debounce(() => showSuggestions(), 1000)
-}
-function handleShowSuggestion_2() {
-  debounce(() => showSuggestions_2(), 1000)
-}
+const handleShowSuggestion = debounce(() => showSuggestions(), 1000)
+const handleShowSuggestion_2 = debounce(() => showSuggestions_2(), 1000)
 async function showSuggestions() {
   const apiKey = import.meta.env.VITE_KEY
   const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(

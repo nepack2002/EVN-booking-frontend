@@ -238,18 +238,16 @@
                       placeholder="Điền địa chỉ để hiển thị gợi ý..."
                       @input="handleShowSuggestion"
                   />
-                  <div>
-                    <ul class="divide-y divide-gray-300">
-                      <li
-                          v-for="prediction in predictions"
-                          :key="prediction"
-                          @click="selectSuggestion(prediction.description)"
-                          class="cursor-pointer py-2 px-4 hover:bg-gray-200"
-                      >
-                        {{ prediction.description }}
-                      </li>
-                    </ul>
-                  </div>
+                  <ul class="mb-5.5">
+                    <li
+                        v-for="prediction in predictions"
+                        :key="prediction"
+                        @click="selectSuggestion(prediction.description)"
+                        class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                    >
+                      {{ prediction.description }}
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div class="w-[100%] flex justify-end gap-5">
@@ -415,9 +413,7 @@ const handleFileUpload = (event) => {
   reader.readAsDataURL(file);
 }
 
-function handleShowSuggestion() {
-  debounce(() => showSuggestions(), 1000)
-}
+const handleShowSuggestion = debounce(() => showSuggestions(), 1000)
 
 async function showSuggestions() {
   const apiKey = import.meta.env.VITE_KEY
