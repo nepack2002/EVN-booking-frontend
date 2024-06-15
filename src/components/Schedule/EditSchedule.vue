@@ -27,6 +27,7 @@
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.program"
                     placeholder="Chương trình công tác"
+                    :disabled="form.status !== '0'"
                 />
               </div>
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
@@ -42,6 +43,7 @@
                     <select
                         class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         v-model="form.department_id"
+                        :disabled="form.status !== '0'"
                     >
                       <option
                           v-for="department in departments"
@@ -61,9 +63,10 @@
                       'text-red': errorMessage.datetime
                     }"
                       class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Thời gian</label
-                  >
-                  <datetime-picker-one v-model="form.datetime"/>
+                  >Thời gian</label>
+                  <datetime-picker-one  v-model="form.datetime"
+                                        :disabled="form.status !== '0'"
+                  />
                 </div>
               </div>
 
@@ -83,6 +86,7 @@
                       v-model="form.location"
                       placeholder="Điền địa chỉ để hiển thị gợi ý..."
                       @input="handleShowSuggestion"
+                      :disabled="form.status !== '0'"
                   />
                   <div>
                     <ul class="divide-y divide-gray-300">
@@ -106,14 +110,14 @@
                     'text-red': errorMessage.location_2
                   }"
                     class="mb-3 block text-sm font-medium text-black dark:text-white"
-                >Địa điểm kết thúc</label
-                >
+                >Địa điểm kết thúc</label>
                 <input
                     type="text"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.location_2"
                     placeholder="Điền địa chỉ để hiển thị gợi ý..."
                     @input="handleShowSuggestion_2"
+                    :disabled="form.status !== '0'"
                 />
                 <div class="mb-5.5">
                   <ul class="divide-y divide-gray-300">
@@ -134,11 +138,11 @@
                     }"
                       class="mb-3 block text-sm font-medium text-black dark:text-white"
                       for="Username"
-                  >Loại phương tiện</label
-                  >
+                  >Loại phương tiện</label>
                   <select
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.car_id"
+                      :disabled="form.status !== '0'"
                   >
                     <option v-for="car in cars" :key="car.car_id" :value="car.car_id">
                       {{ car.car_id }} - {{ car.name }} (Cách điểm bắt đầu {{ roundedDistance(car.distance) }} KM)
@@ -158,6 +162,7 @@
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.participants"
                       placeholder="Người tham gia"
+                      :disabled="form.status !== '0'"
                   />
                 </div>
               </div>

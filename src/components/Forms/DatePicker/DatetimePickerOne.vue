@@ -4,6 +4,9 @@ import {onMounted} from 'vue'
 import {Vietnamese} from "flatpickr/dist/l10n/vn.js"
 
 const model = defineModel()
+const props = defineProps({
+  disabled: Boolean
+})
 
 onMounted(() => {
   // Init flatpickr
@@ -33,6 +36,7 @@ onMounted(() => {
         placeholder="dd/mm/yyyy h:m"
         data-class="flatpickr-right"
         :value="model"
+        :disabled="props.disabled"
     />
 
     <div class="pointer-events-none absolute inset-0 right-5 left-auto flex items-center">

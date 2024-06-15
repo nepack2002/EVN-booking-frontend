@@ -35,7 +35,7 @@ const canAccess = (userRole, roles) => {
 const routes = [
     {
         path: "/",
-        redirect: "/car"
+        redirect: "/schedule"
     },
     {
         path: "/car",
