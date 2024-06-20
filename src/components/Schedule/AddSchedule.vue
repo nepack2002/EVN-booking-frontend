@@ -135,7 +135,7 @@
                       v-model="form.car_id"
                   >
                     <option v-for="car in cars" :key="car.car_id" :value="car.car_id">
-                      {{ car.car_id }} - {{ car.name }} (Cách điểm bắt đầu {{ roundedDistance(car.distance) }} KM)
+                      {{ car.name }} ({{car.so_cho}} chỗ) (Cách điểm bắt đầu {{ car.distance.toFixed(2) }} KM)
                     </option>
                   </select>
                 </div>
@@ -145,8 +145,8 @@
                       'text-red': errorMessage.participants
                     }"
                       class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Người tham gia</label
-                  >
+                  >Người tham gia <span class="text-red">({{soNguoiThamGia}} người)</span></label>
+                  <small>Tên người tham gia cách nhau bằng dấu <b>,</b></small>
                   <input
                       type="text"
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
@@ -180,7 +180,7 @@
   </DefaultLayout>
 </template>
 <script setup>
-import {onMounted, ref} from 'vue'
+import {computed, onMounted, ref, watch} from 'vue'
 import {useUserStore} from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import axios from 'axios'
@@ -207,6 +207,11 @@ const predictions_2 = ref([])
 const departments = ref([])
 const cars = ref([])
 const userStore = useUserStore()
+
+const handleShowCarsSuggestion = debounce(() => fetchCars(), 1000)
+const soNguoiThamGia = computed(() => form.value.participants.split(',').length);
+watch(soNguoiThamGia, handleShowCarsSuggestion);
+
 onMounted(async () => {
   // await userStore.fetchUser()
   fetchDepartments()
@@ -230,7 +235,8 @@ const fetchCars = async () => {
         '/coordinates',
         {
           lat: form.value.lat_location,
-          long: form.value.long_location
+          long: form.value.long_location,
+          so_cho: soNguoiThamGia.value,
         },
         {
           headers: {

@@ -141,7 +141,7 @@
                       :disabled="form.status !== '0'"
                   >
                     <option v-for="car in cars" :key="car.car_id" :value="car.car_id">
-                      {{ car.car_id }} - {{ car.name }} (Cách điểm bắt đầu {{ roundedDistance(car.distance) }} KM)
+                      {{ car.name }} ({{car.so_cho}} chỗ) (Cách điểm bắt đầu {{ car.distance.toFixed(2) }} KM)
                     </option>
                   </select>
                 </div>
@@ -151,8 +151,8 @@
                       'text-red': errorMessage.participants
                     }"
                       class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Người tham gia</label
-                  >
+                  >Người tham gia <span class="text-red">({{soNguoiThamGia}} người)</span></label>
+                  <small>Tên người tham gia cách nhau bằng dấu <b>,</b></small>
                   <input
                       type="text"
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
@@ -185,6 +185,9 @@
         </div>
       </div>
       <h2 class="text-2xl font-bold my-4">Lộ trình</h2>
+      <div class="bg-white shadow sm:rounded-lg dark:bg-boxdark px-6 py-4 mb-2 text-sm">
+        Tiêu thụ tổng: ~ {{locations.reduce((partialSum, a) => partialSum + a.so_dau_xang_tieu_thu, 0)}}L xăng/dầu
+      </div>
       <div class="bg-white shadow sm:rounded-lg dark:bg-boxdark">
         <div class="px-6 py-4 gap-2 text-sm font-medium text-gray-900 flex items-center">
           <div class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
@@ -203,6 +206,9 @@
           </div>
           <div class="flex-1 break-words">
             {{ location.location }}
+            <div class="text-bodydark">
+              Tiêu thụ: ~ {{ location.so_dau_xang_tieu_thu }}L
+            </div>
             <div class="text-bodydark text-xs">
               {{location.lat}}, {{location.long}}
             </div>
@@ -225,7 +231,7 @@
   </DefaultLayout>
 </template>
 <script setup>
-import {onMounted, ref} from 'vue'
+import {computed, onMounted, ref, watch} from 'vue'
 import {useUserStore} from '@/stores/auth.js'
 import {useRoute} from 'vue-router'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
@@ -254,7 +260,12 @@ const predictions_2 = ref([])
 const departments = ref([])
 const cars = ref([])
 const userStore = useUserStore()
-const route = useRoute()
+const route = useRoute();
+
+const handleShowCarsSuggestion = debounce(() => fetchCars(), 1000)
+const soNguoiThamGia = computed(() => form.value.participants.split(',').length);
+watch(soNguoiThamGia, handleShowCarsSuggestion);
+
 onMounted(async () => {
   // await userStore.fetchUser()
   await fetchDepartments()
@@ -300,7 +311,8 @@ const fetchCars = async () => {
         '/coordinates',
         {
           lat: form.value.lat_location,
-          long: form.value.long_location
+          long: form.value.long_location,
+          so_cho: soNguoiThamGia.value,
         },
         {
           headers: {
@@ -308,7 +320,6 @@ const fetchCars = async () => {
           }
         }
     )
-    console.log(form.value.lat_location)
     cars.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy danh sách xe:', error)

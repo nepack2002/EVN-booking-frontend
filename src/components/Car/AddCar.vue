@@ -54,7 +54,24 @@
                   </select>
                 </div>
               </div>
-
+              <div class="mb-5.5">
+                <input
+                    v-model="form.theo_doi_vi_tri"
+                    class="mr-3"
+                    type="checkbox"
+                    name="theo_doi_vi_tri"
+                    id="theo_doi_vi_tri"
+                    :true-value="1"
+                    :false-value="0"
+                />
+                <label
+                    :class="{
+                    'text-red': errorMessage.theo_doi_vi_tri
+                  }"
+                    class="mb-3 text-sm font-medium text-black dark:text-white"
+                    for="theo_doi_vi_tri"
+                >Cho phép theo dõi vị trí</label>
+              </div>
               <!-- Email Address Section -->
               <div class="mb-5.5">
                 <label
@@ -302,7 +319,7 @@ const form = ref({
   han_dang_kiem_tiep_theo: '',
   anh_xe: '',
   ngay_sua_chua_lon_gan_nhat: '',
-
+  theo_doi_vi_tri: 1,
 })
 const predictions = ref([])
 
@@ -319,7 +336,7 @@ const fetchUsers = async () => {
         Authorization: `Bearer ${userStore.token}`
       }
     })
-    users.value = response.data.data
+    users.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy danh sách người lái:', error)
   }
@@ -345,6 +362,7 @@ const handleSubmit = async () => {
     formData.append('ngay_bao_duong_gan_nhat', form.value.ngay_bao_duong_gan_nhat)
     formData.append('han_dang_kiem_tiep_theo', form.value.han_dang_kiem_tiep_theo)
     formData.append('ngay_sua_chua_lon_gan_nhat', form.value.ngay_sua_chua_lon_gan_nhat)
+    formData.append('theo_doi_vi_tri', form.value.theo_doi_vi_tri)
     if (form.value.anh_xe) {
       formData.append('anh_xe', form.value.anh_xe)
     }
@@ -386,15 +404,18 @@ const resetForm = () => {
   form.value = {
     ten_xe: '',
     mau_xe: '',
-    user_id: null,
+    user_id: '',
     bien_so_xe: '',
     so_khung: '',
     so_cho: '',
-    dac_diem_mac_dinh: null,
-    so_dau_xang_tieu_thu: null,
-    ngay_bao_duong_gan_nhat: null,
-    han_dang_kiem_tiep_theo: null,
-    anh_xe: null
+    so_may: '',
+    dac_diem_mac_dinh: '',
+    so_dau_xang_tieu_thu: '',
+    ngay_bao_duong_gan_nhat: '',
+    han_dang_kiem_tiep_theo: '',
+    anh_xe: '',
+    ngay_sua_chua_lon_gan_nhat: '',
+    theo_doi_vi_tri: 1,
   }
 }
 

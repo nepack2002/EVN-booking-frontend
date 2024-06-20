@@ -48,13 +48,30 @@
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.user_id"
                   >
-                    <option v-for="user in users.filter(user => !user.car)" :key="user.id" :value="user.id">
+                    <option v-for="user in users.filter(user => ((user.car && user.car.id) == route.params.id || !user.car))" :key="user.id" :value="user.id">
                       {{ user.id }} - {{ user.name }}
                     </option>
                   </select>
                 </div>
               </div>
-
+              <div class="mb-5.5">
+                <input
+                    v-model="form.theo_doi_vi_tri"
+                    class="mr-3"
+                    type="checkbox"
+                    name="theo_doi_vi_tri"
+                    id="theo_doi_vi_tri"
+                    :true-value="1"
+                    :false-value="0"
+                />
+                <label
+                    :class="{
+                    'text-red': errorMessage.theo_doi_vi_tri
+                  }"
+                    class="mb-3 text-sm font-medium text-black dark:text-white"
+                    for="theo_doi_vi_tri"
+                >Cho phép theo dõi vị trí</label>
+              </div>
               <!-- Email Address Section -->
               <div class="mb-5.5">
                 <label
@@ -303,6 +320,7 @@ const form = ref({
   anh_xe: "",
   ngay_sua_chua_lon_gan_nhat: '',
   so_may: '',
+  theo_doi_vi_tri: 1,
 });
 const predictions = ref([])
 
@@ -319,7 +337,7 @@ const fetchUsers = async () => {
         Authorization: `Bearer ${userStore.token}`,
       },
     });
-    users.value = response.data.data;
+    users.value = response.data;
   } catch (error) {
     console.error("Lỗi khi lấy danh sách người lái:", error);
   }
@@ -367,6 +385,7 @@ const handleSubmit = async (event) => {
         form.value.han_dang_kiem_tiep_theo
     );
     formData.append('ngay_sua_chua_lon_gan_nhat', form.value.ngay_sua_chua_lon_gan_nhat)
+    formData.append('theo_doi_vi_tri', form.value.theo_doi_vi_tri)
     if (form.value.anh_xe) {
       formData.append("anh_xe", form.value.anh_xe);
     }
