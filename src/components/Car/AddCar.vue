@@ -331,7 +331,7 @@ onMounted(async () => {
 const users = ref([])
 const fetchUsers = async () => {
   try {
-    const response = await axios.get('/users', {
+    const response = await axios.get('/drivers', {
       headers: {
         Authorization: `Bearer ${userStore.token}`
       }
