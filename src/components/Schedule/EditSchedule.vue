@@ -13,6 +13,7 @@
             <form @submit.prevent="handleSubmit" enctype="multipart/form-data" method="post">
               <div v-if="form.status === '1'" class="mb-5.5 text-red">Lịch trình này đang được chạy</div>
               <div v-if="form.status === '2'" class="mb-5.5 text-red">Lịch trình này đã kết thúc</div>
+              <div v-if="form.status === '3'" class="mb-5.5 text-red">Lịch trình này đang tạm dừng</div>
               <!-- Full Name Section -->
               <div class="mb-5.5">
                 <label
