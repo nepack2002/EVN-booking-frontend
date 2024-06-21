@@ -320,6 +320,9 @@ const form = ref({
   anh_xe: '',
   ngay_sua_chua_lon_gan_nhat: '',
   theo_doi_vi_tri: 1,
+  location: "",
+  lat_location: "",
+  long_location: "",
 })
 const predictions = ref([])
 
@@ -366,6 +369,10 @@ const handleSubmit = async () => {
     if (form.value.anh_xe) {
       formData.append('anh_xe', form.value.anh_xe)
     }
+    formData.append('location', form.value.location)
+    formData.append('lat_location', form.value.lat_location)
+    formData.append('long_location', form.value.long_location)
+
     await axios.post('/cars', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -416,6 +423,9 @@ const resetForm = () => {
     anh_xe: '',
     ngay_sua_chua_lon_gan_nhat: '',
     theo_doi_vi_tri: 1,
+    location: "",
+    lat_location: "",
+    long_location: "",
   }
 }
 
