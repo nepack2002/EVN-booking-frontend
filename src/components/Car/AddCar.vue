@@ -178,7 +178,7 @@
                 <input
                     v-model="form.so_dau_xang_tieu_thu"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    type="number"
+                    type="text"
                     name="tieuthu"
                     id="tieuthu"
                     placeholder="L/100KM"
