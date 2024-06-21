@@ -48,7 +48,7 @@
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.user_id"
                   >
-                    <option v-for="user in users.filter(user => ((user.car && user.car.id) == route.params.id || !user.car))" :key="user.id" :value="user.id">
+                    <option v-for="user in users" :key="user.id" :value="user.id">
                       {{ user.id }} - {{ user.name }}
                     </option>
                   </select>
