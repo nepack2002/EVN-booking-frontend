@@ -276,6 +276,7 @@ const handleSubmit = async () => {
   try {
     await axios.post('/schedules', form.value, {
       headers: {
+        'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${userStore.token}`
       }
     })
