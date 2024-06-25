@@ -162,6 +162,28 @@
                       :disabled="form.status !== '0'"
                   />
                 </div>
+
+                <div class="mb-5.5">
+                  <label
+                      :class="{
+                    'text-red': errorMessage.tai_lieu
+                  }"
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="Username"
+                  >Tài liệu đính kèm</label
+                  >
+                  <div class="my-2" v-if="form.ten_tai_lieu">
+                    <a :href="form.tai_lieu" download target="_blank">{{form.ten_tai_lieu}}</a>
+                  </div>
+                  <input
+                      :disabled="form.status !== '0'"
+                      accept="application/pdf"
+                      type="file"
+                      id="tai_lieu"
+                      @change="handleFileUpload"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  />
+                </div>
               </div>
 
               <div class="w-[100%] flex justify-end items-center gap-5" v-if="form.status === '0'">
@@ -175,7 +197,7 @@
                 </button>
                 <button
                     type="submit"
-                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
+                    class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded"
                     :class="{ 'bg-red pointer-events-none': form.status !== '0' }"
                 >
                   Cập nhật
@@ -194,7 +216,7 @@
           <div class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
             <img src="@/assets/images/location_on_24px.svg" alt="location"/>
           </div>
-          <div class="flex-1 break-words text-blue-700">
+          <div class="flex-1 break-words text-primary">
             {{ form.location }}
             <div class="text-bodydark text-xs">
               {{form.lat_location}}, {{form.long_location}}
@@ -220,7 +242,7 @@
           <div class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
             <img src="@/assets/images/location_on_24px.svg" alt="location"/>
           </div>
-          <div class="flex-1 break-words text-blue-700">
+          <div class="flex-1 break-words text-primary">
             {{ form.location_2 }}
             <div class="text-bodydark text-xs">
               {{form.lat_location_2}}, {{form.long_location_2}}
@@ -254,7 +276,8 @@ const form = ref({
   long_location_2: '',
   car_id: '',
   participants: '',
-  program: ''
+  program: '',
+  tai_lieu: null
 })
 const predictions = ref([])
 const predictions_2 = ref([])
@@ -264,7 +287,7 @@ const userStore = useUserStore()
 const route = useRoute();
 
 const handleShowCarsSuggestion = debounce(() => fetchCars(), 1000)
-const soNguoiThamGia = computed(() => form.value.participants.split(',').length);
+const soNguoiThamGia = computed(() => !form.value.participants ? 0 : form.value.participants.split(',').length);
 watch(soNguoiThamGia, handleShowCarsSuggestion);
 
 onMounted(async () => {
@@ -274,6 +297,12 @@ onMounted(async () => {
   await fetchLocations()
   fetchCars()
 })
+
+const handleFileUpload = (event) => {
+  form.value.ten_tai_lieu = '';
+  form.value.tai_lieu = event.target.files[0]
+}
+
 const fetchLocations = async () => {
   try {
     const response = await axios.get(`/users/ScheduleLocation/${route.params.id}`)

@@ -93,7 +93,7 @@ const menuGroups = ref([
 
 <template>
   <aside
-      class="absolute left-0 top-0 z-9999 flex h-screen w-[320px] flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
+      class="absolute left-0 top-0 z-9999 flex h-screen w-[320px] flex-col overflow-y-hidden bg-primary duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
       :class="{
       'translate-x-0': sidebarStore.isSidebarOpen,
       '-translate-x-full': !sidebarStore.isSidebarOpen

@@ -20,7 +20,7 @@
             </button>
             {{ message }}
             <button
-                class="py-2.5 px-4 text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none mx-2"
+                class="py-2.5 px-4 text-white bg-primary rounded-xl hover:bg-primary-dark focus:outline-none mx-2"
             >
               <router-link
                   :to="{ name: 'CarOfUser' }"

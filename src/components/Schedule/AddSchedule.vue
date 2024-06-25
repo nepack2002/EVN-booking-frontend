@@ -154,6 +154,23 @@
                       placeholder="Người tham gia"
                   />
                 </div>
+                <div class="mb-5.5">
+                  <label
+                      :class="{
+                    'text-red': errorMessage.tai_lieu
+                  }"
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="Username"
+                  >Tài liệu đính kèm</label
+                  >
+                  <input
+                      accept="application/pdf"
+                      type="file"
+                      id="tai_lieu"
+                      @change="handleFileUpload"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  />
+                </div>
               </div>
 
               <div class="w-[100%] flex justify-end gap-5">
@@ -164,7 +181,7 @@
                 </button>
                 <button
                     type="submit"
-                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
+                    class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded"
                 >
                   Thêm mới
                 </button>
@@ -200,7 +217,8 @@ const form = ref({
   long_location_2: '',
   car_id: '',
   participants: '',
-  program: ''
+  program: '',
+  tai_lieu: null
 })
 const predictions = ref([])
 const predictions_2 = ref([])
@@ -209,8 +227,12 @@ const cars = ref([])
 const userStore = useUserStore()
 
 const handleShowCarsSuggestion = debounce(() => fetchCars(), 1000)
-const soNguoiThamGia = computed(() => form.value.participants.split(',').length);
+const soNguoiThamGia = computed(() => !form.value.participants ? 0 : form.value.participants.split(',').length);
 watch(soNguoiThamGia, handleShowCarsSuggestion);
+
+const handleFileUpload = (event) => {
+  form.value.tai_lieu = event.target.files[0]
+}
 
 onMounted(async () => {
   // await userStore.fetchUser()
@@ -377,7 +399,8 @@ function resetForm() {
     long_location_2: '',
     car_id: '',
     participants: '',
-    program: ''
+    program: '',
+    tai_lieu: null,
   }
 }
 </script>

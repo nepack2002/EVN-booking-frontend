@@ -27,28 +27,28 @@ onMounted(async () => {
 
 <template>
   <div
-      class="mt-12 rounded-sm bg-white shadow-default dark:bg-boxdark"
+      class="h-screen relative before:content-[''] before:absolute before:z-10 before:w-full before:h-full before:bg-white before:bg-opacity-75 before:backdrop-blur bg-[url('@/assets/images/bg.jpg')] bg-no-repeat bg-cover"
   >
-    <div class="w-full h-0 border-stroke">
-      <div class="w-[50%] mx-auto p-4 sm:p-12.5 xl:p-17.5">
-        <form @submit.prevent="login" v-if="!user">
-          <div class="flex items-center w-full justify-center mb-10">
-            <img src="@/assets/images/logo/Frame.png" class="w-[400px] object-cover" alt=""/>
-          </div>
-          <div v-if="errors" class="w-[100%] bg-red text-white rounded-md p-2 my-5">
-            {{ errors }}
-          </div>
-          <div class="mb-4">
-            <label class="mb-2.5 block font-medium text-black dark:text-white"></label>
-            <div class="relative">
-              <input
-                  type="text"
-                  placeholder="Tên đăng nhập"
-                  v-model="username"
-                  class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-black dark:text-white"
-              />
+    <div class="w-[50%] mx-auto p-4 sm:p-12.5 xl:p-17.5 relative z-20">
+      <form @submit.prevent="login" v-if="!user">
+        <div class="flex flex-col items-center w-full justify-center mb-10">
+          <img src="@/assets/images/Logo_EVNNPC.png" class="w-[200px] object-cover" alt=""/>
+          <h2 class="text-primary font-bold text-3xl mt-4">QUẢN LÝ ĐẶT XE NPC</h2>
+        </div>
+        <div v-if="errors" class="w-[100%] bg-red text-white rounded-md p-2 my-5">
+          {{ errors }}
+        </div>
+        <div class="mb-4">
+          <label class="mb-2.5 block font-medium text-black dark:text-white"></label>
+          <div class="relative">
+            <input
+                type="text"
+                placeholder="Tên đăng nhập"
+                v-model="username"
+                class="w-full bg-white rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-black dark:text-white"
+            />
 
-              <span class="absolute right-4 top-4">
+            <span class="absolute right-4 top-4">
                   <svg
                       class="fill-current"
                       width="22"
@@ -65,19 +65,19 @@ onMounted(async () => {
                     </g>
                   </svg>
                 </span>
-            </div>
           </div>
-          <div class="mb-4">
-            <label class="mb-2.5 block font-medium text-black dark:text-white"></label>
-            <div class="relative">
-              <input
-                  type="password"
-                  placeholder="Mật khẩu"
-                  v-model="password"
-                  class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-black dark:text-white"
-              />
+        </div>
+        <div class="mb-4">
+          <label class="mb-2.5 block font-medium text-black dark:text-white"></label>
+          <div class="relative">
+            <input
+                type="password"
+                placeholder="Mật khẩu"
+                v-model="password"
+                class="w-full bg-white rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary text-black dark:text-white"
+            />
 
-              <span class="absolute right-4 top-4">
+            <span class="absolute right-4 top-4">
                   <svg
                       class="fill-current"
                       width="22"
@@ -98,18 +98,17 @@ onMounted(async () => {
                     </g>
                   </svg>
                 </span>
-            </div>
           </div>
-          <div class="mb-5 mt-6">
-            <input
-                type="submit"
-                name="login"
-                value="Đăng nhập"
-                class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90"
-            />
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="mb-5 mt-6">
+          <input
+              type="submit"
+              name="login"
+              value="Đăng nhập"
+              class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90"
+          />
+        </div>
+      </form>
     </div>
   </div>
 </template>

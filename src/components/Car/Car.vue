@@ -94,11 +94,11 @@ const deleteCar = async (id) => {
             />
             <div class="flex gap-5">
               <router-link
-                  class="inline-flex py-3 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none text-sm font-semibold"
+                  class="inline-flex py-3 px-4 whitespace-nowrap text-white bg-primary rounded-xl hover:bg-primary-dark focus:outline-none text-sm font-semibold"
                   :to="{ name: 'AddCar' }">Thêm ô tô
               </router-link>
               <router-link :to="{ name: 'ImportCar' }"
-                           class="inline-flex py-3 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none text-sm font-semibold tracking-wide"
+                           class="inline-flex py-3 px-4 whitespace-nowrap text-white bg-primary rounded-xl hover:bg-primary-dark focus:outline-none text-sm font-semibold tracking-wide"
               >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -207,7 +207,7 @@ const deleteCar = async (id) => {
       <!--====== Điều khiển phân trang ======-->
       <div class="flex justify-center my-4">
         <button
-            class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg mx-1 disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
+            class="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg mx-1 disabled:opacity-50 disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
             @click="changePage(currentPage - 1)"
             :disabled="currentPage === 1"
         >
@@ -228,7 +228,7 @@ const deleteCar = async (id) => {
         </button>
         <span class="px-4 py-2 text-gray-700"> Trang {{ currentPage }} trên {{ totalPages }} </span>
         <button
-            class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg mx-1 disabled:opacity-50 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
+            class="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg mx-1 disabled:opacity-50 disabled:bg-gray-200 disabled:hover:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed"
             @click="changePage(currentPage + 1)"
             :disabled="currentPage === totalPages"
         >

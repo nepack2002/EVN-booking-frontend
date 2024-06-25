@@ -81,7 +81,7 @@ const deleteDepartment = async (id) => {
           >
             <div class="flex gap-5">
               <button
-                  class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
+                  class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-primary rounded-xl hover:bg-primary-dark focus:outline-none"
               >
                 <router-link :to="{ name: 'AddDepartment' }" class="text-sm font-semibold"
                 >Thêm phòng ban
@@ -89,7 +89,7 @@ const deleteDepartment = async (id) => {
                 >
               </button>
               <button
-                  class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-indigo-600 rounded-xl hover:bg-indigo-700 focus:outline-none"
+                  class="inline-flex py-4 px-4 whitespace-nowrap text-white bg-primary rounded-xl hover:bg-primary-dark focus:outline-none"
               >
                 <router-link
                     :to="{ name: 'ImportDepartment' }"
