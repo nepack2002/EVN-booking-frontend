@@ -173,7 +173,7 @@
                   >Tài liệu đính kèm</label
                   >
                   <div class="my-2" v-if="form.ten_tai_lieu">
-                    <a :href="form.tai_lieu" download target="_blank">{{form.ten_tai_lieu}}</a>
+                    <a class="text-primary" :href="form.tai_lieu" download target="_blank">{{form.ten_tai_lieu}}</a>
                   </div>
                   <input
                       :disabled="form.status !== '0'"
