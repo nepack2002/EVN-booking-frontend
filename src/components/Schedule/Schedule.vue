@@ -21,7 +21,12 @@ const fetchSchedules = async (page = 1) => {
     })
 
     // Lưu trữ dữ liệu trả về và thông tin phân trang
-    schedules.value = response.data.data
+    schedules.value = response.data.data.map(schedule => {
+      return {
+        ...schedule,
+        tai_lieu: schedule.tai_lieu ? `${import.meta.env.VITE_API_URL.replace('/api', '/')}${schedule.tai_lieu}` : null
+      }
+    })
     currentPage.value = response.data.current_page
     totalPages.value = response.data.last_page
     if (schedules.value.length === 0 && currentPage.value > 1) {
@@ -136,7 +141,7 @@ const deleteUser = async (id) => {
 
         <!-- Table Header -->
         <div
-            class="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark dark:text-white dark:bg-meta-4 sm:grid-cols-8 md:px-6 2xl:px-7.5 text-black"
+            class="grid grid-cols-10 border-t border-stroke py-4.5 px-4 dark:border-strokedark dark:text-white dark:bg-meta-4 sm:grid-cols-10 md:px-6 2xl:px-7.5 text-black"
         >
           <div class="col-span-2 md:col-span-2 flex items-center">
             <p class="font-bold">Lịch trình</p>
@@ -144,6 +149,9 @@ const deleteUser = async (id) => {
 
           <div class="col-span-2 flex items-center justify-center">
             <p class="font-bold">Địa điểm</p>
+          </div>
+          <div class="col-span-2 flex items-center justify-center">
+            <p class="font-bold">Tài liệu</p>
           </div>
           <div class="col-span-2 flex items-center justify-center">
             <p class="font-bold">Thời gian</p>
@@ -157,7 +165,7 @@ const deleteUser = async (id) => {
         <div
             v-for="schedule in schedules"
             :key="schedule.id"
-            class="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+            class="grid grid-cols-10 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-10 md:px-6 2xl:px-7.5"
         >
           <div class="col-span-2 md:col-span-2 flex items-center">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -172,6 +180,13 @@ const deleteUser = async (id) => {
               <p class="text-base font-medium text-black dark:text-white">
                 {{ schedule.location }}
               </p>
+            </div>
+          </div>
+          <div class="col-span-2 md:col-span-2 flex items-center justify-center">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <a :href="schedule.tai_lieu" class="text-base font-medium text-black dark:text-white">
+                {{ schedule.ten_tai_lieu }}
+              </a>
             </div>
           </div>
           <div class="col-span-2 md:col-span-2 flex items-center justify-center">

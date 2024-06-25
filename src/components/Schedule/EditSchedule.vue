@@ -319,6 +319,7 @@ const getDepartments = async () => {
       }
     })
     form.value = response.data
+    form.value.tai_lieu = response.data.tai_lieu ? `${import.meta.env.VITE_API_URL.replace('/api', '/')}${response.data.tai_lieu}` : null
   } catch (error) {
     console.error('Lỗi khi lấy thông tin xe:', error)
   }
