@@ -196,7 +196,7 @@ const fetchCar = async () => {
   try {
     const response = await axios.get(`/schedule/car/${userStore.user.id}`)
     car.value = response.data
-    imageUrl.value = `${import.meta.env.VITE_API_URL.replace('/api', '/')}${response.data.anh_xe}`
+    imageUrl.value = `${import.meta.env.VITE_BACKEND_URL}${response.data.anh_xe}`
   } catch (e) {
     console.log(e)
   }

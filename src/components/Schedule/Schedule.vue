@@ -24,7 +24,7 @@ const fetchSchedules = async (page = 1) => {
     schedules.value = response.data.data.map(schedule => {
       return {
         ...schedule,
-        tai_lieu: schedule.tai_lieu ? `${import.meta.env.VITE_API_URL.replace('/api', '/')}${schedule.tai_lieu}` : null
+        tai_lieu: schedule.tai_lieu ? `${import.meta.env.VITE_BACKEND_URL}${schedule.tai_lieu}` : null
       }
     })
     currentPage.value = response.data.current_page
