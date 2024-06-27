@@ -147,7 +147,7 @@ const deleteCar = async (id) => {
           <div class="col-span-2 md:col-span-3 flex items-center">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
               <div class="h-12.5 w-15 rounded-md">
-                <img :src="car.anh_xe" :alt="`Product: ${car.ten_xe}`"/>
+                <img v-if="car.anh_xe" :src="car.anh_xe" :alt="`Product: ${car.ten_xe}`"/>
               </div>
               <p class="text-base font-medium text-black dark:text-white">{{ car.ten_xe }}</p>
             </div>
