@@ -173,7 +173,7 @@
                   >Tài liệu đính kèm</label
                   >
                   <div class="my-2" v-if="form.ten_tai_lieu">
-                    <a class="text-primary" :href="form.tai_lieu" download target="_blank">{{form.ten_tai_lieu}}</a>
+                    <a class="text-primary" :href="form.tai_lieu_preview" download target="_blank">{{form.ten_tai_lieu}}</a>
                   </div>
                   <input
                       :disabled="form.status !== '0'"
@@ -319,7 +319,7 @@ const getDepartments = async () => {
       }
     })
     form.value = response.data
-    form.value.tai_lieu = response.data.tai_lieu ? `${import.meta.env.VITE_BACKEND_URL}${response.data.tai_lieu}` : null
+    form.value.tai_lieu_preview = response.data.tai_lieu_preview ? `${import.meta.env.VITE_BACKEND_URL}${response.data.tai_lieu_preview}` : null
   } catch (error) {
     console.error('Lỗi khi lấy thông tin xe:', error)
   }
