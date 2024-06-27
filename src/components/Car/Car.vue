@@ -122,7 +122,7 @@ const deleteCar = async (id) => {
 
         <!-- Table Header -->
         <div
-            class="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark dark:text-white dark:bg-meta-4 sm:grid-cols-8 md:px-6 2xl:px-7.5 text-black"
+            class="grid grid-cols-8 border-t border-stroke py-4.5 px-4 dark:border-strokedark dark:text-white dark:bg-meta-4 sm:grid-cols-10 md:px-6 2xl:px-7.5 text-black"
         >
           <div class="col-span-2 md:col-span-3 flex items-center">
             <p class="font-bold">Tên</p>
@@ -133,6 +133,9 @@ const deleteCar = async (id) => {
           <div class="col-span-2 flex items-center">
             <p class="font-bold">Xăng tiêu thụ</p>
           </div>
+          <div class="col-span-2 flex items-center justify-center">
+            <p class="font-bold">Yêu cầu cập nhật</p>
+          </div>
           <div class="col-span-1 flex items-center">
             <p class="font-bold text-nowrap">Hành động</p>
           </div>
@@ -142,7 +145,7 @@ const deleteCar = async (id) => {
         <div
             v-for="car in cars"
             :key="car.id"
-            class="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
+            class="grid grid-cols-8 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-10 md:px-6 2xl:px-7.5"
         >
           <div class="col-span-2 md:col-span-3 flex items-center">
             <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -160,7 +163,11 @@ const deleteCar = async (id) => {
               {{ car.so_dau_xang_tieu_thu }}L/100KM
             </p>
           </div>
-
+          <div class="col-span-2 flex items-center justify-center">
+            <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+              {{ car.need_verify.length }}
+            </span>
+          </div>
           <div class="col-span-1 flex items-center">
             <div class="flex items-center space-x-10">
               <router-link

@@ -290,6 +290,26 @@
           </div>
         </div>
       </div>
+      <h2 class="text-2xl font-bold my-4">Lịch sử bảo dưỡng</h2>
+      <div class="bg-white shadow sm:rounded-lg dark:bg-boxdark">
+        <div v-for="item in history" :key="item.id" class="px-6 py-4 gap-2 text-sm font-medium text-gray-900 flex items-center w-full">
+            <div class="flex-1">
+              <p>Gửi bởi: {{item.user.name}}</p>
+              <template v-if="item.ngay_bao_duong_gan_nhat">
+                <p class="text-bodydark font-semibold">Ngày sửa chữa</p>
+                <p>{{item.ngay_bao_duong_gan_nhat}}</p>
+              </template>
+              <template v-if="item.han_dang_kiem_tiep_theo">
+                <p class="text-bodydark font-semibold">Hạn đăng kiểm tiếp theo</p>
+                <p>{{item.han_dang_kiem_tiep_theo}}</p>
+              </template>
+            </div>
+            <a :href="item.tai_lieu" title="Tài liệu đính kèm">Tải xuống tài liệu</a>
+          <button @click="allowChange(item)" v-if="item.trang_thai === '1'" class="inline-flex py-3 px-4 whitespace-nowrap text-white bg-primary rounded-xl hover:bg-primary-dark focus:outline-none text-sm font-semibold">
+            Duyệt yêu cầu
+          </button>
+        </div>
+      </div>
     </div>
   </DefaultLayout>
 </template>
@@ -326,13 +346,28 @@ const form = ref({
   long_location: "",
 });
 const predictions = ref([])
+const history = ref([]);
 
 const users = ref([]);
 const userStore = useUserStore();
 onMounted(async () => {
   // await userStore.fetchUser();
 });
-
+const allowChange = async (history) => {
+  try {
+    await axios.post("/car/allowChange",
+  {
+          historyId: history.id
+        },{
+      headers: {
+        Authorization: `Bearer ${userStore.token}`,
+      },
+    });
+    await getCars();
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách người lái:", error);
+  }
+}
 const fetchUsers = async () => {
   try {
     const response = await axios.get("/drivers", {
@@ -356,7 +391,9 @@ const getCars = async () => {
           },
         }
     );
-    form.value = response.data; // Cập nhật giá trị của reactivity object form với thông tin của chiếc xe
+    form.value = {...response.data}; // Cập nhật giá trị của reactivity object form với thông tin của chiếc xe
+    history.value = response.data.history;
+    delete form.value.history;
   } catch (error) {
     console.error("Lỗi khi lấy thông tin xe:", error);
   }
