@@ -1,10 +1,10 @@
 <template>
   <header
-      class="flex shadow-md py-4 px-4 sm:px-10 bg-white font-sans min-h-[70px] tracking-wide relative z-50"
       v-if="userStore.user"
+      class="flex shadow-md py-4 px-4 sm:px-10 bg-white font-sans min-h-[70px] tracking-wide relative z-50"
   >
     <div class="flex flex-wrap items-center justify-around gap-4 w-full">
-      <div id="logo" class="w-20 cursor-none"><img src="../../public/img/Asset 1 1.png" alt=""></div>
+      <div id="logo" class="w-20 cursor-none"><img alt="" src="../../public/img/Asset 1 1.png"></div>
 
       <div
           id="collapseMenu"
@@ -16,9 +16,9 @@
             @click="handleClick"
         >
           <svg
-              xmlns="http://www.w3.org/2000/svg"
               class="w-4 fill-black"
               viewBox="0 0 320.591 320.591"
+              xmlns="http://www.w3.org/2000/svg"
           >
             <path
                 d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
@@ -54,22 +54,22 @@
       </div>
 
       <div class="flex items-center space-x-10 cursor-pointer">
-        <div class="relative" v-if="userStore.user">
+        <div v-if="userStore.user" class="relative">
           <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              width="20px"
-              height="20px"
               class="cursor-pointer hover:fill-[#007bff] inline"
+              fill="none"
+              height="20px"
+              stroke="currentColor"
+              stroke-width="1.5"
+              viewBox="0 0 24 24"
+              width="20px"
+              xmlns="http://www.w3.org/2000/svg"
               @click="toggleNotifications"
           >
             <path
+                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
             />
           </svg>
 
@@ -128,9 +128,9 @@
               xmlns="http://www.w3.org/2000/svg"
           >
             <path
-                fill-rule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
                 clip-rule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                fill-rule="evenodd"
             ></path>
           </svg>
         </button>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {ref} from 'vue'
 
 const checkboxToggle = ref<boolean>(false)
@@ -6,12 +6,12 @@ const checkboxToggle = ref<boolean>(false)
 
 <template>
   <div>
-    <label for="checkboxLabelThree" class="flex cursor-pointer select-none items-center">
+    <label class="flex cursor-pointer select-none items-center" for="checkboxLabelThree">
       <div class="relative">
         <input
-            type="checkbox"
             id="checkboxLabelThree"
             class="sr-only"
+            type="checkbox"
             @change="checkboxToggle = !checkboxToggle"
         />
         <div
@@ -26,10 +26,10 @@ const checkboxToggle = ref<boolean>(false)
                 xmlns="http://www.w3.org/2000/svg"
             >
               <path
+                  d="M6 18L18 6M6 6l12 12"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
               ></path>
             </svg>
           </span>

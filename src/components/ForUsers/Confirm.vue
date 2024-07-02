@@ -10,14 +10,14 @@
       <p class="mb-4">Bạn chắc chắn muốn kết thúc chuyến đi?</p>
       <div class="flex justify-around">
         <button
-            @click="confirm"
             class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none"
+            @click="confirm"
         >
           Đồng ý
         </button>
         <button
-            @click="cancel"
             class="py-2 px-4 bg-red text-white text-gray-700 rounded-lg hover:bg-gray-400 focus:outline-none ml-2"
+            @click="cancel"
         >
           Hủy
         </button>

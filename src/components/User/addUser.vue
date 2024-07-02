@@ -10,7 +10,7 @@
           </div>
 
           <div class="p-7">
-            <form @submit.prevent="handleSubmit" enctype="multipart/form-data" method="post">
+            <form enctype="multipart/form-data" method="post" @submit.prevent="handleSubmit">
               <!-- Full Name Section -->
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                 <div class="w-full sm:w-1/2">
@@ -24,11 +24,11 @@
                   >
                   <div class="">
                     <input
+                        id="name"
                         v-model="form.name"
                         class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                        type="text"
-                        id="name"
                         placeholder="Họ và tên"
+                        type="text"
                     />
                   </div>
                 </div>
@@ -44,9 +44,9 @@
                   >Tên người dùng</label
                   >
                   <input
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       id="username"
                       v-model="form.username"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       placeholder="Tên người dùng"
                   />
                 </div>
@@ -65,8 +65,8 @@
                 <div class="relative">
                   <select
                       id="role"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.role"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   >
                     <option value="admin">Admin</option>
                     <option value="qtct">Quản trị công tác</option>
@@ -87,11 +87,11 @@
                 >Số điện thoại</label
                 >
                 <input
+                    id="phone"
                     v-model="form.phone"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    type="text"
-                    id="phone"
                     placeholder="Số điện thoại"
+                    type="text"
                 />
               </div>
               <div class="mb-5.5">
@@ -105,8 +105,8 @@
                 >
                 <select
                     id="department"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.department_id"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                 >
                   <option
                       v-for="department in departments"
@@ -140,8 +140,8 @@
                   <router-link :to="{ name: 'Car' }">Hủy</router-link>
                 </button>
                 <button
-                    type="submit"
                     class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded"
+                    type="submit"
                 >
                   Thêm mới
                 </button>
@@ -178,11 +178,7 @@ const userStore = useUserStore()
 const departments = ref([])
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get('/departments2', {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`
-      }
-    })
+    const response = await axios.get('/departments2')
     departments.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy danh sách phòng ban:', error)
@@ -190,11 +186,7 @@ const fetchDepartments = async () => {
 }
 const handleSubmit = async () => {
   try {
-    await axios.post('/users', form.value, {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`
-      }
-    })
+    await axios.post('/users', form.value)
     showAddSuccess.value = true
     errorMessage.value = []
     setTimeout(() => {

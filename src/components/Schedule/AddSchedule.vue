@@ -10,7 +10,7 @@
           </div>
 
           <div class="p-7">
-            <form @submit.prevent="handleSubmit" enctype="multipart/form-data" method="post">
+            <form enctype="multipart/form-data" method="post" @submit.prevent="handleSubmit">
               <!-- Full Name Section -->
               <div class="mb-5.5">
                 <label
@@ -21,10 +21,10 @@
                 >Chương trình công tác</label
                 >
                 <input
-                    type="text"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.program"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     placeholder="Chương trình công tác"
+                    type="text"
                 />
               </div>
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
@@ -38,8 +38,8 @@
                   >
                   <div class="">
                     <select
-                        class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         v-model="form.department_id"
+                        class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     >
                       <option
                           v-for="department in departments"
@@ -76,18 +76,18 @@
                 >
                 <div class="relative">
                   <input
-                      type="text"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.location"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       placeholder="Điền địa chỉ để hiển thị gợi ý..."
+                      type="text"
                       @input="handleShowSuggestion"
                   />
                   <ul class="mb-5.5">
                     <li
                         v-for="prediction in predictions"
                         :key="prediction"
-                        @click="selectSuggestion(prediction.description)"
                         class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                        @click="selectSuggestion(prediction.description)"
                     >
                       {{ prediction.description }}
                     </li>
@@ -105,18 +105,18 @@
                 >Địa điểm kết thúc</label
                 >
                 <input
-                    type="text"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.location_2"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     placeholder="Điền địa chỉ để hiển thị gợi ý..."
+                    type="text"
                     @input="handleShowSuggestion_2"
                 />
                 <ul class="mb-5.5">
                   <li
                       v-for="prediction in predictions_2"
                       :key="prediction"
-                      @click="selectSuggestion_2(prediction.description)"
                       class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                      @click="selectSuggestion_2(prediction.description)"
                   >
                     {{ prediction.description }}
                   </li>
@@ -131,11 +131,11 @@
                   >Loại phương tiện</label
                   >
                   <select
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.car_id"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   >
                     <option v-for="car in cars" :key="car.car_id" :value="car.car_id">
-                      {{ car.name }} ({{car.so_cho}} chỗ) (Cách điểm bắt đầu {{ car.distance.toFixed(2) }} KM)
+                      {{ car.name }} ({{ car.so_cho }} chỗ) (Cách điểm bắt đầu {{ car.distance.toFixed(2) }} KM)
                     </option>
                   </select>
                 </div>
@@ -145,13 +145,13 @@
                       'text-red': errorMessage.participants
                     }"
                       class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Người tham gia <span class="text-red">({{soNguoiThamGia}} người)</span></label>
+                  >Người tham gia <span class="text-red">({{ soNguoiThamGia }} người)</span></label>
                   <small>Tên người tham gia cách nhau bằng dấu <b>,</b></small>
                   <input
-                      type="text"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.participants"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       placeholder="Người tham gia"
+                      type="text"
                   />
                 </div>
                 <div class="mb-5.5">
@@ -164,11 +164,11 @@
                   >Tài liệu đính kèm</label
                   >
                   <input
-                      accept="application/pdf"
-                      type="file"
                       id="tai_lieu"
-                      @change="handleFileUpload"
+                      accept="application/pdf"
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      type="file"
+                      @change="handleFileUpload"
                   />
                 </div>
               </div>
@@ -180,8 +180,8 @@
                   <router-link :to="{ name: 'Schedule' }">Hủy</router-link>
                 </button>
                 <button
-                    type="submit"
                     class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded"
+                    type="submit"
                 >
                   Thêm mới
                 </button>
@@ -241,11 +241,7 @@ onMounted(async () => {
 })
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get('/departments2', {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`
-      }
-    })
+    const response = await axios.get('/departments2')
     departments.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy danh sách phòng ban:', error)
@@ -259,11 +255,6 @@ const fetchCars = async () => {
           lat: form.value.lat_location,
           long: form.value.long_location,
           so_cho: soNguoiThamGia.value,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${userStore.token}`
-          }
         }
     )
     cars.value = response.data
@@ -277,7 +268,6 @@ const handleSubmit = async () => {
     await axios.post('/schedules', form.value, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${userStore.token}`
       }
     })
 
@@ -293,6 +283,7 @@ const handleSubmit = async () => {
 }
 const handleShowSuggestion = debounce(() => showSuggestions(), 1000)
 const handleShowSuggestion_2 = debounce(() => showSuggestions_2(), 1000)
+
 async function showSuggestions() {
   const apiKey = import.meta.env.VITE_KEY
   const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(

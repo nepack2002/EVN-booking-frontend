@@ -5,7 +5,7 @@
         <p class="text-xl font-semibold">Đang tải...</p>
       </div>
       <div class="relative flex flex-col items-center">
-        <div class="w-[80%] bg-blue-700 rounded-xl h-[300px] text-white relative" v-if="car">
+        <div v-if="car" class="w-[80%] bg-blue-700 rounded-xl h-[300px] text-white relative">
           <div class="p-5">
             <p class="font-semibold text-2xl">{{ car.ten_xe }}</p>
             <p class="font-semibold text-2xl">{{ car.mau_xe }}</p>
@@ -15,8 +15,8 @@
             <img :src="imageUrl" alt="" width="250px"/>
           </div>
         </div>
-        <div class="absolute w-[80%] top-[200px] bg-white dark:bg-boxdark dark:text-white shadow-xl rounded-xl p-5"
-             v-if="car">
+        <div v-if="car"
+             class="absolute w-[80%] top-[200px] bg-white dark:bg-boxdark dark:text-white shadow-xl rounded-xl p-5">
           <div>
             <span class="text-gray-400 font-semibold">Số khung: </span>
             <span class="font-semibold uppercase">{{ car.so_khung }}</span>
@@ -43,64 +43,64 @@
       <div
           v-for="(schedule, date) in schedules"
           :key="date"
-          class="mt-25 w-[80%] mx-auto dark:text-white"
           :class="{ 'opacity-50 pointer-events-none': isFutureDate(date) }"
+          class="mt-25 w-[80%] mx-auto dark:text-white"
       >
         <div class="font-semibold text-xl my-5">{{ date }}</div>
         <div v-for="scheduleDate in schedule" :key="scheduleDate.id">
           <div class="flex items-center gap-[50px]">
             <div>{{ formatTime(scheduleDate.datetime) }}</div>
             <router-link
-                :to="{ name: 'View', params: { id: scheduleDate.id } }"
-                class="w-[100%] rounded-xl p-5 my-3 "
                 :class="[
               scheduleDate.status === '1'
                 ? 'bg-blue-700 text-white '
                 : 'text-black shadow-lg border-[1px] dark:bg-boxdark dark:text-white'
             ]"
+                :to="{ name: 'View', params: { id: scheduleDate.id } }"
+                class="w-[100%] rounded-xl p-5 my-3 "
             >
               <div class="flex items-center gap-5">
                 <div class="flex flex-col items-center gap-3">
                   <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
                       class="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
+                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                     />
                     <path
+                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
                     />
                   </svg>
                   <div
-                      class="border-l-2 h-12"
                       :class="[scheduleDate.status == '1' ? 'border-white ' : 'border-black dark:border-white']"
+                      class="border-l-2 h-12"
                   ></div>
                   <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
                       class="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
+                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
                     />
                     <path
+                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
                     />
                   </svg>
                 </div>
@@ -129,14 +129,14 @@
           v-if="schedules == '' && isLoading == false"
           class="flex flex-col justify-center items-center my-28 pb-16"
       >
-        <img src="@/assets/images/logo/Asset.png" alt="" class="w-[200px]"/>
+        <img alt="" class="w-[200px]" src="@/assets/images/logo/Asset.png"/>
         <p class="text-xl font-semibold">Bạn chưa được phân công lịch nào</p>
       </div>
       <div v-for="(schedule, date) in schedules" :key="date" class="mt-20 w-[80%] mx-auto">
         <div v-for="scheduleDate in schedule" :key="scheduleDate.id" class="">
           <div
-              class="border-2 flex justify-between p-5 text-lg text-black dark:text-white dark:bg-boxdark"
               v-if="scheduleDate.status == '1'"
+              class="border-2 flex justify-between p-5 text-lg text-black dark:text-white dark:bg-boxdark"
           >
             <div>
               <span>Bạn đang trong chuyến đi tới </span>

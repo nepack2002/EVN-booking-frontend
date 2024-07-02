@@ -10,7 +10,7 @@
           </div>
 
           <div class="p-7">
-            <form @submit.prevent="handleSubmit" enctype="multipart/form-data" method="post">
+            <form enctype="multipart/form-data" method="post" @submit.prevent="handleSubmit">
               <!-- Full Name Section -->
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                 <div class="w-full sm:w-1/2">
@@ -24,12 +24,12 @@
                   >
                   <div class="">
                     <input
+                        id="fullName"
                         v-model="form.ten_xe"
                         class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                        type="text"
                         name="fullName"
-                        id="fullName"
                         placeholder="Tên xe"
+                        type="text"
                     />
                   </div>
                 </div>
@@ -45,8 +45,8 @@
                   >Tài xế</label
                   >
                   <select
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.user_id"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   >
                     <option v-for="user in users" :key="user.id" :value="user.id">
                       {{ user.id }} - {{ user.name }}
@@ -56,13 +56,13 @@
               </div>
               <div class="mb-5.5">
                 <input
-                    v-model="form.theo_doi_vi_tri"
-                    class="mr-3"
-                    type="checkbox"
-                    name="theo_doi_vi_tri"
                     id="theo_doi_vi_tri"
-                    :true-value="1"
+                    v-model="form.theo_doi_vi_tri"
                     :false-value="0"
+                    :true-value="1"
+                    class="mr-3"
+                    name="theo_doi_vi_tri"
+                    type="checkbox"
                 />
                 <label
                     :class="{
@@ -84,12 +84,12 @@
                 >
                 <div class="relative">
                   <input
+                      id="mauxe"
                       v-model="form.mau_xe"
                       class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      type="text"
                       name="mauxe"
-                      id="mauxe"
                       placeholder="Màu xe"
+                      type="text"
                   />
                 </div>
               </div>
@@ -105,12 +105,12 @@
                 >Biển số xe</label
                 >
                 <input
+                    id="biensoxe"
                     v-model="form.bien_so_xe"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    type="text"
                     name="biensoxe"
-                    id="biensoxe"
                     placeholder="Biển số xe"
+                    type="text"
                 />
               </div>
               <div class="mb-5.5">
@@ -123,12 +123,12 @@
                 >Số khung</label
                 >
                 <input
+                    id="sokhung"
                     v-model="form.so_khung"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    type="text"
                     name="sokhung"
-                    id="sokhung"
                     placeholder="Số khung"
+                    type="text"
                 />
               </div>
               <div class="mb-5.5">
@@ -141,12 +141,12 @@
                 >Số máy</label
                 >
                 <input
+                    id="so_may"
                     v-model="form.so_may"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    type="text"
                     name="so_may"
-                    id="so_may"
                     placeholder="Số máy"
+                    type="text"
                 />
               </div>
               <div class="mb-5.5">
@@ -158,12 +158,12 @@
                     for="socho">Số chỗ</label
                 >
                 <input
+                    id="socho"
                     v-model="form.so_cho"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    type="text"
                     name="socho"
-                    id="socho"
                     placeholder="Số chỗ"
+                    type="text"
                 />
               </div>
               <div class="mb-5.5">
@@ -176,12 +176,12 @@
                 >Số xăng, dầu tiêu thụ (L/100KM)</label
                 >
                 <input
+                    id="tieuthu"
                     v-model="form.so_dau_xang_tieu_thu"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    type="text"
                     name="tieuthu"
-                    id="tieuthu"
                     placeholder="L/100KM"
+                    type="text"
                 />
               </div>
               <div class="mb-5.5">
@@ -226,9 +226,9 @@
                 >Ảnh xe</label
                 >
                 <input
-                    type="file"
                     id="anh_xe"
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    type="file"
                     @change="handleFileUpload"
                 />
                 <!-- Hiển thị ảnh đã chọn -->
@@ -249,18 +249,18 @@
                 >
                 <div class="relative">
                   <input
-                      type="text"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.location"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       placeholder="Điền địa chỉ để hiển thị gợi ý..."
+                      type="text"
                       @input="handleShowSuggestion"
                   />
                   <ul class="mb-5.5">
                     <li
                         v-for="prediction in predictions"
                         :key="prediction"
-                        @click="selectSuggestion(prediction.description)"
                         class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                        @click="selectSuggestion(prediction.description)"
                     >
                       {{ prediction.description }}
                     </li>
@@ -274,8 +274,8 @@
                   <router-link :to="{ name: 'Car' }">Hủy</router-link>
                 </button>
                 <button
-                    type="submit"
                     class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded"
+                    type="submit"
                 >
                   Thêm mới
                 </button>
@@ -297,7 +297,6 @@
 <script setup>
 import {onMounted, ref} from 'vue'
 import axios from 'axios'
-import {useUserStore} from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import DatePickerOne from "@/components/Forms/DatePicker/DatePickerOne.vue";
 import debounce from 'lodash.debounce'
@@ -326,7 +325,6 @@ const form = ref({
 })
 const predictions = ref([])
 
-const userStore = useUserStore()
 onMounted(async () => {
   // await userStore.fetchUser()
 })
@@ -334,11 +332,7 @@ onMounted(async () => {
 const users = ref([])
 const fetchUsers = async () => {
   try {
-    const response = await axios.get('/drivers', {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`
-      }
-    })
+    const response = await axios.get('/drivers')
     users.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy danh sách người lái:', error)
@@ -375,8 +369,7 @@ const handleSubmit = async () => {
 
     await axios.post('/cars', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${userStore.token}`
+        "Content-Type": "multipart/form-data",
       }
     })
     errorMessage.value = []

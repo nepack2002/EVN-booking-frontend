@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {useDarkModeStore} from '@/stores/darkMode'
 
 const darkModeStore = useDarkModeStore()
@@ -10,17 +10,17 @@ const darkModeStore = useDarkModeStore()
       class="relative m-0 block h-7.5 w-14 rounded-full"
       @click="darkModeStore.toggleDarkMode"
   >
-    <input type="checkbox" class="absolute top-0 z-50 m-0 h-full w-full cursor-pointer opacity-0"/>
+    <input class="absolute top-0 z-50 m-0 h-full w-full cursor-pointer opacity-0" type="checkbox"/>
     <span
         :class="{ 'right-1 translate-x-full': darkModeStore.darkMode }"
         class="absolute top-1/2 left-1 flex h-6 w-6 -translate-y-1/2 translate-x-0 items-center justify-center rounded-full bg-white shadow-switcher duration-75 ease-linear"
     >
       <span class="dark:hidden">
         <svg
-            width="16"
+            fill="none"
             height="16"
             viewBox="0 0 16 16"
-            fill="none"
+            width="16"
             xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -35,10 +35,10 @@ const darkModeStore = useDarkModeStore()
       </span>
       <span class="hidden dark:inline-block">
         <svg
-            width="16"
+            fill="none"
             height="16"
             viewBox="0 0 16 16"
-            fill="none"
+            width="16"
             xmlns="http://www.w3.org/2000/svg"
         >
           <path

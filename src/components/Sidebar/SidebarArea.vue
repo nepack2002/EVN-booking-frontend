@@ -93,22 +93,22 @@ const menuGroups = ref([
 
 <template>
   <aside
-      class="absolute left-0 top-0 z-9999 flex h-screen w-[320px] flex-col overflow-y-hidden bg-primary duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
+      ref="target"
       :class="{
       'translate-x-0': sidebarStore.isSidebarOpen,
       '-translate-x-full': !sidebarStore.isSidebarOpen
     }"
-      ref="target"
+      class="absolute left-0 top-0 z-9999 flex h-screen w-[320px] flex-col overflow-y-hidden bg-primary duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
   >
     <!-- SIDEBAR HEADER -->
     <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
       <button class="block lg:hidden" @click="sidebarStore.isSidebarOpen = false">
         <svg
             class="fill-current"
-            width="20"
+            fill="none"
             height="18"
             viewBox="0 0 20 18"
-            fill="none"
+            width="20"
             xmlns="http://www.w3.org/2000/svg"
         >
           <path
@@ -130,9 +130,9 @@ const menuGroups = ref([
             <ul class="mb-6 flex flex-col gap-1.5">
               <SidebarItem
                   v-for="(menuItem, index) in menuGroup.menuItems"
-                  :item="menuItem"
                   :key="index"
                   :index="index"
+                  :item="menuItem"
               />
             </ul>
           </div>

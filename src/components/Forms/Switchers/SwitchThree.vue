@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {ref} from 'vue'
 
 const switcherToggle = ref<boolean>(false)
@@ -6,12 +6,12 @@ const switcherToggle = ref<boolean>(false)
 
 <template>
   <div>
-    <label for="toggle3" class="flex cursor-pointer select-none items-center">
+    <label class="flex cursor-pointer select-none items-center" for="toggle3">
       <div class="relative">
         <input
-            type="checkbox"
             id="toggle3"
             class="sr-only"
+            type="checkbox"
             @change="switcherToggle = !switcherToggle"
         />
         <div class="block h-8 w-14 rounded-full bg-meta-9 dark:bg-[#5A616B]"></div>
@@ -22,10 +22,10 @@ const switcherToggle = ref<boolean>(false)
           <span :class="switcherToggle && '!block'" class="hidden text-white dark:text-bodydark">
             <svg
                 class="fill-current stroke-current"
-                width="11"
+                fill="none"
                 height="8"
                 viewBox="0 0 11 8"
-                fill="none"
+                width="11"
                 xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -44,10 +44,10 @@ const switcherToggle = ref<boolean>(false)
                 xmlns="http://www.w3.org/2000/svg"
             >
               <path
+                  d="M6 18L18 6M6 6l12 12"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
               ></path>
             </svg>
           </span>

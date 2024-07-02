@@ -10,7 +10,7 @@
           </div>
 
           <div class="p-7">
-            <form @submit.prevent="handleSubmit" enctype="multipart/form-data" method="post">
+            <form enctype="multipart/form-data" method="post" @submit.prevent="handleSubmit">
               <div v-if="form.status === '1'" class="mb-5.5 text-red">Lịch trình này đang được chạy</div>
               <div v-if="form.status === '2'" class="mb-5.5 text-red">Lịch trình này đã kết thúc</div>
               <div v-if="form.status === '3'" class="mb-5.5 text-red">Lịch trình này đang tạm dừng</div>
@@ -24,11 +24,11 @@
                 >Chương trình công tác</label
                 >
                 <input
-                    type="text"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.program"
-                    placeholder="Chương trình công tác"
                     :disabled="form.status !== '0'"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    placeholder="Chương trình công tác"
+                    type="text"
                 />
               </div>
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
@@ -42,9 +42,9 @@
                   >
                   <div class="">
                     <select
-                        class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         v-model="form.department_id"
                         :disabled="form.status !== '0'"
+                        class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     >
                       <option
                           v-for="department in departments"
@@ -65,8 +65,8 @@
                     }"
                       class="mb-3 block text-sm font-medium text-black dark:text-white"
                   >Thời gian</label>
-                  <datetime-picker-one  v-model="form.datetime"
-                                        :disabled="form.status !== '0'"
+                  <datetime-picker-one v-model="form.datetime"
+                                       :disabled="form.status !== '0'"
                   />
                 </div>
               </div>
@@ -82,19 +82,19 @@
                 >
                 <div class="relative">
                   <input
-                      type="text"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.location"
-                      placeholder="Điền địa chỉ để hiển thị gợi ý..."
-                      @input="handleShowSuggestion"
                       :disabled="form.status !== '0'"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      placeholder="Điền địa chỉ để hiển thị gợi ý..."
+                      type="text"
+                      @input="handleShowSuggestion"
                   />
                   <ul class="mb-5.5">
                     <li
                         v-for="prediction in predictions"
                         :key="prediction"
-                        @click="selectSuggestion(prediction.description)"
                         class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                        @click="selectSuggestion(prediction.description)"
                     >
                       {{ prediction.description }}
                     </li>
@@ -111,19 +111,19 @@
                     class="mb-3 block text-sm font-medium text-black dark:text-white"
                 >Địa điểm kết thúc</label>
                 <input
-                    type="text"
-                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.location_2"
-                    placeholder="Điền địa chỉ để hiển thị gợi ý..."
-                    @input="handleShowSuggestion_2"
                     :disabled="form.status !== '0'"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    placeholder="Điền địa chỉ để hiển thị gợi ý..."
+                    type="text"
+                    @input="handleShowSuggestion_2"
                 />
                 <ul class="mb-5.5">
                   <li
                       v-for="prediction in predictions_2"
                       :key="prediction"
-                      @click="selectSuggestion_2(prediction.description)"
                       class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                      @click="selectSuggestion_2(prediction.description)"
                   >
                     {{ prediction.description }}
                   </li>
@@ -137,12 +137,12 @@
                       for="Username"
                   >Loại phương tiện</label>
                   <select
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.car_id"
                       :disabled="form.status !== '0'"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   >
                     <option v-for="car in cars" :key="car.car_id" :value="car.car_id">
-                      {{ car.name }} ({{car.so_cho}} chỗ) (Cách điểm bắt đầu {{ car.distance.toFixed(2) }} KM)
+                      {{ car.name }} ({{ car.so_cho }} chỗ) (Cách điểm bắt đầu {{ car.distance.toFixed(2) }} KM)
                     </option>
                   </select>
                 </div>
@@ -152,14 +152,14 @@
                       'text-red': errorMessage.participants
                     }"
                       class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  >Người tham gia <span class="text-red">({{soNguoiThamGia}} người)</span></label>
+                  >Người tham gia <span class="text-red">({{ soNguoiThamGia }} người)</span></label>
                   <small>Tên người tham gia cách nhau bằng dấu <b>,</b></small>
                   <input
-                      type="text"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                       v-model="form.participants"
-                      placeholder="Người tham gia"
                       :disabled="form.status !== '0'"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      placeholder="Người tham gia"
+                      type="text"
                   />
                 </div>
 
@@ -172,21 +172,22 @@
                       for="Username"
                   >Tài liệu đính kèm</label
                   >
-                  <div class="my-2" v-if="form.ten_tai_lieu">
-                    <a class="text-primary" :href="form.tai_lieu_preview" download target="_blank">{{form.ten_tai_lieu}}</a>
+                  <div v-if="form.ten_tai_lieu" class="my-2">
+                    <a :href="form.tai_lieu_preview" class="text-primary" download
+                       target="_blank">{{ form.ten_tai_lieu }}</a>
                   </div>
                   <input
+                      id="tai_lieu"
                       :disabled="form.status !== '0'"
                       accept="application/pdf"
-                      type="file"
-                      id="tai_lieu"
-                      @change="handleFileUpload"
                       class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                      type="file"
+                      @change="handleFileUpload"
                   />
                 </div>
               </div>
 
-              <div class="w-[100%] flex justify-end items-center gap-5" v-if="form.status === '0'">
+              <div v-if="form.status === '0'" class="w-[100%] flex justify-end items-center gap-5">
                 <p v-if="showAddSuccess" class="text-green-500 ml-10 font-semibold text-md">
                   Cập nhật thành công
                 </p>
@@ -196,9 +197,9 @@
                   <router-link :to="{ name: 'Schedule' }">Hủy</router-link>
                 </button>
                 <button
-                    type="submit"
-                    class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded"
                     :class="{ 'bg-red pointer-events-none': form.status !== '0' }"
+                    class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded"
+                    type="submit"
                 >
                   Cập nhật
                 </button>
@@ -209,23 +210,26 @@
       </div>
       <h2 class="text-2xl font-bold my-4">Lộ trình</h2>
       <div class="bg-white shadow sm:rounded-lg dark:bg-boxdark px-6 py-4 mb-2 text-sm">
-        Tiêu thụ tổng: ~ {{locations.reduce((partialSum, a) => partialSum + a.so_dau_xang_tieu_thu, 0)}}L xăng/dầu
+        Tiêu thụ tổng: ~ {{ locations.reduce((partialSum, a) => partialSum + a.so_dau_xang_tieu_thu, 0) }}L xăng/dầu
       </div>
       <div class="bg-white shadow sm:rounded-lg dark:bg-boxdark">
         <div class="px-6 py-4 gap-2 text-sm font-medium text-gray-900 flex items-center">
-          <div class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
-            <img src="@/assets/images/location_on_24px.svg" alt="location"/>
+          <div
+              class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
+            <img alt="location" src="@/assets/images/location_on_24px.svg"/>
           </div>
           <div class="flex-1 break-words text-primary">
             {{ form.location }}
             <div class="text-bodydark text-xs">
-              {{form.lat_location}}, {{form.long_location}}
+              {{ form.lat_location }}, {{ form.long_location }}
             </div>
           </div>
         </div>
-        <div v-for="location in locations" :key="location.id" class="px-6 py-4 gap-2 text-sm font-medium text-gray-900 flex items-center">
-          <div class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
-            <img src="@/assets/images/location_on_24px.svg" alt="location"/>
+        <div v-for="location in locations" :key="location.id"
+             class="px-6 py-4 gap-2 text-sm font-medium text-gray-900 flex items-center">
+          <div
+              class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
+            <img alt="location" src="@/assets/images/location_on_24px.svg"/>
           </div>
           <div class="flex-1 break-words">
             {{ location.location }}
@@ -233,19 +237,20 @@
               Tiêu thụ: ~ {{ location.so_dau_xang_tieu_thu }}L
             </div>
             <div class="text-bodydark text-xs">
-              {{location.lat}}, {{location.long}}
+              {{ location.lat }}, {{ location.long }}
             </div>
           </div>
         </div>
 
         <div v-if="form.status === '2'" class="px-6 py-4 gap-2 text-sm font-medium text-gray-900 flex items-center">
-          <div class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
-            <img src="@/assets/images/location_on_24px.svg" alt="location"/>
+          <div
+              class="relative before:content-[''] before:absolute before:w-[2px] before:bg-bodydark before:h-[20px] before:left-1/2 before:-translate-x-[2px] before:-top-full after:content-[''] after:absolute after:w-[2px] after:bg-bodydark after:h-[20px] after:left-1/2 after:-translate-x-[2px]">
+            <img alt="location" src="@/assets/images/location_on_24px.svg"/>
           </div>
           <div class="flex-1 break-words text-primary">
             {{ form.location_2 }}
             <div class="text-bodydark text-xs">
-              {{form.lat_location_2}}, {{form.long_location_2}}
+              {{ form.lat_location_2 }}, {{ form.long_location_2 }}
             </div>
           </div>
         </div>
@@ -313,11 +318,7 @@ const fetchLocations = async () => {
 }
 const getDepartments = async () => {
   try {
-    const response = await axios.get(`/schedules/${route.params.id}`, {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`
-      }
-    })
+    const response = await axios.get(`/schedules/${route.params.id}`)
     form.value = response.data
     form.value.tai_lieu_preview = response.data.tai_lieu_preview ? `${import.meta.env.VITE_BACKEND_URL}${response.data.tai_lieu_preview}` : null
   } catch (error) {
@@ -326,11 +327,7 @@ const getDepartments = async () => {
 }
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get('/departments2', {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`
-      }
-    })
+    const response = await axios.get('/departments2')
     departments.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy danh sách phòng ban:', error)
@@ -344,11 +341,6 @@ const fetchCars = async () => {
           lat: form.value.lat_location,
           long: form.value.long_location,
           so_cho: soNguoiThamGia.value,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${userStore.token}`
-          }
         }
     )
     cars.value = response.data
@@ -363,7 +355,6 @@ const handleSubmit = async (event) => {
     await axios.post(`/schedules/${route.params.id}`, form.value, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${userStore.token}`
       }
     })
     showAddSuccess.value = true
@@ -377,6 +368,7 @@ const handleSubmit = async (event) => {
 }
 const handleShowSuggestion = debounce(() => showSuggestions(), 1000)
 const handleShowSuggestion_2 = debounce(() => showSuggestions_2(), 1000)
+
 async function showSuggestions() {
   const apiKey = import.meta.env.VITE_KEY
   const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(

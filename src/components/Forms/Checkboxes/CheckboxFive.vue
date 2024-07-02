@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {ref} from 'vue'
 
 const checkboxToggle = ref<boolean>(false)
@@ -6,12 +6,12 @@ const checkboxToggle = ref<boolean>(false)
 
 <template>
   <div>
-    <label for="checkboxLabelFive" class="flex cursor-pointer select-none items-center">
+    <label class="flex cursor-pointer select-none items-center" for="checkboxLabelFive">
       <div class="relative">
         <input
-            type="checkbox"
             id="checkboxLabelFive"
             class="sr-only"
+            type="checkbox"
             @change="checkboxToggle = !checkboxToggle"
         />
         <div

@@ -11,10 +11,10 @@
             </h3>
 
           </div>
-          <div class="pr-5" v-if="schedule.status">
+          <div v-if="schedule.status" class="pr-5">
             <button
-                @click="handleStopButton"
                 class="py-2.5 px-4 text-white bg-green-500 rounded-xl hover:bg-green-600 focus:outline-none mx-2"
+                @click="handleStopButton"
             >
               {{ schedule.status == 1 ? "Stop" : "Start" }}
             </button>
@@ -59,8 +59,8 @@
       </div>
       <confirm-modal
           :is-visible="isModalVisible"
-          @confirm="confirmStop"
           @cancel="cancelStop"
+          @confirm="confirmStop"
       ></confirm-modal>
     </div>
   </DefaultLayoutForUser>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import flatpickr from 'flatpickr'
 import {onMounted} from 'vue'
 import {Vietnamese} from "flatpickr/dist/l10n/vn";
@@ -31,19 +31,19 @@ onMounted(() => {
 <template>
   <div class="relative">
     <input
-        class="datepicker w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-        placeholder="dd/mm/yyyy"
-        data-class="flatpickr-right"
-        :value="model"
         :disabled="props.disabled"
+        :value="model"
+        class="datepicker w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+        data-class="flatpickr-right"
+        placeholder="dd/mm/yyyy"
     />
 
     <div class="pointer-events-none absolute inset-0 right-5 left-auto flex items-center">
       <svg
-          width="18"
+          fill="none"
           height="18"
           viewBox="0 0 18 18"
-          fill="none"
+          width="18"
           xmlns="http://www.w3.org/2000/svg"
       >
         <path

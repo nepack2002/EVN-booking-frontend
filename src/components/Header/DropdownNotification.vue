@@ -53,7 +53,7 @@ onClickOutside(target, () => {
 </script>
 
 <template>
-  <li class="relative" ref="target">
+  <li ref="target" class="relative">
     <div
         class="relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white"
         to="#"
@@ -70,10 +70,10 @@ onClickOutside(target, () => {
 
       <svg
           class="fill-current duration-300 ease-in-out"
-          width="18"
+          fill="none"
           height="18"
           viewBox="0 0 18 18"
-          fill="none"
+          width="18"
           xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -96,9 +96,9 @@ onClickOutside(target, () => {
         <template v-for="item in notificationItems" :key="item.id">
           <li>
             <div
-                @click="markNotificationAsRead(item.id)"
-                class="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 dark:border-strokedark dark:hover:bg-meta-4"
                 :class="[item.read == 0 ? 'bg-slate-400 hover:bg-slate-300' : '']"
+                class="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 dark:border-strokedark dark:hover:bg-meta-4"
+                @click="markNotificationAsRead(item.id)"
             >
               <p class="text-sm">
                 <span class="text-black dark:text-white">{{ item.message }}</span>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import {onClickOutside} from '@vueuse/core'
 import {ref} from 'vue'
 import userOne from '@/assets/images/user/user-01.png'
@@ -54,7 +54,7 @@ const messagesList = ref([
 </script>
 
 <template>
-  <li class="relative" ref="target">
+  <li ref="target" class="relative">
     <router-link
         class="relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white"
         to="#"
@@ -71,10 +71,10 @@ const messagesList = ref([
 
       <svg
           class="fill-current duration-300 ease-in-out"
-          width="18"
+          fill="none"
           height="18"
           viewBox="0 0 18 18"
-          fill="none"
+          width="18"
           xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -109,8 +109,8 @@ const messagesList = ref([
         <template v-for="(item, index) in messagesList" :key="index">
           <li>
             <router-link
-                class="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
                 :to="item.route"
+                class="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
             >
               <div class="h-12.5 w-12.5 rounded-full">
                 <img :src="item.userImg" alt="User"/>
