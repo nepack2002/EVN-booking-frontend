@@ -11,9 +11,7 @@ const currentPage = ref(1) // Trang hiện tại
 const totalPages = ref(0) // Tổng số trang
 const userStore = useUserStore()
 const searchQuery = ref('')
-onMounted(async () => {
-  await userStore.fetchUser()
-})
+
 const fetchCars = async (page = 1) => {
   try {
     const response = await axios.get(`cars?page=${page}&query=${searchQuery.value}`, {
@@ -36,7 +34,6 @@ const fetchCars = async (page = 1) => {
 watch(searchQuery, () => {
   fetchCars(currentPage.value)
 })
-onMounted(fetchCars)
 const changePage = async (newPage) => {
   if (newPage > 0 && newPage <= totalPages.value) {
     await fetchCars(newPage)
