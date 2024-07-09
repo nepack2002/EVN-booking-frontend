@@ -27,7 +27,8 @@ export default {
         bodydark: '#AEB7C0',
         bodydark1: '#DEE4EE',
         bodydark2: '#8A99AF',
-        primary: '#3C50E0',
+        primary: '#174397',
+        'primary-dark': '#14387c',
         secondary: '#80CAEE',
         stroke: '#E2E8F0',
         gray: '#EFF4FB',
@@ -53,7 +54,8 @@ export default {
         'meta-10': '#0FADCF',
         success: '#219653',
         danger: '#D34053',
-        warning: '#FFA70B'
+        warning: '#FFA70B',
+        'burning-red': '#ed1c25',
       },
       fontSize: {
         'title-xxl': ['44px', '55px'],

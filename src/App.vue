@@ -1,12 +1,10 @@
 <template>
-  <RouterView />
+  <RouterView/>
 </template>
 
 <script setup>
-import { useUserStore } from '@/stores/auth.js'
-import { onMounted } from 'vue'
-import axios from 'axios'
-const a = localStorage.getItem('OneSignalUserId')
+import {useUserStore} from '@/stores/auth.js'
+
 const userStore = useUserStore()
 
 // onMounted(async () => {

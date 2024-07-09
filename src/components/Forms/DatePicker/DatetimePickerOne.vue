@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import flatpickr from 'flatpickr'
 import {onMounted} from 'vue'
-import {Vietnamese} from "flatpickr/dist/l10n/vn";
+import {Vietnamese} from "flatpickr/dist/l10n/vn.js"
 
 const model = defineModel()
 const props = defineProps({
@@ -11,10 +11,11 @@ const props = defineProps({
 onMounted(() => {
   // Init flatpickr
   flatpickr('.datepicker', {
+    enableTime: true,
     mode: 'single',
     static: true,
     monthSelectorType: 'static',
-    dateFormat: 'd/m/Y',
+    dateFormat: 'd/m/Y H:i',
     prevArrow:
         '<svg class="fill-current" width="7" height="11" viewBox="0 0 7 11"><path d="M5.4 10.8l1.4-1.4-4-4 4-4L5.4 0 0 5.4z" /></svg>',
     nextArrow:
@@ -35,7 +36,7 @@ onMounted(() => {
         :value="model"
         class="datepicker w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
         data-class="flatpickr-right"
-        placeholder="dd/mm/yyyy"
+        placeholder="dd/mm/yyyy h:m"
     />
 
     <div class="pointer-events-none absolute inset-0 right-5 left-auto flex items-center">
