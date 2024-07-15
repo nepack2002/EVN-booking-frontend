@@ -42,8 +42,6 @@ export const useUserStore = defineStore("userStore", {
             if (!this.token) return;
             
             try {
-
-
                 const response = await axios.get('/user', {
                     headers: {
                         'Authorization': `Bearer ${this.token}`

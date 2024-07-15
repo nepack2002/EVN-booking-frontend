@@ -169,7 +169,7 @@ import DefaultLayoutForUser from './DefaultLayoutForUser.vue';
     const userStore = useUserStore()
     const isLoading = ref(true)
 
-    userStore.fetchUser()
+    // userStore.fetchUser()
     const fetchSchedules = async () => {
       try {
         const response = await axios.get(`/users/${userStore.user.id}/schedulesDate`)

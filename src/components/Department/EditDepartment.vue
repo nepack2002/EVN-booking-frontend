@@ -3,31 +3,32 @@
     <div class="mx-auto w-[80%]">
       <div class="col-span-5 xl:col-span-3">
         <div
-          class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
+            class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"
         >
           <div class="border-b border-stroke py-4 px-7 dark:border-strokedark">
             <h3 class="font-medium text-black dark:text-white">Thông tin người dùng</h3>
           </div>
 
           <div class="p-7">
-            <form @submit.prevent="handleSubmit" enctype="multipart/form-data" method="post">
+            <form enctype="multipart/form-data" method="post" @submit.prevent="handleSubmit">
               <!-- Full Name Section -->
               <div class="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.name
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="fullName"
-                    >Tên phòng ban</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="name"
+                  >Tên phòng ban</label
                   >
                   <div class="">
                     <input
-                      v-model="form.name"
-                      class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                      type="text"
-                      placeholder="nepack"
+                        id="name"
+                        v-model="form.name"
+                        class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                        placeholder="Tên phòng ban"
+                        type="text"
                     />
                   </div>
                 </div>
@@ -35,24 +36,24 @@
                 <!-- Phone Number Section -->
                 <div class="w-full sm:w-1/2">
                   <label
-                    :class="{
+                      :class="{
                       'text-red': errorMessage.parent_id
                     }"
-                    class="mb-3 block text-sm font-medium text-black dark:text-white"
-                    for="phoneNumber"
-                    >Phòng ban con</label
+                      class="mb-3 block text-sm font-medium text-black dark:text-white"
+                      for="parent_id"
+                  >Phòng ban cha</label
                   >
                   <select
-                    class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                    v-model="form.parent_id"
+                      id="parent_id"
+                      v-model="form.parent_id"
+                      class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   >
-                    <option value="">Không chọn phòng ban nào</option>
                     <option
-                      v-for="department in departments"
-                      :key="department.id"
-                      :value="department.id"
+                        v-for="department in departments"
+                        :key="department.id"
+                        :value="department.id"
                     >
-                      {{ department.id }} - {{ department.name }}
+                      {{ department.full_name }}
                     </option>
                   </select>
                 </div>
@@ -65,13 +66,13 @@
                   Cập nhật thành công
                 </p>
                 <button
-                  class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
+                    class="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                 >
                   <router-link :to="{ name: 'Department' }">Hủy</router-link>
                 </button>
                 <button
-                  type="submit"
-                  class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded"
+                    class="bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded"
+                    type="submit"
                 >
                   Cập nhật
                 </button>
@@ -85,10 +86,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import {onMounted, ref} from 'vue'
 import axios from 'axios'
-import { useRoute } from 'vue-router'
-import { useUserStore } from '@/stores/auth.js'
+import {useRoute} from 'vue-router'
+import {useUserStore} from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
 const errorMessage = ref({})
@@ -100,7 +101,7 @@ const form = ref({
 })
 const userStore = useUserStore()
 onMounted(async () => {
-  await userStore.fetchUser()
+  // await userStore.fetchUser()
   getDepartments()
   fetchDepartments()
 })
@@ -108,12 +109,8 @@ onMounted(async () => {
 const departments = ref([])
 const fetchDepartments = async () => {
   try {
-    const response = await axios.get('/departments', {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`
-      }
-    })
-    departments.value = response.data.data.filter((department) => department.id !== form.value.id)
+    const response = await axios.get('/departments2')
+    departments.value = response.data.filter((department) => department.id !== form.value.id)
   } catch (error) {
     console.error('Lỗi khi lấy danh sách phòng ban:', error)
   }
@@ -121,11 +118,7 @@ const fetchDepartments = async () => {
 const route = useRoute()
 const getDepartments = async () => {
   try {
-    const response = await axios.get(`/departments/${route.params.id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
+    const response = await axios.get(`/departments/${route.params.id}`)
     form.value = response.data
   } catch (error) {
     console.error('Lỗi khi lấy thông tin xe:', error)
@@ -135,11 +128,7 @@ const handleSubmit = async (event) => {
   event.preventDefault()
 
   try {
-    await axios.post(`/departments/${route.params.id}`, form.value, {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`
-      }
-    })
+    await axios.post(`/departments/${route.params.id}`, form.value)
     showAddSuccess.value = true
     errorMessage.value = []
     setTimeout(() => {

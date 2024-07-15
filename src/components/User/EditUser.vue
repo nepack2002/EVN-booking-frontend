@@ -129,9 +129,9 @@
               <p v-if="showAddSuccess" class="text-green-500 ml-10 font-semibold text-md">
                 Cập nhật thành công
               </p>
-              <div v-if="messages" class="w-[100%] bg-red-400 text-white rounded-md p-2 my-5">
+              <!-- <div v-if="messages" class="w-[100%] bg-red-400 text-white rounded-md p-2 my-5">
                 {{ messages }}
-              </div>
+              </div> -->
             </form>
           </div>
         </div>
@@ -158,7 +158,7 @@ const form = ref({
 })
 const userStore = useUserStore()
 onMounted(() => {
-  userStore.fetchUser()
+  // userStore.fetchUser()
   fetchDepartments()
 })
 const departments = ref([])

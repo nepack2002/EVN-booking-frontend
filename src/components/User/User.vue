@@ -4,7 +4,6 @@ import { ref, onMounted, watch } from 'vue'
 import axios from 'axios'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import { useUserStore } from '@/stores/auth.js'
-import OneSignal from '@onesignal/onesignal-vue3';
 const userStore = useUserStore()
 const users = ref([])
 const currentPage = ref(1) // Trang hiện tại

@@ -29,7 +29,7 @@
                       type="text"
                       name="fullName"
                       id="fullName"
-                      placeholder="Devid Jhon"
+                      placeholder="Tên xe"
                     />
                   </div>
                 </div>
@@ -42,18 +42,20 @@
                     }"
                     class="mb-3 block text-sm font-medium text-black dark:text-white"
                     for="phoneNumber"
-                    >Người lái</label
+                    >Tài xế</label
                   >
                   <select
                     class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     v-model="form.user_id"
                   >
-                    <option v-for="user in users" :key="user.id" :value="user.id">
+                    <option
+                      v-for="user in users"
+                      :key="user.id"
+                      :value="user.id"
+                    >
                       {{ user.id }} - {{ user.name }}
-                      <div v-if="user.car">
-                        {{ user.car.ten_xe }}
-                      </div>
                     </option>
+                  
                   </select>
                 </div>
               </div>
@@ -65,7 +67,7 @@
                     'text-red': errorMessage.mau_xe
                   }"
                   class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="emailAddress"
+                  for="mauxe"
                   >Màu xe</label
                 >
                 <div class="relative">
@@ -73,9 +75,9 @@
                     v-model="form.mau_xe"
                     class="w-full rounded border border-stroke bg-gray py-3 px-5 pr-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                     type="text"
-                    name="emailAddress"
-                    id="emailAddress"
-                    placeholder="devidjond45@gmail.com"
+                    name="mauxe"
+                    id="mauxe"
+                    placeholder="Màu xe"
                   />
                 </div>
               </div>
@@ -87,16 +89,16 @@
                     'text-red': errorMessage.bien_so_xe
                   }"
                   class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="Username"
+                  for="biensoxe"
                   >Biển số xe</label
                 >
                 <input
                   v-model="form.bien_so_xe"
                   class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   type="text"
-                  name="Username"
-                  id="Username"
-                  placeholder="devidjhon24"
+                  name="biensoxe"
+                  id="biensoxe"
+                  placeholder="Biến số xe"
                 />
               </div>
               <div class="mb-5.5">
@@ -105,16 +107,16 @@
                     'text-red': errorMessage.so_khung
                   }"
                   class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="Username"
+                  for="sokhung"
                   >Số khung</label
                 >
                 <input
                   v-model="form.so_khung"
                   class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   type="text"
-                  name="Username"
-                  id="Username"
-                  placeholder="devidjhon24"
+                  name="sokhung"
+                  id="sokhung"
+                  placeholder="Số khung"
                 />
               </div>
               <div class="mb-5.5">
@@ -123,35 +125,45 @@
                     'text-red': errorMessage.so_cho
                   }"
                   class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="Username"
+                  for="socho"
                   >Số chỗ</label
                 >
                 <input
                   v-model="form.so_cho"
                   class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   type="text"
-                  name="Username"
-                  id="Username"
-                  placeholder="devidjhon24"
+                  name="socho"
+                  id="socho"
+                  placeholder="Số chỗ"
                 />
               </div>
               <div class="mb-5.5">
                 <label
                   :class="{
-                    'text-red': errorMessage.dac_diem_mac_dinh
+                    'text-red': errorMessage.location
                   }"
                   class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="Username"
-                  >Đặc điểm mặc định</label
+                  >Vị trí hiện tại</label
                 >
-                <select
-                  id="dac_diem_mac_dinh"
-                  v-model="form.dac_diem_mac_dinh"
-                  class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                >
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                </select>
+                <div class="relative">
+                  <input
+                    v-model="form.location"
+                    class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                    placeholder="Điền địa chỉ để hiển thị gợi ý..."
+                    type="text"
+                    @input="handleShowSuggestion"
+                  />
+                  <ul class="mb-5.5">
+                    <li
+                      v-for="prediction in predictions"
+                      :key="prediction"
+                      class="cursor-pointer py-2 px-4 hover:bg-gray-200"
+                      @click="selectSuggestion(prediction.description)"
+                    >
+                      {{ prediction.description }}
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div class="mb-5.5">
                 <label
@@ -159,16 +171,16 @@
                     'text-red': errorMessage.so_dau_xang_tieu_thu
                   }"
                   class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="Username"
+                  for="tieuthu"
                   >Số xăng, dầu tiêu thụ (L/100KM)</label
                 >
                 <input
                   v-model="form.so_dau_xang_tieu_thu"
                   class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   type="number"
-                  name="Username"
-                  id="Username"
-                  placeholder="devidjhon24"
+                  name="tieuthu"
+                  id="tieuthu"
+                  placeholder="L/100KM"
                 />
               </div>
               <div class="mb-5.5">
@@ -177,16 +189,16 @@
                     'text-red': errorMessage.ngay_bao_duong_gan_nhat
                   }"
                   class="mb-3 block text-sm font-medium text-black dark:text-white"
-                  for="Username"
+                  for="ngaybaoduong"
                   >Ngày bảo dưỡng gần nhất</label
                 >
                 <input
                   v-model="form.ngay_bao_duong_gan_nhat"
                   class="w-full rounded border border-stroke bg-gray py-3 px-4.5 font-normal text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                   type="date"
-                  name="Username"
-                  id="Username"
-                  placeholder="devidjhon24"
+                  name="ngaybaoduong"
+                  id="ngaybaoduong"
+                  placeholder="Ngày bảo dưỡng gần nhất"
                 />
               </div>
               <div class="mb-5.5">
@@ -260,8 +272,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import { useUserStore } from '@/stores/auth.js'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import debounce from 'lodash.debounce'
 
 const showAddSuccess = ref(false)
 const errorMessage = ref({})
@@ -277,23 +289,19 @@ const form = ref({
   so_dau_xang_tieu_thu: '',
   ngay_bao_duong_gan_nhat: '',
   han_dang_kiem_tiep_theo: '',
-  anh_xe: ''
+  anh_xe: '',
+  location: '',
+  lat_location: '',
+  long_location: ''
 })
+const predictions = ref([])
 
-const userStore = useUserStore()
-onMounted(async () => {
-  await userStore.fetchUser()
-})
-//lấy thông tin trong bảng "User"
 const users = ref([])
 const fetchUsers = async () => {
   try {
-    const response = await axios.get('/users', {
-      headers: {
-        Authorization: `Bearer ${userStore.token}`
-      }
-    })
-    users.value = response.data.data
+    const response = await axios.get('/drivers')
+    users.value = response.data;
+    console.log(users.value);
   } catch (error) {
     console.error('Lỗi khi lấy danh sách người lái:', error)
   }
@@ -320,10 +328,12 @@ const handleSubmit = async () => {
     if (form.value.anh_xe) {
       formData.append('anh_xe', form.value.anh_xe)
     }
+    formData.append('location', form.value.location)
+    formData.append('lat_location', form.value.lat_location)
+    formData.append('long_location', form.value.long_location)
     await axios.post('/cars', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${userStore.token}`
+        'Content-Type': 'multipart/form-data'
       }
     })
     errorMessage.value = []
@@ -366,8 +376,60 @@ const resetForm = () => {
     so_dau_xang_tieu_thu: null,
     ngay_bao_duong_gan_nhat: null,
     han_dang_kiem_tiep_theo: null,
-    anh_xe: null
+    anh_xe: null,
+    location: '',
+    lat_location: '',
+    long_location: ''
+  }
+}
+const handleShowSuggestion = debounce(() => showSuggestions(), 1000)
+
+async function showSuggestions() {
+  const apiKey = import.meta.env.VITE_KEY
+  const url = `https://rsapi.goong.io/Place/AutoComplete?api_key=${apiKey}&input=${encodeURIComponent(
+    form.value.location
+  )}`
+  if (form.value.location.length > 0) {
+    try {
+      const response = await fetch(url)
+      const data = await response.json()
+      predictions.value = data.predictions
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  } else {
+    predictions.value = []
+    form.value.lat_location = ''
+    form.value.long_location = ''
+  }
+}
+
+async function selectSuggestion(selectedDescription) {
+  const selectedPrediction = predictions.value.find(
+    (prediction) => prediction.description === selectedDescription
+  )
+  if (selectedPrediction) {
+    const placeId = selectedPrediction.place_id
+    const apiKey = import.meta.env.VITE_KEY
+    const placeDetailUrl = `https://rsapi.goong.io/Place/Detail?place_id=${placeId}&api_key=${apiKey}`
+
+    try {
+      const response = await fetch(placeDetailUrl)
+      const data = await response.json()
+      form.value.lat_location = data.result.geometry.location.lat
+      form.value.long_location = data.result.geometry.location.lng
+      form.value.location = data.result.formatted_address
+      console.log(form.value.lat_location)
+      console.log(form.value.long_location)
+      console.log(form.value.location)
+
+      predictions.value = []
+      console.log('Coordinates sent successfully to Laravel.')
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  } else {
+    console.error('Selected prediction not found.')
   }
 }
 </script>
-

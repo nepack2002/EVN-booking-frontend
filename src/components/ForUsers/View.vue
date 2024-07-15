@@ -92,9 +92,7 @@ export default {
     let intervalId;
     const isModalVisible = ref(false);
     const formattedTime = computed(() => formatTime(elapsedSeconds.value));
-    if (userStore) {
-      userStore.fetchUser();
-    }
+   
     const fetchLocations = async () => {
       try {
         const response = await axios.get(

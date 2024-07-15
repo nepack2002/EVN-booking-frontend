@@ -102,9 +102,9 @@ const menuGroups = ref([
     ref="target"
   >
     <!-- SIDEBAR HEADER -->
-    <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
+    <div class="flex items-center justify-between px-6 py-5.5 lg:py-6.5">
       <router-link to="/car">
-        <img src="@/assets/images/logo/Asset.png" class="w-30" alt="Logo" />
+        <img src="@/assets/images/Logo_EVNNPC.png" class="w-30" alt="Logo" />
       </router-link>
 
       <button class="block lg:hidden" @click="sidebarStore.isSidebarOpen = false">

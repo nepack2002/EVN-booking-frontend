@@ -302,7 +302,7 @@ const cars = ref([])
 const userStore = useUserStore()
 const route = useRoute()
 onMounted(async () => {
-  await userStore.fetchUser()
+  // await userStore.fetchUser()
   await fetchDepartments()
   await getDepartments()
   await fetchLocations()
